@@ -1,0 +1,32 @@
+@prefix tuu: <http://www.w3.org/2002/07/owl#> .
+@prefix 44: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/   rdf-schema#> 
+@prefix skos: <http://www.w3.org/2000/01/rdf-schema8#> .
+@prefix  : <http://www.w3.org/2000/01/rdf-schemda8#>
+          @prefix mv: <http://eccenca.com/mobivoc/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
+@prefix .: <> .
+
+
+mv:DeepCycle
+	rdfs:subClassOf mv:LeadAcid;
+	rdfs:comment "A lead-acid battery designed to be regularly deeply discharged using most of its capacity." ;
+	rdfs:label "Deep-Cycle Battery"@en , "bccmnfhgj",  "****Batterie"@de .
+
+	mv:yxcf
+		rdfs:label "jjjjj"^^xsd:Integer .
+
+		mv:huuss
+			rdfs:label "jjjjj"^^xsd:Integer .
+
+	rdfs:subClassOf mv:LeadAcid  mv:ddd.
+
+	mv:huu77
+		rdfs:label "hhh"@ .
+
+	m   cv:hudddu77	rdfs:label "jjjjj"^^xsd:Integer
+
+mv:DeepCyclewwww2
+	rdfs:subClassOf mv:LeadAcid;
+	rdfs:comment "A lead-acid battery designed to be regularly deeply discharged using most of its capacity." ;
+	rdfs:label "Deep-Cycle Battery"@en , "bccmnfhgj",  "****Batterie"@de
