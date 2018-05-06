@@ -305,6 +305,18 @@ public class TurtleBaseListener implements TurtleListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterErrors(@NotNull TurtleParser.ErrorsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitErrors(@NotNull TurtleParser.ErrorsContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterRdfType(@NotNull TurtleParser.RdfTypeContext ctx) { }
 	/**
 	 * {@inheritDoc}

@@ -1,56 +1,54 @@
-// ANTLR4 Equivalent of accompanying bnf, developed in
-// http://www.w3.org/2005/01/yacker/uploads/ShEx3
-// Updated to Jul 27 AM ShEx3
-// Updated to Aug 23 AM ShEx3 (last change was EGP 20150820)
-// Sept 21 AM disallow single internal unary (e.g. {(:p .{2}){3}}
-//            Change (non-standard) "codeLabel" to "productionName"
-// Oct 26 - change annotation predicate to include rdftype (how did this slip in to the production rules?
-// Dec 30 - update to match http://www.w3.org/2005/01/yacker/uploads/ShEx2/bnf with last change "EGP 20151120"
-// May 23, 2016 - Update to match http://www.w3.org/2005/01/yacker/uploads/ShEx2/bnf with last change "EGP20160520" AND ';' separator and '//' for annotations
-// May 24, 2016 - EGP20150424
-// Aug 11, 2016 - EGP20160708
-// Sep 14, 2016 - Revised to match Eric's latest reshuffle
-// Sep 24, 2016 - Switched to TT grammar (vs inner and outer shapes)
-// Sep 26, 2016 - Refactored to match https://raw.githubusercontent.com/shexSpec/shex.js/7eb770fe2b5bab9edfe9558dc07bb6f6dcdf5d23/doc/bnf
-// Oct 27, 2016 - Added comments to '*', '*' and '?' to facilitate parsing
-// Oct 27, 2016 - Added qualifier rule to be reused by shapeDefinition and inlineShapeDefinition
-// Oct 27, 2016 - Added negation rule
-// Mar 03, 2017 - removed ^^-style facet arguments per shex#41
-// Mar 03, 2017 - switch to ~/regexp/
-// Apr 09, 2017 - removed WS fragment (unused)
-// Apr 09, 2017 - revise REGEXP definition
-// Apr 09, 2017 - factor out REGEXP_FLAGS so we don't have to parse them out
-// Apr 09, 2017 - literalRange / languageRange additions
-// Apr 09, 2017 - factor out shapeRef to match spec
-// Apr 09, 2017 - update repeatRange to allow differentiation of {INTEGER} and {INTEGER,}
-// Apr 09, 2017 - add STEM_MARK and UNBOUNDED tokens to eliminate lex token parsing
-
-
 grammar Turtle;
 
-start 		    : (directive)* ( triples*)? EOF;  // leading CODE
+
+start 		    : (directive)* (errors)* ( triples*)? (errors)*;  // leading CODE
 directive       : baseDecl
 				| prefixDecl 
 				;
 baseDecl 		: baseSparql | base  ;			
 baseSparql 		: KW_BASE  IRIREF 
+				| '@BASE'   IRIREF '.'  {notifyErrorListeners("Uncorrect form of Base directive");}
+				| '@BASE'  IRIREF   {notifyErrorListeners("Uncorrect form of Base  directive");}
+				| KW_BASE   IRIREF  '.' {notifyErrorListeners("SPARQL BASE directive should not followed by '.'");}
 				;
 base 		    : BASE  IRIREF '.' 
-				| BASE  IRIREF {notifyErrorListeners(" Missing '.' at the end of Base directive");}
-				| BASE {notifyErrorListeners(" Missing IRI after '@base'");}
+				| BASE  IRIREF {notifyErrorListeners("Missing '.' at the end of Base directive");}
+				| BASE {notifyErrorListeners("Missing IRI after '@base'");}
 				;
 prefixDecl		: prefixSparql | prefix ;
 prefix		    : PREFIX PNAME_NS IRIREF '.' 
-				| PREFIX PNAME_NS IRIREF {notifyErrorListeners(" Missing '.' at the end of Prefix directive");}
+				| PREFIX PNAME_NS IRIREF {notifyErrorListeners("Missing '.' at the end of Prefix directive");}
+				| PREFIX PNAME_NS  {notifyErrorListeners("Missing IRI in Prefix directive");}
+				| PREFIX   IRIREF '.' {notifyErrorListeners("Missing NameSpace in Prefix directive");}
 				;
-prefixSparql	: KW_PREFIX PNAME_NS IRIREF {System.out.println("\nNS "+$PNAME_NS.text+"IRI "+$IRIREF.text);};
-triples 		:  	subject predicateObjectList '.';
-subject         :  	iri | blank ;
-blank	        : 	blankNode | blankNodePropertyList | collection ;
-blankNodePropertyList	   :   	'[' predicateObjectList ']' ;
-predicateObjectList	   :   	predicate objectList ( ';' predicate objectList )* (';')? ;
+prefixSparql	: KW_PREFIX PNAME_NS IRIREF {System.out.println("\nNS "+$PNAME_NS.text+"IRI "+$IRIREF.text);}
+				| KW_PREFIX PNAME_NS IRIREF '.' {notifyErrorListeners(" extraneous input'.' at the end of Prefix directive");}
+				| KW_PREFIX PNAME_NS  '.' {notifyErrorListeners("Missing IRI in Prefix directive");}
+				| KW_PREFIX   IRIREF  {notifyErrorListeners("Missing NameSpace in Prefix directive");}
+				;
+errors			: iri '=' iri '.' {notifyErrorListeners("Turtle is not N3");}
+				| '{' triples '}' {notifyErrorListeners("{} pattern is not in Turtle");}
+				|  (subject '.')  {notifyErrorListeners("N3 paths cannot be used in Turtle");}
+				;
+triples 		:  	subject predicateObjectList '.'
+		 		|  	subject predicateObjectList ('.')+ ('.')+ {notifyErrorListeners("Too many DOT ");}
+		 		|  	subject predicateObjectList  {notifyErrorListeners("Missing '.' at the end of the triple");}		 		
+		 		;
+subject         :  	iri | blank 
+				| booleanLiteral  {notifyErrorListeners("Subject cannot be a boolean value");}
+				| rdfLiteral   {notifyErrorListeners("Subject cannot be a string");}
+				| numericLiteral  {notifyErrorListeners("Subject cannot be a number");}
+				;
+blank	        : 	blankNode | blankNodePropertyList | collection 
+				| blankNode '.' {notifyErrorListeners("Blank Node cannot be followed by '.'");}
+				;
+blankNodePropertyList	   :   	'[' (predicateObjectList)* ']' ;
+predicateObjectList	   :   	predicate objectList ( ';' predicate objectList )* (';')? 
+				| predicate {notifyErrorListeners("Object is missing in the triple");}
+				;
 objectList	   :   	object ( ',' object )* ;
-object	   :   	iri | blank | literal ;
+object	   :   	iri | blank | literal 
+				;
 collection	   :   	'(' object* ')' ;
 
 literal         : rdfLiteral
@@ -60,6 +58,8 @@ literal         : rdfLiteral
 // BNF: predicate ::= iri | RDF_TYPE
 predicate       : iri
 				| rdfType
+				| literal {notifyErrorListeners("Predicate cannot be a literal");}
+				| blank {notifyErrorListeners("Predicate cannot be a blank node");}
 				;
 rdfType			: RDF_TYPE ;
 datatype        : iri ;
@@ -67,6 +67,8 @@ datatype        : iri ;
 numericLiteral  : INTEGER
 				| DECIMAL
 				| DOUBLE
+				|   INTEGER CHAR {notifyErrorListeners("Numeric literal cannot have string characters");}
+				|   INTEGER '.' CHAR {notifyErrorListeners("Uncorrect form of a literal");}
 				;
 rdfLiteral      : string (LANGTAG | '^^' datatype)?
 				| string (LANGTAG | '^' datatype)? {notifyErrorListeners("Missing '^' Character");}
@@ -76,6 +78,8 @@ booleanLiteral  : KW_TRUE
 				;
 string          : STRING_LITERAL_LONG1
                 | STRING_LITERAL_LONG2
+                | STRING_LITERAL_LONG2 '"' {notifyErrorListeners("Uncorrect form of long literal with 4 qoutes");}
+                | '"' STRING_LITERAL_LONG2  {notifyErrorListeners("Uncorrect form of long literal with 4 qoutes");}
                 | STRING_LITERAL1
 				| STRING_LITERAL2
 				;
@@ -85,8 +89,8 @@ iri             : IRIREF
 prefixedName    : PNAME_LN
 				| PNAME_NS
 				;
-blankNode       : BLANK_NODE_LABEL ;
-
+blankNode       : BLANK_NODE_LABEL 
+				;
 
 // Reserved for future use
 
@@ -107,7 +111,10 @@ CODE                  : '{' (~[%\\] | '\\' [%\\] | UCHAR)* '%' '}' ;
 RDF_TYPE              : 'a' ;
 IRIREF                : '<' (~[\u0000-\u0020=<>"{}|^`\\] | UCHAR)* '>' ; /* #x00=NULL #01-#x1F=control codes #x20=space */
 PNAME_NS			  : PN_PREFIX? ':' ;
-PNAME_LN			  : PNAME_NS PN_LOCAL ;
+PNAME_LN			  : PNAME_NS PN_LOCAL
+// this is not working since it is related to Lexer not to the parser 
+//					  | PNAME_NS PN_LOCAL '^' PN_LOCAL {notifyErrorListeners("Wrong form of a local name");}
+					  ;
 REGEXP                : '/' (~[/\n\r\\] | '\\' [/nrt\\|.?*+(){}[\]$^-] | UCHAR)+ '/' ;
 REGEXP_FLAGS		  : [smix]+ ;
 BLANK_NODE_LABEL      : '_:' (PN_CHARS_U | [0-9]) ((PN_CHARS | '.')* PN_CHARS)? ;
@@ -115,7 +122,8 @@ LANGTAG               : '@' [a-zA-Z]+ ('-' [a-zA-Z0-9]+)* ;
 INTEGER               : [+-]? [0-9]+ ;
 DECIMAL               : [+-]? [0-9]* '.' [0-9]+ ;
 DOUBLE                : [+-]? ([0-9]+ '.' [0-9]* EXPONENT | '.'? [0-9]+ EXPONENT) ;
-
+CHAR 				  : [a-zA-Z]+
+					   ;
 fragment EXPONENT     : [eE] [+-]? [0-9]+ ;
 
 STRING_LITERAL1       : '\'' (~[\u0027\u005C\u000A\u000D] | ECHAR | UCHAR)* '\'' ; /* #x27=' #x5C=\ #xA=new line #xD=carriage return */

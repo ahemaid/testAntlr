@@ -88,6 +88,16 @@ public interface TurtleListener extends ParseTreeListener {
 	 */
 	void exitPrefixSparql(TurtleParser.PrefixSparqlContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TurtleParser#errors}.
+	 * @param ctx the parse tree
+	 */
+	void enterErrors(TurtleParser.ErrorsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TurtleParser#errors}.
+	 * @param ctx the parse tree
+	 */
+	void exitErrors(TurtleParser.ErrorsContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TurtleParser#triples}.
 	 * @param ctx the parse tree
 	 */

@@ -29,7 +29,8 @@ public class RecognitionExceptionUtil {
                 getOffendingTokenVerboseString(e),
                 getErrorLineStringUnderlined(e).replaceAll("(?m)^|$", "|"));
     }
-
+    
+    
     public static String getRuleStackString(RecognitionException e) {
         if (e == null || e.getRecognizer() == null
                 || e.getCtx() == null

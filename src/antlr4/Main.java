@@ -55,22 +55,14 @@ public class Main {
 	}
 
 	public static void main (String[] args) {
-
-//        
-//		String txt = 
-//		"@base <http://example.org/> .\n" + 
-//		"@prefix mv: <http://eccenca.com/mobivoc/> \n" + 
-//		"@prefix tuu: <http://www.w3.org/2002/07/owl#> \n" + 
-//		"@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" + 
-//		"@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" + 
-//		"@prefix  skos: \n" + 
-//		"@prefix  skosh: <> .\n" + 
-//		"@prefix  skosh7: <http://www.w3.org/2000/01/rdf-schema#> .\n" ;
-		
 		//final String filename = "/home/ahmed/Downloads/yagoRedirectLabels_de.ttl";
-		final String filename = "b2.ttl";
+		//final String filename = "b2.ttl";
+		//final String filename = "/home/ahmed/Downloads/TESTS/TurtleTests/turtle-syntax-bad-base-02.ttl";
+		//final String filename = "mainfest.ttl";
 		//final String filename = "test.ttl";
 		//final String filename = "Battery.ttl";
+		//final String filename = "testTurtle.ttl";
+		final String filename = "/home/ahmed/Downloads/TESTS/TurtleTests/turtle-syntax-bad-esc-01.ttl";
 		long startTime = 0, endTime = 0;
 		StringBuilder inputSB = new StringBuilder();
 		//final String filename = "data.ttl";

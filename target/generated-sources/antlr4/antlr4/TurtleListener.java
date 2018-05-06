@@ -249,6 +249,16 @@ public interface TurtleListener extends ParseTreeListener {
 	 */
 	void exitDirective(@NotNull TurtleParser.DirectiveContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TurtleParser#errors}.
+	 * @param ctx the parse tree
+	 */
+	void enterErrors(@NotNull TurtleParser.ErrorsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TurtleParser#errors}.
+	 * @param ctx the parse tree
+	 */
+	void exitErrors(@NotNull TurtleParser.ErrorsContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TurtleParser#rdfType}.
 	 * @param ctx the parse tree
 	 */
