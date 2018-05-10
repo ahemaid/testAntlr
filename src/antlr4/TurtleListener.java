@@ -38,6 +38,16 @@ public interface TurtleListener extends ParseTreeListener {
 	 */
 	void exitBaseDecl(TurtleParser.BaseDeclContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TurtleParser#unkonwnDecl}.
+	 * @param ctx the parse tree
+	 */
+	void enterUnkonwnDecl(TurtleParser.UnkonwnDeclContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TurtleParser#unkonwnDecl}.
+	 * @param ctx the parse tree
+	 */
+	void exitUnkonwnDecl(TurtleParser.UnkonwnDeclContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TurtleParser#baseSparql}.
 	 * @param ctx the parse tree
 	 */

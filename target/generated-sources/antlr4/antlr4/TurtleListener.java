@@ -89,6 +89,16 @@ public interface TurtleListener extends ParseTreeListener {
 	 */
 	void exitPrefixDecl(@NotNull TurtleParser.PrefixDeclContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TurtleParser#unkonwnDecl}.
+	 * @param ctx the parse tree
+	 */
+	void enterUnkonwnDecl(@NotNull TurtleParser.UnkonwnDeclContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TurtleParser#unkonwnDecl}.
+	 * @param ctx the parse tree
+	 */
+	void exitUnkonwnDecl(@NotNull TurtleParser.UnkonwnDeclContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TurtleParser#literal}.
 	 * @param ctx the parse tree
 	 */

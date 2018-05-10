@@ -4,8 +4,11 @@ grammar Turtle;
 start 		    : (directive)* (errors)* ( triples*)? (errors)*;  // leading CODE
 directive       : baseDecl
 				| prefixDecl 
+				| unkonwnDecl
 				;
-baseDecl 		: baseSparql | base  ;			
+baseDecl 		: baseSparql | base  ;	
+unkonwnDecl 	: '@keywords' (CHAR)* '.' {notifyErrorListeners("@keywords is unkown directive in Turtle");}
+				;		
 baseSparql 		: KW_BASE  IRIREF 
 				| '@BASE'   IRIREF '.'  {notifyErrorListeners("Uncorrect form of Base directive");}
 				| '@BASE'  IRIREF   {notifyErrorListeners("Uncorrect form of Base  directive");}
@@ -27,7 +30,8 @@ prefixSparql	: KW_PREFIX PNAME_NS IRIREF {System.out.println("\nNS "+$PNAME_NS.t
 				| KW_PREFIX   IRIREF  {notifyErrorListeners("Missing NameSpace in Prefix directive");}
 				;
 errors			: iri '=' iri '.' {notifyErrorListeners("Turtle is not N3");}
-				| '{' triples '}' {notifyErrorListeners("{} pattern is not in Turtle");}
+				| '{' subject predicateObjectList '}' {notifyErrorListeners("{ } pattern is not in Turtle");}
+				| '{' triples '}' {notifyErrorListeners("{ } pattern is not in Turtle");}
 				|  (subject '.')  {notifyErrorListeners("N3 paths cannot be used in Turtle");}
 				;
 triples 		:  	subject predicateObjectList '.'
@@ -45,6 +49,7 @@ blank	        : 	blankNode | blankNodePropertyList | collection
 blankNodePropertyList	   :   	'[' (predicateObjectList)* ']' ;
 predicateObjectList	   :   	predicate objectList ( ';' predicate objectList )* (';')? 
 				| predicate {notifyErrorListeners("Object is missing in the triple");}
+				|	'<=' objectList ( ';' predicate objectList )* (';')?  {notifyErrorListeners("'<=' is not in Turtle");}
 				;
 objectList	   :   	object ( ',' object )* ;
 object	   :   	iri | blank | literal 
@@ -67,11 +72,14 @@ datatype        : iri ;
 numericLiteral  : INTEGER
 				| DECIMAL
 				| DOUBLE
-				|   INTEGER CHAR {notifyErrorListeners("Numeric literal cannot have string characters");}
-				|   INTEGER '.' CHAR {notifyErrorListeners("Uncorrect form of a literal");}
+				|   INTEGER (CHAR)+ {notifyErrorListeners("Numeric literal cannot have string characters");}
+				|   INTEGER '.' (CHAR)+ {notifyErrorListeners("Uncorrect form of a literal");}
 				;
 rdfLiteral      : string (LANGTAG | '^^' datatype)?
 				| string (LANGTAG | '^' datatype)? {notifyErrorListeners("Missing '^' Character");}
+				| string (LANGTAG '^^' datatype)? {notifyErrorListeners("Uncorrect form of a Literal");}
+				| string ( '^^' datatype LANGTAG)? {notifyErrorListeners("Uncorrect form of a Literal");}
+				
 			   ;
 booleanLiteral  : KW_TRUE
 				| KW_FALSE
@@ -80,10 +88,12 @@ string          : STRING_LITERAL_LONG1
                 | STRING_LITERAL_LONG2
                 | STRING_LITERAL_LONG2 '"' {notifyErrorListeners("Uncorrect form of long literal with 4 qoutes");}
                 | '"' STRING_LITERAL_LONG2  {notifyErrorListeners("Uncorrect form of long literal with 4 qoutes");}
+                | WRONG_STRING_LITERAL_LONG2 {notifyErrorListeners("Missing qoutes of long literal");}
                 | STRING_LITERAL1
 				| STRING_LITERAL2
 				;
-iri             : IRIREF
+iri             : WRONGIRIREF {notifyErrorListeners("Uncorrect form of URI, it should not contain newline");} 
+				| IRIREF
 				| prefixedName
 				;
 prefixedName    : PNAME_LN
@@ -109,7 +119,10 @@ BASE				  : '@base' ;
 PREFIX				  : '@prefix' ;
 CODE                  : '{' (~[%\\] | '\\' [%\\] | UCHAR)* '%' '}' ;
 RDF_TYPE              : 'a' ;
-IRIREF                : '<' (~[\u0000-\u0020=<>"{}|^`\\] | UCHAR)* '>' ; /* #x00=NULL #01-#x1F=control codes #x20=space */
+IRIREF                : '<' (~[\u0000-\u0020=<>"{}|^`\\] | UCHAR)* '>' /* #x00=NULL #01-#x1F=control codes #x20=space */
+					  ;
+WRONGIRIREF 		  : '<' (~[\u0000-\u0020=<>"{}|^`\\] | UCHAR)* '\\n>'
+				      ;
 PNAME_NS			  : PN_PREFIX? ':' ;
 PNAME_LN			  : PNAME_NS PN_LOCAL
 // this is not working since it is related to Lexer not to the parser 
@@ -122,15 +135,17 @@ LANGTAG               : '@' [a-zA-Z]+ ('-' [a-zA-Z0-9]+)* ;
 INTEGER               : [+-]? [0-9]+ ;
 DECIMAL               : [+-]? [0-9]* '.' [0-9]+ ;
 DOUBLE                : [+-]? ([0-9]+ '.' [0-9]* EXPONENT | '.'? [0-9]+ EXPONENT) ;
-CHAR 				  : [a-zA-Z]+
-					   ;
+CHAR 				  : [a-zA-Z]
+					  ;
+
+
 fragment EXPONENT     : [eE] [+-]? [0-9]+ ;
 
 STRING_LITERAL1       : '\'' (~[\u0027\u005C\u000A\u000D] | ECHAR | UCHAR)* '\'' ; /* #x27=' #x5C=\ #xA=new line #xD=carriage return */
 STRING_LITERAL2       : '"' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '"' ;   /* #x22=" #x5C=\ #xA=new line #xD=carriage return */
 STRING_LITERAL_LONG1  : '\'\'\'' (('\'' | '\'\'')? (~['\\] | ECHAR | UCHAR))* '\'\'\'' ;
 STRING_LITERAL_LONG2  : '"""' (('"' | '""')? (~["\\] | ECHAR | UCHAR))* '"""' ;
-
+WRONG_STRING_LITERAL_LONG2 : '"""' (('"' | '""')? (~["\\] | ECHAR | UCHAR))*  ;
 fragment UCHAR                 : '\\u' HEX HEX HEX HEX | '\\U' HEX HEX HEX HEX HEX HEX HEX HEX ;
 fragment ECHAR                 : '\\' [tbnrf\\"'] ;
 

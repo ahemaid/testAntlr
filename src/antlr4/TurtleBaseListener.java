@@ -52,6 +52,18 @@ public class TurtleBaseListener implements TurtleListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterUnkonwnDecl(TurtleParser.UnkonwnDeclContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitUnkonwnDecl(TurtleParser.UnkonwnDeclContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterBaseSparql(TurtleParser.BaseSparqlContext ctx) { }
 	/**
 	 * {@inheritDoc}
