@@ -209,6 +209,16 @@ public interface TurtleListener extends ParseTreeListener {
 	 */
 	void exitBlankNode(@NotNull TurtleParser.BlankNodeContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TurtleParser#graphLabel}.
+	 * @param ctx the parse tree
+	 */
+	void enterGraphLabel(@NotNull TurtleParser.GraphLabelContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TurtleParser#graphLabel}.
+	 * @param ctx the parse tree
+	 */
+	void exitGraphLabel(@NotNull TurtleParser.GraphLabelContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TurtleParser#iri}.
 	 * @param ctx the parse tree
 	 */
@@ -258,6 +268,16 @@ public interface TurtleListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDirective(@NotNull TurtleParser.DirectiveContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TurtleParser#wrongPredicateObjectList}.
+	 * @param ctx the parse tree
+	 */
+	void enterWrongPredicateObjectList(@NotNull TurtleParser.WrongPredicateObjectListContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TurtleParser#wrongPredicateObjectList}.
+	 * @param ctx the parse tree
+	 */
+	void exitWrongPredicateObjectList(@NotNull TurtleParser.WrongPredicateObjectListContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TurtleParser#errors}.
 	 * @param ctx the parse tree
