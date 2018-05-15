@@ -1,4 +1,4 @@
-package core;
+package main;
 
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -13,6 +13,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+
+import core.CollectionErrorListener;
+import core.ShortToUnicodeString;
+import core.TurtleLexer;
+import core.TurtleParser;
+import errorCorrection.Correction;
+import errorDetection.DescriptiveErrorListener;
+
 import java.io.PrintWriter;
 import java.io.PrintStream;
 import java.io.FileOutputStream;
@@ -23,52 +31,20 @@ import org.antlr.v4.runtime.BaseErrorListener;
 import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.antlr.v4.runtime.tree.ParseTree;
+import org.antlr.v4.runtime.tree.ParseTreeListener;
 import org.antlr.v4.gui.TreeViewer;
 import org.antlr.v4.runtime.CommonTokenStream;
 public class Main {
-
-
-
-
-	private static void printDrink(String Text) {
-		// Get our lexer
-		String text = 
-				"@base <http://example.org/> .\n" + 
-						"PREFIX77 mv: <http://eccenca.com/mobivoc/> \n" + 
-						"PREFIX tuu: <http://www.w3.org/2002/07/owl#> \n" + 
-						"PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> \n" + 
-						"PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> \n" + 
-						"PREFIX  skos: \n" + 
-						"@prefix  skosh: <> .\n" + 
-						"@prefix  skosh7: <http://www.w3.org/2000/01/rdf-schema#> .\n" ;
-
-
-		//
-		////		"rdf:ff rdfs:lable \"ddddd\" . ";
-		//	    HelloLexer lexer = new  HelloLexer(new ANTLRInputStream(Text));
-		//	 
-		//	    // Get a list of matched tokens
-		//	    CommonTokenStream tokens = new CommonTokenStream(lexer);
-		//	 
-		//	    // Pass the tokens to the parser
-		//	    HelloParser parser = new  HelloParser(tokens);
-		//	 
-		//	    // Specify our entry point
-		//	    HelloParser.TurtleDocContext sentenceContext = parser.turtleDoc();
-		//
-		//	    // Walk it and attach our listener
-		//	    ParseTreeWalker walker = new ParseTreeWalker();
-		//	    walker.walk(listener, sentenceContext);
-	}
-
 	public static void main (String[] args) {
 		//final String filename = "/home/ahmed/Downloads/yagoRedirectLabels_de.ttl";
-		final String filename = "b2.ttl";
+		//final String filename = "b2.ttl";
 		//final String filename = "/home/ahmed/Downloads/TESTS/TurtleTestsResult/bad_syntax/turtle-syntax-bad-ln-escape.ttl";
 		//final String filename = "mainfest.ttl";
 		//final String filename = "test.ttl";
 		//final String filename = "Battery.ttl";
 		//final String filename = "testTurtle.ttl";
+		final String filename = "/home/ahmed/Downloads/article_templates_de.ttl/data";
+		final String outputFilename = "/home/ahmed/Downloads/article_templates_de.ttl/output.ttl" ;
 		
 		
 		// test with all TurtleSuit files 
@@ -104,7 +80,7 @@ public class Main {
 
 				BufferedReader reader = new BufferedReader(new InputStreamReader(input));
 				DescriptiveErrorListener errorListener = new DescriptiveErrorListener();
-				Validation validator = new Validation();
+				Correction corrector = new Correction();
 				// send system.out to a file
 				//PrintStream printStream = new PrintStream(new FileOutputStream(file.getCanonicalFile()+".out"));
 				//System.setOut(printStream);
@@ -119,7 +95,7 @@ public class Main {
 					System.out.print("line "+counter+"  "+line+"\n");
 					counter++;
 					inputSB.append(line+"\n");
-					if (counter == 10000000)
+					if (counter == 1000000)
 						break;
 				}
 
@@ -145,22 +121,32 @@ public class Main {
 				//System.out.print("\n\n"+parser.getCurrentToken());
 				//System.out.print("\n\n"+tree.getText());
 				//ParseTree tree = parser.init(); // begin parsing at init rule
-				System.out.println("tree"+tree.toStringTree()); // print LISP-style tree
+				
+				
+				//System.out.println("tree"+tree.toStringTree()); // print LISP-style tree
+				
 				// Create a generic parse tree walker that can trigger callbacks
 				ParseTreeWalker walker = new ParseTreeWalker();
 				// Walk the tree created during the parse, trigger callbacks
-				walker.walk(new ShortToUnicodeString(), tree);
-				System.out.println(); // print a \n after translation
-				String output = validator.process(inputSB.toString(),errorListener.errorsList);
-				System.out.print(errorListener.errorsList);
+				//walker.walk((ParseTreeListener) errorListener, tree);
 				
+//				startRule_ctx root = ... ;
+//				ParseTreeVisitor visitor = new ParseTreeVisitor();
+//				visitor.visit(listener, root);
+				
+				//System.out.println(); // print a \n after translation
+				corrector.process(inputSB.toString(),errorListener.errorsList);
+				System.out.print(errorListener.errorsList);
+				//validator.showInputAfterEditing();
+				corrector.writeToFileAfterEditing(outputFilename);
+
 
 				endTime = System.nanoTime();
 
-				System.out.print(output);
+				//System.out.print(output);
 
 				//show AST in GUI
-				
+				/*
 			        JFrame frame = new JFrame("Antlr AST");
 
 			        TreeViewer viewr = new TreeViewer(Arrays.asList(
@@ -174,7 +160,7 @@ public class Main {
 			        frame.setSize(1200,800);
 			        frame.setVisible(true);
 				 
-
+				*/
 				// show detected errors
 				/*
 				 for (SyntaxError e : collector.getErrors()) {

@@ -1,17 +1,20 @@
 PREFIX mv: <http://eccenca.com/mobivoc/> .
 PREFIX <http://www.w3.org/2013/TurtleTests/>
 @prefix tuu: <http://www.w3.org/2002/07/owl#>
+PREFIX mv44: <http://eccenca.com/mobivoc/> .
+
+
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 
 
-<http://www.w3.org/2013/TurtleTests/s> <http://www.w3.org/2013/TurtleTests/p>
 
 mv:DeepCycle
 	rdfs:subClassOf mv:LeadAcid ;
 	rdfs:comment "A lead-acid battery designed to be regularly deeply discharged using most of its capacity." , "Deep-Cyc", "j"@dd ;
-	rdfs:label "Deep-Cycle Battery"@en , "****Batterie"@de.
+	rdfs:label "Deep-Cycle Battery"@en , "****Batterie"@de
 
+<http://www.w3.org/2013/TurtleTests/s> <http://www.w3.org/2013/TurtleTests/p>
 
 
 	rdfs:comment "A battery used to power the propulsion of a battery electric vehicle." ;
@@ -36,7 +39,7 @@ mv:LeadAcid ;
 mv:LeadAcid
 	rdfs:subClassOf mv:Battery ;
 	rdfs:comment "The oldest type of rechargeable battery. The cells have a relatively large power-to-weight ratio and these batteries have low cost." ;
-	rdfs:label "Lead-Acid Battery"@en , "Bleiakkumulator"@de.
+	rdfs:label "Lead-Acid Battery"@en , "Bleiakkumulator"@de
 
 mv44:LithiumIon
 	rdfs:sublassOf mv:Battery ;

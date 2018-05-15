@@ -1,7 +1,7 @@
 grammar Turtle;
 
 
-start 		    : (errors)* (directive)* (errors)* ( triples*)? (errors)*;  // leading CODE
+start 		    :  (directive)*  (triples)* (errors)*;  // leading CODE
 directive       : baseDecl
 				| prefixDecl 
 				| unkonwnDecl
@@ -23,7 +23,8 @@ prefix		    : PREFIX PNAME_NS IRIREF '.'
 				| PREFIX '.' PNAME_NS  IRIREF '.' {notifyErrorListeners("Namespace cannot start with '.' ");}
 				| PREFIX PN_PREFIX?  '.' ':' IRIREF '.' {notifyErrorListeners("Namespace cannot end with '.' ");}
 				| PREFIX PNAME_NS IRIREF {notifyErrorListeners("Missing '.' at the end of Prefix directive");}
-				| PREFIX PNAME_NS  {notifyErrorListeners("Missing IRI in Prefix directive");}
+				| PREFIX PNAME_NS  '.' {notifyErrorListeners("Missing IRI in Prefix directive");}
+				| PREFIX PNAME_NS  {notifyErrorListeners("Missing IRI  and dot at Prefix directive");}
 				| PREFIX   IRIREF '.' {notifyErrorListeners("Missing NameSpace in Prefix directive");}
 				;
 prefixSparql	: KW_PREFIX PNAME_NS IRIREF {System.out.println("\nNS "+$PNAME_NS.text+"IRI "+$IRIREF.text);}
@@ -33,9 +34,10 @@ prefixSparql	: KW_PREFIX PNAME_NS IRIREF {System.out.println("\nNS "+$PNAME_NS.t
 				| KW_PREFIX PNAME_NS  '.' {notifyErrorListeners("Missing IRI in Prefix directive");}
 				| KW_PREFIX   IRIREF  {notifyErrorListeners("Missing NameSpace in Prefix directive");}
 				;
-errors			: iri '=' iri '.' {notifyErrorListeners("Turtle is not N3");}
-		 		| subject predicateObjectList ';'  {notifyErrorListeners("Uncorrect end of a triple, a triple ends with '.'");}
-				| subject predicateObjectList ','  {notifyErrorListeners("Uncorrect end of a triple, a triple ends with '.'");}
+errors			: iri '=' iri '.' {notifyErrorListeners("'=' sign cannot be used in Turtle");}
+				//TODO:remove for debugging
+		 		//| subject predicateObjectList ';'  {notifyErrorListeners("Uncorrect end of a triple, a triple ends with '.'");}
+				//| subject predicateObjectList ','  {notifyErrorListeners("Uncorrect end of a triple, a triple ends with '.'");}
 				| '{' subject predicateObjectList '}' {notifyErrorListeners("{ } pattern is not in Turtle");}
 				| '{' triples '}' {notifyErrorListeners("{ } pattern is not in Turtle");}
 				|  (subject '.')  {notifyErrorListeners("N3 paths cannot be used in Turtle");}
@@ -46,7 +48,9 @@ errors			: iri '=' iri '.' {notifyErrorListeners("Turtle is not N3");}
 				;
 triples 		:  	subject predicateObjectList '.'
 		 		|  	subject predicateObjectList ('.')+ ('.')+ {notifyErrorListeners("Too many DOT ");}
-		 		|  	subject predicateObjectList  {notifyErrorListeners("Missing '.' at the end of the triple");}	
+		 		|  	subject predicateObjectList  {notifyErrorListeners("Missing '.' at the end of the triple");}
+		 		|  	subject predicateObjectList (';') {notifyErrorListeners("Missing '.' at the end of the triple");}	
+		 			
 		 		;
 graphLabel		: IRIREF | BLANK_NODE_LABEL
 				;
@@ -60,15 +64,17 @@ blank	        : 	blankNode | blankNodePropertyList | collection
 				| blankNode '.' {notifyErrorListeners("Blank Node cannot be followed by '.'");}
 				;
 blankNodePropertyList	   :   	'[' (predicateObjectList)* ']' ;
-predicateObjectList	   :   	predicate objectList ( ';' predicate objectList )* (';')? 
+predicateObjectList	   :   	predicate objectList (';' predicate objectList)* 
+				// TODO: remove the last ';' above
+				//predicate objectList (';' predicate objectList)* (';')? 
 				| predicate {notifyErrorListeners("Object is missing in the triple");}
-				|	'<=' objectList ( ';' predicate objectList )* (';')?  {notifyErrorListeners("'<=' is not in Turtle");}
-				|	'=>' objectList ( ';' predicate objectList )* (';')?  {notifyErrorListeners("'=>' is not in Turtle");}
+				|	'<=' objectList (';' predicate objectList)* (';')?  {notifyErrorListeners("'<=' is not in Turtle");}
+				|	'=>' objectList (';' predicate objectList)* (';')?  {notifyErrorListeners("'=>' is not in Turtle");}
 				;
 wrongPredicateObjectList	: 'is' predicate 'of' objectList ( ';' predicate objectList )* (';')? 
 				;
 objectList	   :   	object ( ',' object )* ;
-object	   :   	iri | blank | literal 
+object	   :   	literal | iri | blank  
 				| RDF_TYPE {notifyErrorListeners("'a' cannot be used as an object");}
 				;
 collection	   :   	'(' object* ')' ;
@@ -103,16 +109,18 @@ rdfLiteral      : string (LANGTAG | '^^' datatype)?
 booleanLiteral  : KW_TRUE
 				| KW_FALSE
 				;
-string          : STRING_LITERAL_LONG1
+string          : STRING_LITERAL1
+				| STRING_LITERAL2
+				| STRING_LITERAL_LONG1
                 | STRING_LITERAL_LONG2
                 | STRING_LITERAL_LONG2 '"' {notifyErrorListeners("Uncorrect form of long literal with 4 qoutes");}
                 | '"' STRING_LITERAL_LONG2  {notifyErrorListeners("Uncorrect form of long literal with 4 qoutes");}
                 | WRONG_STRING_LITERAL_LONG2 {notifyErrorListeners("Missing qoutes of long literal");}
                 | WRONG_STRING_LITERAL2_MIX_QUOTES  {notifyErrorListeners("Literal cannot be used with a mix of single and double quotes, either one of them can be used");}
                 | (WRONG_STRING_LITERAL1 | WRONG_STRING_LITERAL2)   {notifyErrorListeners("Uncorrect quotes form of a literal");}
-                | WRONG_STRING_LITERAL2_WITH_ESCAPE  {notifyErrorListeners("Uncorrect literal form with escape");}
-                | STRING_LITERAL1
-				| STRING_LITERAL2
+                //TODO:check another way to form string with escape
+                //| WRONG_STRING_LITERAL2_WITH_ESCAPE  {notifyErrorListeners("Uncorrect literal form with escape");}
+
 				;
 iri             : WRONGIRIREF {notifyErrorListeners("Uncorrect form of URI, URI cannot contain newline or space");} 
 //				| WRONGIRIREF_WITH_ESCAPE {notifyErrorListeners("Uncorrect form of URI with escape");} 

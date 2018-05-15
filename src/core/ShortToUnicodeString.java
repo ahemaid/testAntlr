@@ -13,7 +13,7 @@ public class ShortToUnicodeString extends TurtleBaseListener {
     /** Translate { to " */
     @Override
     public void enterStart(TurtleParser.StartContext ctx) {
-        System.out.print('"');
+        System.out.print(ctx.getText());
     }
 
     /** Translate } to " */

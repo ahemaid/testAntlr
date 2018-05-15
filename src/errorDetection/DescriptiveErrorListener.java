@@ -1,4 +1,4 @@
-package core;
+package errorDetection;
 
 import org.antlr.v4.runtime.*;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ public class DescriptiveErrorListener extends BaseErrorListener {
    // public static DescriptiveErrorListener INSTANCE = new DescriptiveErrorListener();
     public 	ArrayList<String> errorsList = new ArrayList<String>();
 
-     DescriptiveErrorListener() {
+    public void DescriptiveErrorListener() {
     	errorsList.removeAll(errorsList);
     }
 
