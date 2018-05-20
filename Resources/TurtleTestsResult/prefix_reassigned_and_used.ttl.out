@@ -1,0 +1,12 @@
+line 1  @prefix p: <http://a.example/>.
+line 2  @prefix p: <http://b.example/>.
+line 3  p:s <http://a.example/p> <http://a.example/o> .
+tree([] ([58] ([85 58] ([129 85 58] @prefix p: <http://a.example/> .))) ([58] ([85 58] ([129 85 58] @prefix p: <http://b.example/> .))) ([70] ([191 70] ([215 191 70] ([394 215 191 70] p:s))) ([192 70] ([246 192 70] ([308 246 192 70] <http://a.example/p>)) ([247 192 70] ([281 247 192 70] ([289 281 247 192 70] <http://a.example/o>)))) .))
+""
+[]
+
+
+
+Total elapsed time: 1 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/turtle-syntax-number-07.ttl

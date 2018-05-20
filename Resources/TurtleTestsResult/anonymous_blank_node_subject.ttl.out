@@ -1,0 +1,10 @@
+line 1  [] <http://a.example/p> <http://a.example/o> .
+tree([] ([70] ([191 70] ([216 191 70] ([229 216 191 70] [ ]))) ([192 70] ([246 192 70] ([308 246 192 70] <http://a.example/p>)) ([247 192 70] ([281 247 192 70] ([289 281 247 192 70] <http://a.example/o>)))) .))
+""
+[]
+
+
+
+Total elapsed time: 1 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/LITERAL1_with_UTF8_boundaries.ttl

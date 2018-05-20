@@ -1,0 +1,13 @@
+line 1  PREFIX : <http://www.w3.org/2013/TurtleTests/>
+line 2  :s :p :123 .
+
+NS :IRI <http://www.w3.org/2013/TurtleTests/>
+tree([] ([58] ([85 58] ([128 85 58] PREFIX : <http://www.w3.org/2013/TurtleTests/>))) ([70] ([191 70] ([215 191 70] ([394 215 191 70] :s))) ([192 70] ([246 192 70] ([308 246 192 70] ([394 308 246 192 70] :p))) ([247 192 70] ([281 247 192 70] ([289 281 247 192 70] ([394 289 281 247 192 70] :123))))) .))
+""
+[]
+
+
+
+Total elapsed time: 5 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/prefix_only_IRI.ttl

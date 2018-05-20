@@ -1,0 +1,10 @@
+line 1  <http://a.example/s> <http://a.example/p> '	' .
+tree([] ([70] ([191 70] ([215 191 70] <http://a.example/s>)) ([192 70] ([246 192 70] ([308 246 192 70] <http://a.example/p>)) ([247 192 70] ([281 247 192 70] ([291 281 247 192 70] ([303 291 281 247 192 70] ([342 303 291 281 247 192 70] '\t')))))) .))
+""
+[]
+
+
+
+Total elapsed time: 1 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/turtle-syntax-lists-05.ttl

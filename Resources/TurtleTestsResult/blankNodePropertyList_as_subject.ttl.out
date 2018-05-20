@@ -1,0 +1,10 @@
+line 1  [ <http://a.example/p> <http://a.example/o> ] <http://a.example/p2> <http://a.example/o2> .
+tree([] ([70] ([191 70] ([216 191 70] ([229 216 191 70] [ ([238 229 216 191 70] ([246 238 229 216 191 70] ([308 246 238 229 216 191 70] <http://a.example/p>)) ([247 238 229 216 191 70] ([281 247 238 229 216 191 70] ([289 281 247 238 229 216 191 70] <http://a.example/o>)))) ]))) ([192 70] ([246 192 70] ([308 246 192 70] <http://a.example/p2>)) ([247 192 70] ([281 247 192 70] ([289 281 247 192 70] <http://a.example/o2>)))) .))
+""
+[]
+
+
+
+Total elapsed time: 10 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/turtle-syntax-struct-03.ttl

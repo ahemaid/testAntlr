@@ -1,0 +1,10 @@
+line 1  <http://a.example/s> <http://a.example/p> true .
+tree([] ([70] ([191 70] ([215 191 70] <http://a.example/s>)) ([192 70] ([246 192 70] ([308 246 192 70] <http://a.example/p>)) ([247 192 70] ([281 247 192 70] ([291 281 247 192 70] ([305 291 281 247 192 70] true))))) .))
+""
+[]
+
+
+
+Total elapsed time: 4 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/turtle-syntax-bad-esc-02.ttl

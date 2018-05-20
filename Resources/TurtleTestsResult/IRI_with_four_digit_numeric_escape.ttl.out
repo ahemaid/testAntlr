@@ -1,0 +1,10 @@
+line 1  <http://a.example/\u0073> <http://a.example/p> <http://a.example/o> .
+tree([] ([70] ([191 70] ([215 191 70] <http://a.example/\u0073>)) ([192 70] ([246 192 70] ([308 246 192 70] <http://a.example/p>)) ([247 192 70] ([281 247 192 70] ([289 281 247 192 70] <http://a.example/o>)))) .))
+""
+[]
+
+
+
+Total elapsed time: 0 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/localName_with_leading_digit.ttl

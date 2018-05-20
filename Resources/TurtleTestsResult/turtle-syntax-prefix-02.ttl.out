@@ -1,0 +1,12 @@
+line 1  PreFIX : <http://www.w3.org/2013/TurtleTests/>
+
+NS :IRI <http://www.w3.org/2013/TurtleTests/>
+tree([] ([58] ([85 58] ([128 85 58] PreFIX : <http://www.w3.org/2013/TurtleTests/>))))
+""
+[]
+
+
+
+Total elapsed time: 0 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/LITERAL_LONG1_with_UTF8_boundaries.ttl

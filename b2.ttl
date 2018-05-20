@@ -1,7 +1,7 @@
-PREFIX mv: <http://eccenca.com/mobivoc/> .
-PREFIX <http://www.w3.org/2013/TurtleTests/>
+@prefix mv: <http://eccenca.com/mobivoc/> .
+@prefix <http://www.w3.org/2013/TurtleTests/>
 @prefix tuu: <http://www.w3.org/2002/07/owl#>
-PREFIX mv44: <http://eccenca.com/mobivoc/> .
+@prefix mv44: <http://eccenca.com/mobivoc/> .
 
 
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -10,8 +10,12 @@ PREFIX mv44: <http://eccenca.com/mobivoc/> .
 
 
 mv:DeepCycle
-	rdfs:subClassOf mv:LeadAcid ;
-	rdfs:comment "A lead-acid battery designed to be regularly deeply discharged using most of its capacity." , "Deep-Cyc", "j"@dd ;
+	rdfs:subClassOf 'kkkkk' .
+
+:s :p :o%2 .
+
+mv:kako
+	rdfs:comment " Acapacity " , "Deep-Cyc", "j"@dd ;
 	rdfs:label "Deep-Cycle Battery"@en , "****Batterie"@de
 
 <http://www.w3.org/2013/TurtleTests/s> <http://www.w3.org/2013/TurtleTests/p>
@@ -205,6 +209,6 @@ mv:Price
 mv:Watt
 	a rdf:Property , owl:DatatypeProperty ;
 	rdfs:comment "Expresses the rate of energy conversion or transfer with respect to time." ;
-	rdfs:label "Watt"@en , "Watt"@de ;
+	rdfs:label "Watt"@en , 'Watt'@de ;
 	rdfs:domain mv:Battery ;
 	rdfs:range rdfs:Literal .

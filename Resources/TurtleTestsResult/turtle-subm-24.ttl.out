@@ -1,0 +1,13 @@
+line 1  # comment line with no final newline test
+line 2  @prefix : <http://example.org/#> .
+line 3  :a :b :c .
+line 4  #foo
+tree([] ([58] ([85 58] ([129 85 58] @prefix : <http://example.org/#> .))) ([70] ([191 70] ([215 191 70] ([394 215 191 70] :a))) ([192 70] ([246 192 70] ([308 246 192 70] ([394 308 246 192 70] :b))) ([247 192 70] ([281 247 192 70] ([289 281 247 192 70] ([394 289 281 247 192 70] :c))))) .))
+""
+[]
+
+
+
+Total elapsed time: 4 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/turtle-syntax-uri-02.ttl

@@ -1,0 +1,13 @@
+line 1  <http://www.w3.org/2013/TurtleTests/s> 
+line 2        <http://www.w3.org/2013/TurtleTests/p1> <http://www.w3.org/2013/TurtleTests/o1> ;
+line 3        <http://www.w3.org/2013/TurtleTests/p2> <http://www.w3.org/2013/TurtleTests/o2> ; 
+line 4        .
+tree([] ([70] ([191 70] ([215 191 70] <http://www.w3.org/2013/TurtleTests/s>)) ([192 70] ([246 192 70] ([308 246 192 70] <http://www.w3.org/2013/TurtleTests/p1>)) ([247 192 70] ([281 247 192 70] ([289 281 247 192 70] <http://www.w3.org/2013/TurtleTests/o1>))) ; ([249 192 70] ([308 249 192 70] <http://www.w3.org/2013/TurtleTests/p2>)) ([250 192 70] ([281 250 192 70] ([289 281 250 192 70] <http://www.w3.org/2013/TurtleTests/o2>))) ;) .))
+""
+[]
+
+
+
+Total elapsed time: 5 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/objectList_with_two_objects.ttl

@@ -1,0 +1,10 @@
+line 1  <http://a.example/s> <http://a.example/p> '\b' .
+tree([] ([70] ([191 70] ([215 191 70] <http://a.example/s>)) ([192 70] ([246 192 70] ([308 246 192 70] <http://a.example/p>)) ([247 192 70] ([281 247 192 70] ([291 281 247 192 70] ([303 291 281 247 192 70] ([342 303 291 281 247 192 70] '\b')))))) .))
+""
+[]
+
+
+
+Total elapsed time: 6 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/prefix_with_PN_CHARS_BASE_character_boundaries.ttl

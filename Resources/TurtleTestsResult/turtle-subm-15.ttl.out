@@ -1,0 +1,15 @@
+line 1  # Test long literal
+line 2  @prefix :  <http://example.org/ex#> .
+line 3  :a :b """a long
+line 4  	literal
+line 5  with
+line 6  newlines""" .
+tree([] ([58] ([85 58] ([129 85 58] @prefix : <http://example.org/ex#> .))) ([70] ([191 70] ([215 191 70] ([394 215 191 70] :a))) ([192 70] ([246 192 70] ([308 246 192 70] ([394 308 246 192 70] :b))) ([247 192 70] ([281 247 192 70] ([291 281 247 192 70] ([303 291 281 247 192 70] ([342 303 291 281 247 192 70] """a long\n\tliteral\nwith\nnewlines""")))))) .))
+""
+[]
+
+
+
+Total elapsed time: 5 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/turtle-syntax-string-07.ttl

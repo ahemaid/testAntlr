@@ -1,0 +1,10 @@
+line 1  <http://www.w3.org/2013/TurtleTests/s> <http://www.w3.org/2013/TurtleTests/p> "string"@en .
+tree([] ([70] ([191 70] ([215 191 70] <http://www.w3.org/2013/TurtleTests/s>)) ([192 70] ([246 192 70] ([308 246 192 70] <http://www.w3.org/2013/TurtleTests/p>)) ([247 192 70] ([281 247 192 70] ([291 281 247 192 70] ([303 291 281 247 192 70] ([342 303 291 281 247 192 70] "string") @en))))) .))
+""
+[]
+
+
+
+Total elapsed time: 5 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/turtle-syntax-uri-03.ttl

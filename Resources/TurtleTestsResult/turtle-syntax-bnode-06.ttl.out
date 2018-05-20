@@ -1,0 +1,11 @@
+line 1  @prefix : <http://www.w3.org/2013/TurtleTests/> .
+line 2  _:a  :p :o .
+tree([] ([58] ([85 58] ([129 85 58] @prefix : <http://www.w3.org/2013/TurtleTests/> .))) ([70] ([191 70] ([216 191 70] ([228 216 191 70] _:a))) ([192 70] ([246 192 70] ([308 246 192 70] ([394 308 246 192 70] :p))) ([247 192 70] ([281 247 192 70] ([289 281 247 192 70] ([394 289 281 247 192 70] :o))))) .))
+""
+[]
+
+
+
+Total elapsed time: 6 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/turtle-syntax-bnode-07.ttl

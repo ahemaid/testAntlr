@@ -1,0 +1,14 @@
+line 1  @prefix foo: <http://example.org/foo#>  .
+line 2  @prefix foo: <http://example.org/bar#>  .
+line 3  
+line 4  foo:blah foo:blah foo:blah .
+line 5  
+tree([] ([58] ([85 58] ([129 85 58] @prefix foo: <http://example.org/foo#> .))) ([58] ([85 58] ([129 85 58] @prefix foo: <http://example.org/bar#> .))) ([70] ([191 70] ([215 191 70] ([394 215 191 70] foo:blah))) ([192 70] ([246 192 70] ([308 246 192 70] ([394 308 246 192 70] foo:blah))) ([247 192 70] ([281 247 192 70] ([289 281 247 192 70] ([394 289 281 247 192 70] foo:blah))))) .))
+""
+[]
+
+
+
+Total elapsed time: 0 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/blankNodePropertyList_with_multiple_triples.ttl

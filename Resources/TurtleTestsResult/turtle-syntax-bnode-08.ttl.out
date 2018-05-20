@@ -1,0 +1,11 @@
+line 1  @prefix : <http://www.w3.org/2013/TurtleTests/> .
+line 2  [ :p  :o ] .
+tree([] ([58] ([85 58] ([129 85 58] @prefix : <http://www.w3.org/2013/TurtleTests/> .))) ([64] ([184 64] ([216 184 64] ([229 216 184 64] [ ([238 229 216 184 64] ([246 238 229 216 184 64] ([308 246 238 229 216 184 64] ([394 308 246 238 229 216 184 64] :p))) ([247 238 229 216 184 64] ([281 247 238 229 216 184 64] ([289 281 247 238 229 216 184 64] ([394 289 281 247 238 229 216 184 64] :o))))) ]))) .))
+""
+[line 3:0 N3 paths cannot be used in Turtle]
+
+
+
+Total elapsed time: 7 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/blankNodePropertyList_as_subject.ttl

@@ -1,0 +1,11 @@
+line 1  base <http://www.w3.org/2013/TurtleTests/>
+line 2  <s> <p> <o> .
+tree([] ([58] ([84 58] ([89 84 58] base <http://www.w3.org/2013/TurtleTests/>))) ([70] ([191 70] ([215 191 70] <s>)) ([192 70] ([246 192 70] ([308 246 192 70] <p>)) ([247 192 70] ([281 247 192 70] ([289 281 247 192 70] <o>)))) .))
+""
+[]
+
+
+
+Total elapsed time: 2 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/turtle-syntax-string-02.ttl

@@ -1,0 +1,10 @@
+line 1  (1) <http://a.example/p> <http://a.example/o> .
+tree([] ([70] ([191 70] ([216 191 70] ([230 216 191 70] ( ([295 230 216 191 70] ([291 295 230 216 191 70] ([304 291 295 230 216 191 70] 1))) )))) ([192 70] ([246 192 70] ([308 246 192 70] <http://a.example/p>)) ([247 192 70] ([281 247 192 70] ([289 281 247 192 70] <http://a.example/o>)))) .))
+""
+[]
+
+
+
+Total elapsed time: 5 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/langtagged_non_LONG.ttl

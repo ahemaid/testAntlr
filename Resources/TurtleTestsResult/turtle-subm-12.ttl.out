@@ -1,0 +1,19 @@
+line 1  # Tests for - and _ in names, qnames
+line 2  @prefix ex1: <http://example.org/ex1#> .
+line 3  @prefix ex-2: <http://example.org/ex2#> .
+line 4  @prefix ex3_: <http://example.org/ex3#> .
+line 5  @prefix ex4-: <http://example.org/ex4#> .
+line 6  
+line 7  ex1:foo-bar ex1:foo_bar "a" .
+line 8  ex-2:foo-bar ex-2:foo_bar "b" .
+line 9  ex3_:foo-bar ex3_:foo_bar "c" .
+line 10  ex4-:foo-bar ex4-:foo_bar "d" .
+tree([] ([58] ([85 58] ([129 85 58] @prefix ex1: <http://example.org/ex1#> .))) ([58] ([85 58] ([129 85 58] @prefix ex-2: <http://example.org/ex2#> .))) ([58] ([85 58] ([129 85 58] @prefix ex3_: <http://example.org/ex3#> .))) ([58] ([85 58] ([129 85 58] @prefix ex4-: <http://example.org/ex4#> .))) ([70] ([191 70] ([215 191 70] ([394 215 191 70] ex1:foo-bar))) ([192 70] ([246 192 70] ([308 246 192 70] ([394 308 246 192 70] ex1:foo_bar))) ([247 192 70] ([281 247 192 70] ([291 281 247 192 70] ([303 291 281 247 192 70] ([342 303 291 281 247 192 70] "a")))))) .) ([70] ([191 70] ([215 191 70] ([394 215 191 70] ex-2:foo-bar))) ([192 70] ([246 192 70] ([308 246 192 70] ([394 308 246 192 70] ex-2:foo_bar))) ([247 192 70] ([281 247 192 70] ([291 281 247 192 70] ([303 291 281 247 192 70] ([342 303 291 281 247 192 70] "b")))))) .) ([70] ([191 70] ([215 191 70] ([394 215 191 70] ex3_:foo-bar))) ([192 70] ([246 192 70] ([308 246 192 70] ([394 308 246 192 70] ex3_:foo_bar))) ([247 192 70] ([281 247 192 70] ([291 281 247 192 70] ([303 291 281 247 192 70] ([342 303 291 281 247 192 70] "c")))))) .) ([70] ([191 70] ([215 191 70] ([394 215 191 70] ex4-:foo-bar))) ([192 70] ([246 192 70] ([308 246 192 70] ([394 308 246 192 70] ex4-:foo_bar))) ([247 192 70] ([281 247 192 70] ([291 281 247 192 70] ([303 291 281 247 192 70] ([342 303 291 281 247 192 70] "d")))))) .))
+""
+[]
+
+
+
+Total elapsed time: 9 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/percent_escaped_localName.ttl

@@ -1,0 +1,11 @@
+line 1  @prefix : <http://www.w3.org/2013/TurtleTests/> .
+line 2  :s :p :o1 , :o2 .
+tree([] ([58] ([85 58] ([129 85 58] @prefix : <http://www.w3.org/2013/TurtleTests/> .))) ([70] ([191 70] ([215 191 70] ([394 215 191 70] :s))) ([192 70] ([246 192 70] ([308 246 192 70] ([394 308 246 192 70] :p))) ([247 192 70] ([281 247 192 70] ([289 281 247 192 70] ([394 289 281 247 192 70] :o1))) , ([283 247 192 70] ([289 283 247 192 70] ([394 289 283 247 192 70] :o2))))) .))
+""
+[]
+
+
+
+Total elapsed time: 0 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/localName_with_nfc_PN_CHARS_BASE_character_boundaries.ttl

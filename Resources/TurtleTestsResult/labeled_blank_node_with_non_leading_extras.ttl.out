@@ -1,0 +1,10 @@
+line 1  <http://a.example/s> <http://a.example/p> _:a·̀ͯ‿.⁀ .
+tree([] ([70] ([191 70] ([215 191 70] <http://a.example/s>)) ([192 70] ([246 192 70] ([308 246 192 70] <http://a.example/p>)) ([247 192 70] ([281 247 192 70] ([290 281 247 192 70] ([228 290 281 247 192 70] _:a·̀ͯ‿.⁀))))) .))
+""
+[]
+
+
+
+Total elapsed time: 7 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/turtle-syntax-bad-num-05.ttl

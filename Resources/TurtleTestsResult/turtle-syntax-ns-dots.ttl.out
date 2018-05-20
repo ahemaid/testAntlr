@@ -1,0 +1,11 @@
+line 1  @prefix e.g: <http://www.w3.org/2013/TurtleTests/> .
+line 2  e.g:s e.g:p e.g:o .
+tree([] ([58] ([85 58] ([129 85 58] @prefix e.g: <http://www.w3.org/2013/TurtleTests/> .))) ([70] ([191 70] ([215 191 70] ([394 215 191 70] e.g:s))) ([192 70] ([246 192 70] ([308 246 192 70] ([394 308 246 192 70] e.g:p))) ([247 192 70] ([281 247 192 70] ([289 281 247 192 70] ([394 289 281 247 192 70] e.g:o))))) .))
+""
+[]
+
+
+
+Total elapsed time: 1 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/turtle-syntax-struct-02.ttl

@@ -1,31 +1,16 @@
-@prefix ex: 
-@prefix tuu: <http://www.w3.org/2002/07/owl#> .
-@prefix ex: 
-@prefix ex: . 
+#@prefix ex: 
+#@prefix tuu: <http://www.w3.org/2002/07/owl#> .
+#@prefix ex: 
+#@prefix ex: . 
 
 
-@prefix ex: 
-@prefix tuu: <http://www.w3.org/2002/07/owl#> .
-@prefix dd44: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+#@prefix ex: 
+#@prefix tuu: <http://www.w3.org/2002/07/owl#> .
+#@prefix dd44: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
-@prefix skos: <http://www.w3.org/2000/01/rdf-schema8#> .
-@prefix ex: . 
-
-@prefix ex: 
-@prefix ex: . 
-@prefix  jjj: <http://www.w3.org/2000/01/rdf-schemda8#>
-@prefix mv: <http://eccenca.com/mobivoc/> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#>.
-@prefix ex: 
-
-@prefix ex: . 
 
 
-<http://www.w3.org/2013/TurtleTests/s> = <http://www.w3.org/2013/TurtleTests/o> .
+rdfs:jj rdfs:label "hggjgkjhgh" 
 
-
-mv:DeepCycle
-	rdfs:subClassOf mv:LeadAcid ;
-	rdfs:comment "A lead-acid battery designed to be regularly deeply discharged using most of its capacity" 
 
 

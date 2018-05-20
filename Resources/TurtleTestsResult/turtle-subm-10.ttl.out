@@ -1,0 +1,19 @@
+line 1  # Test integer datatyped literals using an OWL cardinality constraint
+line 2  @prefix owl: <http://www.w3.org/2002/07/owl#> .
+line 3  
+line 4  # based on examples in the OWL Reference
+line 5  
+line 6  _:hasParent a owl:ObjectProperty .
+line 7  
+line 8  [] a owl:Restriction ;
+line 9    owl:onProperty _:hasParent ;
+line 10    owl:maxCardinality 2 .
+tree([] ([58] ([85 58] ([129 85 58] @prefix owl: <http://www.w3.org/2002/07/owl#> .))) ([70] ([191 70] ([216 191 70] ([228 216 191 70] _:hasParent))) ([192 70] ([246 192 70] ([309 246 192 70] a)) ([247 192 70] ([281 247 192 70] ([289 281 247 192 70] ([394 289 281 247 192 70] owl:ObjectProperty))))) .) ([70] ([191 70] ([216 191 70] ([229 216 191 70] [ ]))) ([192 70] ([246 192 70] ([309 246 192 70] a)) ([247 192 70] ([281 247 192 70] ([289 281 247 192 70] ([394 289 281 247 192 70] owl:Restriction)))) ; ([249 192 70] ([308 249 192 70] ([394 308 249 192 70] owl:onProperty))) ([250 192 70] ([281 250 192 70] ([290 281 250 192 70] ([228 290 281 250 192 70] _:hasParent)))) ; ([249 192 70] ([308 249 192 70] ([394 308 249 192 70] owl:maxCardinality))) ([250 192 70] ([281 250 192 70] ([291 281 250 192 70] ([304 291 281 250 192 70] 2))))) .))
+""
+[]
+
+
+
+Total elapsed time: 8 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/turtle-subm-08.ttl

@@ -1,0 +1,14 @@
+line 1  <http://example.org/res1> <http://example.org/prop1> 000000 .
+line 2  <http://example.org/res2> <http://example.org/prop2> 0 .
+line 3  <http://example.org/res3> <http://example.org/prop3> 000001 .
+line 4  <http://example.org/res4> <http://example.org/prop4> 2 .
+line 5  <http://example.org/res5> <http://example.org/prop5> 4 .
+tree([] ([70] ([191 70] ([215 191 70] <http://example.org/res1>)) ([192 70] ([246 192 70] ([308 246 192 70] <http://example.org/prop1>)) ([247 192 70] ([281 247 192 70] ([291 281 247 192 70] ([304 291 281 247 192 70] 000000))))) .) ([70] ([191 70] ([215 191 70] <http://example.org/res2>)) ([192 70] ([246 192 70] ([308 246 192 70] <http://example.org/prop2>)) ([247 192 70] ([281 247 192 70] ([291 281 247 192 70] ([304 291 281 247 192 70] 0))))) .) ([70] ([191 70] ([215 191 70] <http://example.org/res3>)) ([192 70] ([246 192 70] ([308 246 192 70] <http://example.org/prop3>)) ([247 192 70] ([281 247 192 70] ([291 281 247 192 70] ([304 291 281 247 192 70] 000001))))) .) ([70] ([191 70] ([215 191 70] <http://example.org/res4>)) ([192 70] ([246 192 70] ([308 246 192 70] <http://example.org/prop4>)) ([247 192 70] ([281 247 192 70] ([291 281 247 192 70] ([304 291 281 247 192 70] 2))))) .) ([70] ([191 70] ([215 191 70] <http://example.org/res5>)) ([192 70] ([246 192 70] ([308 246 192 70] <http://example.org/prop5>)) ([247 192 70] ([281 247 192 70] ([291 281 247 192 70] ([304 291 281 247 192 70] 4))))) .))
+""
+[]
+
+
+
+Total elapsed time: 1 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/turtle-subm-06.ttl

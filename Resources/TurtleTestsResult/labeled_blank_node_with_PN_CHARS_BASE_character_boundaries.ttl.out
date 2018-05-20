@@ -1,0 +1,10 @@
+line 1  <http://a.example/s> <http://a.example/p> _:AZazÀÖØöø˿ͰͽͿ῿‌‍⁰↏Ⰰ⿯、퟿豈﷏ﷰ�𐀀󯿽 .
+tree([] ([70] ([191 70] ([215 191 70] <http://a.example/s>)) ([192 70] ([246 192 70] ([308 246 192 70] <http://a.example/p>)) ([247 192 70] ([281 247 192 70] ([290 281 247 192 70] ([228 290 281 247 192 70] _:AZazÀÖØöø˿ͰͽͿ῿‌‍⁰↏Ⰰ⿯、퟿豈﷏ﷰ�))))) .))
+""
+[line 1:70 token recognition error at: '?', line 1:71 token recognition error at: '?', line 1:72 token recognition error at: '?', line 1:73 token recognition error at: '?']
+
+
+
+Total elapsed time: 0 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/empty_collection.ttl

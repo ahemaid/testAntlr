@@ -1,0 +1,11 @@
+line 1  # This is a decimal.
+line 2  <s> <p> 123.0 . 
+tree([] ([70] ([191 70] ([215 191 70] <s>)) ([192 70] ([246 192 70] ([308 246 192 70] <p>)) ([247 192 70] ([281 247 192 70] ([291 281 247 192 70] ([304 291 281 247 192 70] 123.0))))) .))
+""
+[]
+
+
+
+Total elapsed time: 5 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/turtle-syntax-bad-base-03.ttl

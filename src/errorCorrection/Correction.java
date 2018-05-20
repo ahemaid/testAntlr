@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -12,23 +13,24 @@ public class Correction {
 
 	private String [] inputBeforeEditing;
 
-	public void process (String input, ArrayList<String> errors ) {
+	public void process (String [] input, ArrayList<String> errors ) {
 
 		if(inputBeforeEditing == null) {
-			inputBeforeEditing = input.split(String.format("\n"));
+			inputBeforeEditing = input;
 		}
 		Iterator<String> iterator = errors.iterator();
 		while (iterator.hasNext()) {
 			String line = iterator.next();
 			int lineNum = Integer.parseInt(line.split("line ")[1].split(":")[0]);
 			int columnNum = Integer.parseInt(line.split("line ")[1].split(":")[1].split(" ")[0]);
-			System.out.print("\nline "+lineNum);
-			System.out.print("  column "+columnNum);
-			System.out.print("\n"+line+"\n");
-			
+			//System.out.print("\nline "+lineNum);
+			//System.out.print("  column "+columnNum);
+			//System.out.print("\n"+line+"\n");
+			//System.out.print(Arrays.toString(inputBeforeEditing));
+
 			if(line.contains("extraneous input'.' at the end of Prefix directive"))
 				deleteDot(lineNum, columnNum);
-			else if (line.contains("Missing '.' at the end of Prefix directive") /*|| line.contains("extraneous input'.' at the end of Prefix directive")*/)
+			else if (line.contains("Missing '.' at the end of Prefix directive") || line.contains("Missing '.' at the end of the triple"))
 				addDot(lineNum, columnNum);
 			else if (line.contains("Missing IRI in Prefix directive"))
 				addIRI(lineNum, columnNum);
@@ -80,6 +82,7 @@ public class Correction {
 			charLocation = sb.lastIndexOf(" ");
 			if(charLocation != -1) {
 				inputBeforeEditing[(int) lineNumber] = sb.insert(charLocation, ".").toString();
+
 				break;
 			}
 			// if lineNumber is equal to 0, then the line
@@ -166,6 +169,7 @@ public class Correction {
 		// store line inside stringBuilder to delete a period
 		// now just we comment the line contains the rule
 		StringBuilder sb = new StringBuilder(inputBeforeEditing[(int) lineNumber]);
+
 		int charLocation = -1;
 		boolean foundEqualSign = false;
 		
@@ -192,9 +196,14 @@ public class Correction {
 	
 	public void showInputAfterEditing () {
 		long count = 1;
+		System.out.print("\nInput after correction:");
+
 		for(String line : inputBeforeEditing) {
+			// check if input is empty
+			if(line == "")
+				break;
 			// show input after fixing errors
-			System.out.print("\nline "+ count++ + " " + line);
+			System.out.print("line "+ count++ + " " + line);
 		}
 	}
 	
@@ -206,11 +215,14 @@ public class Correction {
 	        FileWriter fr = null;
 	        try {
 	        	
-	            fr = new FileWriter(file);
+	            fr = new FileWriter(file, true);
 	    		for(String line : inputBeforeEditing) {
+	    			// check if input is empty
+	    			if(line == "")
+	    				break;
 	    			// show input after fixing errors
-	    			System.out.print("\nline "+ count++ + " " + line);
-		            fr.write(line+"\n");
+	    			//System.out.print("\nline "+ count++ + " " + line);
+		            fr.write(line);
 	    			
 	    		}
 
@@ -218,8 +230,7 @@ public class Correction {
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }finally{
-    			System.out.print("\nOutput file is saved !");
-
+    			//System.out.print("\nOutput file is saved !");
 	            //close resources
 	            try {
 	                fr.close();

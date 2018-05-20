@@ -1,0 +1,10 @@
+line 1  BASE <http://www.w3.org/2013/TurtleTests/>
+tree([] ([58] ([84 58] ([89 84 58] BASE <http://www.w3.org/2013/TurtleTests/>))))
+""
+[]
+
+
+
+Total elapsed time: 0 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/turtle-syntax-bad-lang-01.ttl

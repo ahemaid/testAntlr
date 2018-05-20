@@ -1,0 +1,11 @@
+line 1  BASE <http://a.example/>
+line 2  <s> <http://a.example/p> <http://a.example/o> .
+tree([] ([58] ([84 58] ([89 84 58] BASE <http://a.example/>))) ([70] ([191 70] ([215 191 70] <s>)) ([192 70] ([246 192 70] ([308 246 192 70] <http://a.example/p>)) ([247 192 70] ([281 247 192 70] ([289 281 247 192 70] <http://a.example/o>)))) .))
+""
+[]
+
+
+
+Total elapsed time: 2 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/predicateObjectList_with_two_objectLists.ttl

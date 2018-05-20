@@ -1,0 +1,10 @@
+line 1  @prefix : <http://www.w3.org/2013/TurtleTests/> .
+tree([] ([58] ([85 58] ([129 85 58] @prefix : <http://www.w3.org/2013/TurtleTests/> .))))
+""
+[]
+
+
+
+Total elapsed time: 1 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/turtle-syntax-bad-number-dot-in-anon.ttl

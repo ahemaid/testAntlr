@@ -28,6 +28,18 @@ public class TurtleBaseListener implements TurtleListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterStatement(TurtleParser.StatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitStatement(TurtleParser.StatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterDirective(TurtleParser.DirectiveContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -35,90 +47,6 @@ public class TurtleBaseListener implements TurtleListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitDirective(TurtleParser.DirectiveContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterBaseDecl(TurtleParser.BaseDeclContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitBaseDecl(TurtleParser.BaseDeclContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterUnkonwnDecl(TurtleParser.UnkonwnDeclContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitUnkonwnDecl(TurtleParser.UnkonwnDeclContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterBaseSparql(TurtleParser.BaseSparqlContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitBaseSparql(TurtleParser.BaseSparqlContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterBase(TurtleParser.BaseContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitBase(TurtleParser.BaseContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterPrefixDecl(TurtleParser.PrefixDeclContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPrefixDecl(TurtleParser.PrefixDeclContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterPrefix(TurtleParser.PrefixContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPrefix(TurtleParser.PrefixContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterPrefixSparql(TurtleParser.PrefixSparqlContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPrefixSparql(TurtleParser.PrefixSparqlContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -136,6 +64,66 @@ public class TurtleBaseListener implements TurtleListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterUnkonwnDecl(TurtleParser.UnkonwnDeclContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitUnkonwnDecl(TurtleParser.UnkonwnDeclContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterPrefixID(TurtleParser.PrefixIDContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitPrefixID(TurtleParser.PrefixIDContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterBase(TurtleParser.BaseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBase(TurtleParser.BaseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSparqlBase(TurtleParser.SparqlBaseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSparqlBase(TurtleParser.SparqlBaseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterSparqlPrefix(TurtleParser.SparqlPrefixContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitSparqlPrefix(TurtleParser.SparqlPrefixContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterTriples(TurtleParser.TriplesContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -143,54 +131,6 @@ public class TurtleBaseListener implements TurtleListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTriples(TurtleParser.TriplesContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterGraphLabel(TurtleParser.GraphLabelContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitGraphLabel(TurtleParser.GraphLabelContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterSubject(TurtleParser.SubjectContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSubject(TurtleParser.SubjectContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterBlank(TurtleParser.BlankContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitBlank(TurtleParser.BlankContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterBlankNodePropertyList(TurtleParser.BlankNodePropertyListContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitBlankNodePropertyList(TurtleParser.BlankNodePropertyListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -208,18 +148,6 @@ public class TurtleBaseListener implements TurtleListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterWrongPredicateObjectList(TurtleParser.WrongPredicateObjectListContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitWrongPredicateObjectList(TurtleParser.WrongPredicateObjectListContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterObjectList(TurtleParser.ObjectListContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -232,37 +160,25 @@ public class TurtleBaseListener implements TurtleListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterObject(TurtleParser.ObjectContext ctx) { }
+	@Override public void enterVerb(TurtleParser.VerbContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitObject(TurtleParser.ObjectContext ctx) { }
+	@Override public void exitVerb(TurtleParser.VerbContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterCollection(TurtleParser.CollectionContext ctx) { }
+	@Override public void enterSubject(TurtleParser.SubjectContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitCollection(TurtleParser.CollectionContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterLiteral(TurtleParser.LiteralContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitLiteral(TurtleParser.LiteralContext ctx) { }
+	@Override public void exitSubject(TurtleParser.SubjectContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -280,37 +196,49 @@ public class TurtleBaseListener implements TurtleListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterRdfType(TurtleParser.RdfTypeContext ctx) { }
+	@Override public void enterObject(TurtleParser.ObjectContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitRdfType(TurtleParser.RdfTypeContext ctx) { }
+	@Override public void exitObject(TurtleParser.ObjectContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterDatatype(TurtleParser.DatatypeContext ctx) { }
+	@Override public void enterLiteral(TurtleParser.LiteralContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitDatatype(TurtleParser.DatatypeContext ctx) { }
+	@Override public void exitLiteral(TurtleParser.LiteralContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterNumericLiteral(TurtleParser.NumericLiteralContext ctx) { }
+	@Override public void enterBlankNodePropertyList(TurtleParser.BlankNodePropertyListContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitNumericLiteral(TurtleParser.NumericLiteralContext ctx) { }
+	@Override public void exitBlankNodePropertyList(TurtleParser.BlankNodePropertyListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCollection(TurtleParser.CollectionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCollection(TurtleParser.CollectionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -328,30 +256,6 @@ public class TurtleBaseListener implements TurtleListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBooleanLiteral(TurtleParser.BooleanLiteralContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitBooleanLiteral(TurtleParser.BooleanLiteralContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterString(TurtleParser.StringContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitString(TurtleParser.StringContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterIri(TurtleParser.IriContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -359,30 +263,6 @@ public class TurtleBaseListener implements TurtleListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitIri(TurtleParser.IriContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterPrefixedName(TurtleParser.PrefixedNameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitPrefixedName(TurtleParser.PrefixedNameContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void enterBlankNode(TurtleParser.BlankNodeContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitBlankNode(TurtleParser.BlankNodeContext ctx) { }
 
 	/**
 	 * {@inheritDoc}

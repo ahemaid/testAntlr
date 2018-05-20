@@ -18,6 +18,16 @@ public interface TurtleListener extends ParseTreeListener {
 	 */
 	void exitStart(TurtleParser.StartContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TurtleParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void enterStatement(TurtleParser.StatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TurtleParser#statement}.
+	 * @param ctx the parse tree
+	 */
+	void exitStatement(TurtleParser.StatementContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TurtleParser#directive}.
 	 * @param ctx the parse tree
 	 */
@@ -27,76 +37,6 @@ public interface TurtleListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitDirective(TurtleParser.DirectiveContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TurtleParser#baseDecl}.
-	 * @param ctx the parse tree
-	 */
-	void enterBaseDecl(TurtleParser.BaseDeclContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TurtleParser#baseDecl}.
-	 * @param ctx the parse tree
-	 */
-	void exitBaseDecl(TurtleParser.BaseDeclContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TurtleParser#unkonwnDecl}.
-	 * @param ctx the parse tree
-	 */
-	void enterUnkonwnDecl(TurtleParser.UnkonwnDeclContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TurtleParser#unkonwnDecl}.
-	 * @param ctx the parse tree
-	 */
-	void exitUnkonwnDecl(TurtleParser.UnkonwnDeclContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TurtleParser#baseSparql}.
-	 * @param ctx the parse tree
-	 */
-	void enterBaseSparql(TurtleParser.BaseSparqlContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TurtleParser#baseSparql}.
-	 * @param ctx the parse tree
-	 */
-	void exitBaseSparql(TurtleParser.BaseSparqlContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TurtleParser#base}.
-	 * @param ctx the parse tree
-	 */
-	void enterBase(TurtleParser.BaseContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TurtleParser#base}.
-	 * @param ctx the parse tree
-	 */
-	void exitBase(TurtleParser.BaseContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TurtleParser#prefixDecl}.
-	 * @param ctx the parse tree
-	 */
-	void enterPrefixDecl(TurtleParser.PrefixDeclContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TurtleParser#prefixDecl}.
-	 * @param ctx the parse tree
-	 */
-	void exitPrefixDecl(TurtleParser.PrefixDeclContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TurtleParser#prefix}.
-	 * @param ctx the parse tree
-	 */
-	void enterPrefix(TurtleParser.PrefixContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TurtleParser#prefix}.
-	 * @param ctx the parse tree
-	 */
-	void exitPrefix(TurtleParser.PrefixContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TurtleParser#prefixSparql}.
-	 * @param ctx the parse tree
-	 */
-	void enterPrefixSparql(TurtleParser.PrefixSparqlContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TurtleParser#prefixSparql}.
-	 * @param ctx the parse tree
-	 */
-	void exitPrefixSparql(TurtleParser.PrefixSparqlContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TurtleParser#errors}.
 	 * @param ctx the parse tree
@@ -108,6 +48,56 @@ public interface TurtleListener extends ParseTreeListener {
 	 */
 	void exitErrors(TurtleParser.ErrorsContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TurtleParser#unkonwnDecl}.
+	 * @param ctx the parse tree
+	 */
+	void enterUnkonwnDecl(TurtleParser.UnkonwnDeclContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TurtleParser#unkonwnDecl}.
+	 * @param ctx the parse tree
+	 */
+	void exitUnkonwnDecl(TurtleParser.UnkonwnDeclContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TurtleParser#prefixID}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrefixID(TurtleParser.PrefixIDContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TurtleParser#prefixID}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrefixID(TurtleParser.PrefixIDContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TurtleParser#base}.
+	 * @param ctx the parse tree
+	 */
+	void enterBase(TurtleParser.BaseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TurtleParser#base}.
+	 * @param ctx the parse tree
+	 */
+	void exitBase(TurtleParser.BaseContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TurtleParser#sparqlBase}.
+	 * @param ctx the parse tree
+	 */
+	void enterSparqlBase(TurtleParser.SparqlBaseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TurtleParser#sparqlBase}.
+	 * @param ctx the parse tree
+	 */
+	void exitSparqlBase(TurtleParser.SparqlBaseContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TurtleParser#sparqlPrefix}.
+	 * @param ctx the parse tree
+	 */
+	void enterSparqlPrefix(TurtleParser.SparqlPrefixContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TurtleParser#sparqlPrefix}.
+	 * @param ctx the parse tree
+	 */
+	void exitSparqlPrefix(TurtleParser.SparqlPrefixContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TurtleParser#triples}.
 	 * @param ctx the parse tree
 	 */
@@ -117,46 +107,6 @@ public interface TurtleListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTriples(TurtleParser.TriplesContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TurtleParser#graphLabel}.
-	 * @param ctx the parse tree
-	 */
-	void enterGraphLabel(TurtleParser.GraphLabelContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TurtleParser#graphLabel}.
-	 * @param ctx the parse tree
-	 */
-	void exitGraphLabel(TurtleParser.GraphLabelContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TurtleParser#subject}.
-	 * @param ctx the parse tree
-	 */
-	void enterSubject(TurtleParser.SubjectContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TurtleParser#subject}.
-	 * @param ctx the parse tree
-	 */
-	void exitSubject(TurtleParser.SubjectContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TurtleParser#blank}.
-	 * @param ctx the parse tree
-	 */
-	void enterBlank(TurtleParser.BlankContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TurtleParser#blank}.
-	 * @param ctx the parse tree
-	 */
-	void exitBlank(TurtleParser.BlankContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TurtleParser#blankNodePropertyList}.
-	 * @param ctx the parse tree
-	 */
-	void enterBlankNodePropertyList(TurtleParser.BlankNodePropertyListContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TurtleParser#blankNodePropertyList}.
-	 * @param ctx the parse tree
-	 */
-	void exitBlankNodePropertyList(TurtleParser.BlankNodePropertyListContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TurtleParser#predicateObjectList}.
 	 * @param ctx the parse tree
@@ -168,16 +118,6 @@ public interface TurtleListener extends ParseTreeListener {
 	 */
 	void exitPredicateObjectList(TurtleParser.PredicateObjectListContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TurtleParser#wrongPredicateObjectList}.
-	 * @param ctx the parse tree
-	 */
-	void enterWrongPredicateObjectList(TurtleParser.WrongPredicateObjectListContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TurtleParser#wrongPredicateObjectList}.
-	 * @param ctx the parse tree
-	 */
-	void exitWrongPredicateObjectList(TurtleParser.WrongPredicateObjectListContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link TurtleParser#objectList}.
 	 * @param ctx the parse tree
 	 */
@@ -188,35 +128,25 @@ public interface TurtleListener extends ParseTreeListener {
 	 */
 	void exitObjectList(TurtleParser.ObjectListContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TurtleParser#object}.
+	 * Enter a parse tree produced by {@link TurtleParser#verb}.
 	 * @param ctx the parse tree
 	 */
-	void enterObject(TurtleParser.ObjectContext ctx);
+	void enterVerb(TurtleParser.VerbContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TurtleParser#object}.
+	 * Exit a parse tree produced by {@link TurtleParser#verb}.
 	 * @param ctx the parse tree
 	 */
-	void exitObject(TurtleParser.ObjectContext ctx);
+	void exitVerb(TurtleParser.VerbContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TurtleParser#collection}.
+	 * Enter a parse tree produced by {@link TurtleParser#subject}.
 	 * @param ctx the parse tree
 	 */
-	void enterCollection(TurtleParser.CollectionContext ctx);
+	void enterSubject(TurtleParser.SubjectContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TurtleParser#collection}.
+	 * Exit a parse tree produced by {@link TurtleParser#subject}.
 	 * @param ctx the parse tree
 	 */
-	void exitCollection(TurtleParser.CollectionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TurtleParser#literal}.
-	 * @param ctx the parse tree
-	 */
-	void enterLiteral(TurtleParser.LiteralContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TurtleParser#literal}.
-	 * @param ctx the parse tree
-	 */
-	void exitLiteral(TurtleParser.LiteralContext ctx);
+	void exitSubject(TurtleParser.SubjectContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TurtleParser#predicate}.
 	 * @param ctx the parse tree
@@ -228,35 +158,45 @@ public interface TurtleListener extends ParseTreeListener {
 	 */
 	void exitPredicate(TurtleParser.PredicateContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TurtleParser#rdfType}.
+	 * Enter a parse tree produced by {@link TurtleParser#object}.
 	 * @param ctx the parse tree
 	 */
-	void enterRdfType(TurtleParser.RdfTypeContext ctx);
+	void enterObject(TurtleParser.ObjectContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TurtleParser#rdfType}.
+	 * Exit a parse tree produced by {@link TurtleParser#object}.
 	 * @param ctx the parse tree
 	 */
-	void exitRdfType(TurtleParser.RdfTypeContext ctx);
+	void exitObject(TurtleParser.ObjectContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TurtleParser#datatype}.
+	 * Enter a parse tree produced by {@link TurtleParser#literal}.
 	 * @param ctx the parse tree
 	 */
-	void enterDatatype(TurtleParser.DatatypeContext ctx);
+	void enterLiteral(TurtleParser.LiteralContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TurtleParser#datatype}.
+	 * Exit a parse tree produced by {@link TurtleParser#literal}.
 	 * @param ctx the parse tree
 	 */
-	void exitDatatype(TurtleParser.DatatypeContext ctx);
+	void exitLiteral(TurtleParser.LiteralContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TurtleParser#numericLiteral}.
+	 * Enter a parse tree produced by {@link TurtleParser#blankNodePropertyList}.
 	 * @param ctx the parse tree
 	 */
-	void enterNumericLiteral(TurtleParser.NumericLiteralContext ctx);
+	void enterBlankNodePropertyList(TurtleParser.BlankNodePropertyListContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TurtleParser#numericLiteral}.
+	 * Exit a parse tree produced by {@link TurtleParser#blankNodePropertyList}.
 	 * @param ctx the parse tree
 	 */
-	void exitNumericLiteral(TurtleParser.NumericLiteralContext ctx);
+	void exitBlankNodePropertyList(TurtleParser.BlankNodePropertyListContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link TurtleParser#collection}.
+	 * @param ctx the parse tree
+	 */
+	void enterCollection(TurtleParser.CollectionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TurtleParser#collection}.
+	 * @param ctx the parse tree
+	 */
+	void exitCollection(TurtleParser.CollectionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TurtleParser#rdfLiteral}.
 	 * @param ctx the parse tree
@@ -268,26 +208,6 @@ public interface TurtleListener extends ParseTreeListener {
 	 */
 	void exitRdfLiteral(TurtleParser.RdfLiteralContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TurtleParser#booleanLiteral}.
-	 * @param ctx the parse tree
-	 */
-	void enterBooleanLiteral(TurtleParser.BooleanLiteralContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TurtleParser#booleanLiteral}.
-	 * @param ctx the parse tree
-	 */
-	void exitBooleanLiteral(TurtleParser.BooleanLiteralContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TurtleParser#string}.
-	 * @param ctx the parse tree
-	 */
-	void enterString(TurtleParser.StringContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TurtleParser#string}.
-	 * @param ctx the parse tree
-	 */
-	void exitString(TurtleParser.StringContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link TurtleParser#iri}.
 	 * @param ctx the parse tree
 	 */
@@ -297,24 +217,4 @@ public interface TurtleListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIri(TurtleParser.IriContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TurtleParser#prefixedName}.
-	 * @param ctx the parse tree
-	 */
-	void enterPrefixedName(TurtleParser.PrefixedNameContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TurtleParser#prefixedName}.
-	 * @param ctx the parse tree
-	 */
-	void exitPrefixedName(TurtleParser.PrefixedNameContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link TurtleParser#blankNode}.
-	 * @param ctx the parse tree
-	 */
-	void enterBlankNode(TurtleParser.BlankNodeContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link TurtleParser#blankNode}.
-	 * @param ctx the parse tree
-	 */
-	void exitBlankNode(TurtleParser.BlankNodeContext ctx);
 }

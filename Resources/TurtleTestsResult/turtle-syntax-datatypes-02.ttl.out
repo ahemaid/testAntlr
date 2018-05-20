@@ -1,0 +1,12 @@
+line 1  @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+line 2  @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+line 3  <s> <p> "123"^^xsd:string .
+tree([] ([58] ([85 58] ([129 85 58] @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .))) ([58] ([85 58] ([129 85 58] @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .))) ([70] ([191 70] ([215 191 70] <s>)) ([192 70] ([246 192 70] ([308 246 192 70] <p>)) ([247 192 70] ([281 247 192 70] ([291 281 247 192 70] ([303 291 281 247 192 70] ([342 303 291 281 247 192 70] "123") ^^ ([345 303 291 281 247 192 70] ([320 345 303 291 281 247 192 70] ([394 320 345 303 291 281 247 192 70] xsd:string)))))))) .))
+""
+[]
+
+
+
+Total elapsed time: 1 ms
+
+/home/ahmed/Downloads/TESTS/TurtleTests/turtle-syntax-bad-base-01.ttl
