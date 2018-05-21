@@ -49,7 +49,7 @@ public class Main {
 		//final String filename = "testTurtle.ttl";
 		//final String filename = "/home/ahmed/Downloads/xaa";
 		//final String filename = "/home/ahmed/Downloads/mappingbased_properties_en_uris_fr.ttl";
-		final String filename = "/home/ahmed/Desktop/eclipse-projects/RDF-Doctor/Resources/TurtleTestsResult/bad_syntax/turtle-syntax-bad-n3-extras-09.ttl";
+		final String filename = "/home/ahmed/Desktop/eclipse-projects/RDF-Doctor/Resources/TurtleTestsResult/bad_syntax/turtle-syntax-bad-string-01.ttl";
 		final String outputFilename = "/home/ahmed/Downloads/xaa_Output.ttl" ;
 
 

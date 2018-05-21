@@ -232,6 +232,18 @@ public class TurtleBaseListener implements TurtleListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterBadBlankNodePropertyList(TurtleParser.BadBlankNodePropertyListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitBadBlankNodePropertyList(TurtleParser.BadBlankNodePropertyListContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterCollection(TurtleParser.CollectionContext ctx) { }
 	/**
 	 * {@inheritDoc}

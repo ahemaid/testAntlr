@@ -188,6 +188,16 @@ public interface TurtleListener extends ParseTreeListener {
 	 */
 	void exitBlankNodePropertyList(TurtleParser.BlankNodePropertyListContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TurtleParser#badBlankNodePropertyList}.
+	 * @param ctx the parse tree
+	 */
+	void enterBadBlankNodePropertyList(TurtleParser.BadBlankNodePropertyListContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TurtleParser#badBlankNodePropertyList}.
+	 * @param ctx the parse tree
+	 */
+	void exitBadBlankNodePropertyList(TurtleParser.BadBlankNodePropertyListContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TurtleParser#collection}.
 	 * @param ctx the parse tree
 	 */
