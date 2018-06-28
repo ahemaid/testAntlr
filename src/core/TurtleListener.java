@@ -48,6 +48,16 @@ public interface TurtleListener extends ParseTreeListener {
 	 */
 	void exitErrors(TurtleParser.ErrorsContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link TurtleParser#graphLabel}.
+	 * @param ctx the parse tree
+	 */
+	void enterGraphLabel(TurtleParser.GraphLabelContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link TurtleParser#graphLabel}.
+	 * @param ctx the parse tree
+	 */
+	void exitGraphLabel(TurtleParser.GraphLabelContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link TurtleParser#unkonwnDecl}.
 	 * @param ctx the parse tree
 	 */

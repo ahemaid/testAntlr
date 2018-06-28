@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -12,13 +13,17 @@ import java.util.Scanner;
 public class Correction {
 
 	private String [] inputBeforeEditing;
-
 	public void process (String [] input, ArrayList<String> errors ) {
 
 		if(inputBeforeEditing == null) {
 			inputBeforeEditing = input;
 		}
-		Iterator<String> iterator = errors.iterator();
+		
+		
+		// make uique values of the error arrary list 
+		HashSet<String> uniqueValues = new HashSet<>(errors);
+		Iterator<String> iterator = uniqueValues.iterator();
+
 		while (iterator.hasNext()) {
 			String line = iterator.next();
 			int lineNum = Integer.parseInt(line.split("line ")[1].split(":")[0]);
@@ -27,10 +32,12 @@ public class Correction {
 			//System.out.print("  column "+columnNum);
 			//System.out.print("\n"+line+"\n");
 			//System.out.print(Arrays.toString(inputBeforeEditing));
+			
+			System.out.print("\n"+lineNum+" "+line );
 
 			if(line.contains("extraneous input'.' at the end of Prefix directive"))
 				deleteDot(lineNum, columnNum);
-			else if (line.contains("Missing '.' at the end of Prefix directive") || line.contains("Missing '.' at the end of the triple"))
+			else if (line.contains("Missing '.' at the end of Prefix directive") || line.contains("Missing '.' at the end of a triple"))
 				addDot(lineNum, columnNum);
 			else if (line.contains("Missing IRI in Prefix directive"))
 				addIRI(lineNum, columnNum);
@@ -38,6 +45,8 @@ public class Correction {
 				addIRIandDot(lineNum, columnNum);
 			else if (line.contains("'=' sign cannot be used in Turtle"))
 				commentLine(lineNum, columnNum);
+			
+			
 		}
 	}
 
@@ -82,7 +91,7 @@ public class Correction {
 			charLocation = sb.lastIndexOf(" ");
 			if(charLocation != -1) {
 				inputBeforeEditing[(int) lineNumber] = sb.insert(charLocation, ".").toString();
-
+				System.out.println(inputBeforeEditing[(int) lineNumber]);
 				break;
 			}
 			// if lineNumber is equal to 0, then the line

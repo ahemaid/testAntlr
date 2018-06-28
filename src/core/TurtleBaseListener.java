@@ -64,6 +64,18 @@ public class TurtleBaseListener implements TurtleListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterGraphLabel(TurtleParser.GraphLabelContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitGraphLabel(TurtleParser.GraphLabelContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterUnkonwnDecl(TurtleParser.UnkonwnDeclContext ctx) { }
 	/**
 	 * {@inheritDoc}

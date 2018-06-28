@@ -22,40 +22,50 @@
 grammar Turtle;
 
 start
-   : statement*
+   : statement*  EOF
    ;
 
 statement
    : directive
    | triples '.'
-   | triples {notifyErrorListeners("Missing '.' at the end of the triple");}
+   | triples ',' {notifyErrorListeners("Extraneous ';' at the end of a triple");}
+   | triples ';' {notifyErrorListeners("Extraneous ';' at the end of a triple");}
+   | triples {notifyErrorListeners("Missing '.' at the end of a triple");}
+   | triples ('.')+ ('.')+ {notifyErrorListeners("Too many DOT ");}
    | errors		
    
    ;
 
 directive
-   : prefixID
+   : sparqlPrefix
+   | sparqlBase 
+   | prefixID
    | base
-   | sparqlPrefix
-   | sparqlBase
    | unkonwnDecl
    | sparqlPrefix '.' {notifyErrorListeners("Extraneous '.' at the end of SPARQL prefix directive");}
    | sparqlBase '.' {notifyErrorListeners("Extraneous '.' at the end of SPARQL base directive");}
    ;
    
 errors	
- 	: iri '=' iri '.' {notifyErrorListeners("'=' sign cannot be used in Turtle");}
+   : iri '=' iri '.' {notifyErrorListeners("'=' sign cannot be used in Turtle");}
  	| iri '<=' iri '.'  {notifyErrorListeners("'<=' symbol cannot be used in Turtle");}
     | iri '=>' iri '.'  {notifyErrorListeners("'=>' symbol cannot be used in Turtle");}
-//TODO
-// 	| BAD_PNAME_LN_ENDS_WITH_DOT BAD_PNAME_LN_ENDS_WITH_DOT  BAD_PNAME_LN_ENDS_WITH_DOT  {notifyErrorListeners("'IRI' as a Subject or a Predicate cannot be followed by '.' in Turtle");}
+////TODO:time much time
+////    | subject predicate object graphLabel? '.' {notifyErrorListeners("Turtle is not NQOUDS");}
+////TODO
+//// 	| BAD_PNAME_LN_ENDS_WITH_DOT BAD_PNAME_LN_ENDS_WITH_DOT  BAD_PNAME_LN_ENDS_WITH_DOT  {notifyErrorListeners("'IRI' as a Subject or a Predicate cannot be followed by '.' in Turtle");}
  	| (iri '.')+ (iri '.')+  triples '.' {notifyErrorListeners("N3 paths cannot be used in Turtle");}
     | (iri '.')+ (iri '.')+  triples  {notifyErrorListeners("N3 paths cannot be used in Turtle");}
     | '@forAll' iri '.' {notifyErrorListeners(" '@forAll' cannot be used in Turtle ");}
     | '@forSome' iri '.' {notifyErrorListeners(" '@forSome' cannot be used in Turtle ");}
     | ('a'|CHARS)* '@a' ('a'|CHARS)* '.' {notifyErrorListeners(" '@a' cannot be used in Turtle ");}
     ;
-   
+  
+  
+ graphLabel
+ 	: 	IRIREF | BLANK_NODE_LABEL
+ 	;
+ 
  unkonwnDecl 	:
  	'@keywords' ('a'|CHARS)*  '.' {notifyErrorListeners("@keywords is unkown directive in Turtle");}
 	;	
@@ -66,6 +76,7 @@ prefixID
    | '@prefix' '.' CHARS ':' IRIREF '.' {notifyErrorListeners("Prefix Namespace cannot start with '.' ");}
    | '@prefix' ':' IRIREF '.' 
    | '@prefix' PNAME_NS IRIREF '.' 
+   | '@prefix' PNAME_NS IRIREF ('.')+ ('.')+ {notifyErrorListeners("Too many DOT ");}
    | PNAME_NS IRIREF '.' {notifyErrorListeners("Missing Prefix keyword, use '@prefix'");}
    | '@prefix'   IRIREF '.' {notifyErrorListeners("Missing NameSpace in Prefix directive");}
    | '@prefix' CHARS*  IRIREF '.'  {notifyErrorListeners("Missing ':' in Prefix directive");}
@@ -78,26 +89,32 @@ prefixID
 
 base
    : '@base' IRIREF '.'
+   | '@base' IRIREF ('.')+ ('.')+ {notifyErrorListeners("Too many DOT ");}
    ;
 
 sparqlBase
-   : 'BASE' IRIREF 
-   | '@BASE'   IRIREF '.'  {notifyErrorListeners("Uncorrect syntax form of base directive");}
+   : KW_BASE  IRIREF 
+   | '@BASE'   IRIREF '.'  {notifyErrorListeners("incorrect syntax form of base directive");}
    ;
 
 sparqlPrefix
-   : 'PREFIX' CHARS '.' ':' IRIREF  {notifyErrorListeners("Prefix Namespace cannot end with '.' ");}
-   | 'PREFIX' '.' CHARS ':' IRIREF  {notifyErrorListeners("Prefix Namespace cannot start with '.' ");}
-   | 'PREFIX' PNAME_NS IRIREF
-   |  PNAME_NS IRIREF {notifyErrorListeners("Missing Prefix keyword, use 'PREFIX'");}
-   | 'PREFIX'   IRIREF  {notifyErrorListeners("Missing NameSpace in Prefix directive");}
-   
+   : KW_PREFIX CHARS '.' ':' IRIREF  {notifyErrorListeners("Prefix Namespace cannot end with '.' ");}
+   | KW_PREFIX '.' CHARS ':' IRIREF  {notifyErrorListeners("Prefix Namespace cannot start with '.' ");}
+   | KW_PREFIX PNAME_NS IRIREF
+   | KW_PREFIX ':' IRIREF
+   | PNAME_NS IRIREF {notifyErrorListeners("Missing Prefix keyword, use 'PREFIX'");}
+   | KW_PREFIX  IRIREF  {notifyErrorListeners("Missing NameSpace in Prefix directive");}
    ;
+   
+KW_BASE : B A S E ;
+KW_PREFIX : P R E F I X ;
 
 triples
    :    
    subject predicateObjectList
    | blankNodePropertyList predicateObjectList?
+   | subject ':' object 
+   | subject verb {notifyErrorListeners("Object of a triple is missing");}
    ;
 
 predicateObjectList
@@ -126,9 +143,14 @@ subject
    | 'a' {notifyErrorListeners("'a' cannot be used as a subject");}
    | BooleanLiteral {notifyErrorListeners("Subject cannot be a boolean value");}
    | NumericLiteral  {notifyErrorListeners("Subject cannot be a number");}
+   | rdfLiteral   {notifyErrorListeners("Subject cannot be a string");}
+   
    | collection
    | '{' triples '.' '}' {notifyErrorListeners("{ } pattern cannot be used in Turtle");}
    | '{' triples '}' {notifyErrorListeners("{ } pattern cannot be used in Turtle");} 
+// todo
+//				| rdfLiteral   {notifyErrorListeners("Subject cannot be a string");}
+				
    ;
 
 predicate
@@ -140,7 +162,7 @@ object
    | BlankNode
    | collection
    | blankNodePropertyList
-   | badBlankNodePropertyList  {notifyErrorListeners("Uncorrect form of a blank node list");}
+   | badBlankNodePropertyList  {notifyErrorListeners("incorrect form of a blank node list");}
    | literal
    | 'a' {notifyErrorListeners("'a' cannot be used as an object");}
    ;
@@ -149,7 +171,7 @@ literal
    : rdfLiteral
    | NumericLiteral
    | BooleanLiteral
-   | BadLiteral {notifyErrorListeners("Uncorrect form of a Literal");}
+   | BadLiteral {notifyErrorListeners("incorrect form of a Literal");}
    ;
 
 blankNodePropertyList
@@ -169,11 +191,20 @@ NumericLiteral
    ;
 
 rdfLiteral
-   : String (LANGTAG | '^^' iri)?
+   : 
+   BAD_STRING_LITERAL_LONG_QUOTE_TOO_MANY (LANGTAG | '^^' iri)? {notifyErrorListeners("incorrect form of long literal with 4 qoutes");}
+   | BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_TOO_MANY (LANGTAG | '^^' iri)? {notifyErrorListeners("incorrect form of long literal with 4 qoutes");}
+   | String (LANGTAG | '^^' iri)?
    | String  BAD_LANGTAG_AS_NUMBER  {notifyErrorListeners("Language tag cannot be a numeric value");}
    | String '^' iri {notifyErrorListeners("Missing '^' Character");}
-   | String LANGTAG '^^' iri {notifyErrorListeners("Uncorrect form of a Literal");}
-   | String '^^' iri LANGTAG {notifyErrorListeners("Uncorrect form of a Literal");}
+   | String LANGTAG '^^' iri {notifyErrorListeners("incorrect form of a Literal");}
+   | String '^^' iri LANGTAG {notifyErrorListeners("incorrect form of a Literal");}  
+   | (BAD_STRING_LITERAL_LONG_SINGLE_QUOTE | BAD_STRING_LITERAL_LONG_QUOTE ) (LANGTAG | '^^' iri)?  {notifyErrorListeners("incorrect quotes of a literal");}
+   | BAD_STRING_LITERAL_SINGLE_QUOTE (LANGTAG | '^^' iri)? {notifyErrorListeners("incorrect quotes of a literal");}
+   | BAD_STRING_LITERAL_QUOTE (LANGTAG | '^^' iri)? {notifyErrorListeners("incorrect quotes of a literal");}
+   | BAD_STRING_LITERAL_QUOTE_WITH_ESCAPE {notifyErrorListeners("Bad Unicode Characters, Only HEX Chars can be used");}
+  
+//   |   {notifyErrorListeners("Uncorrect form of long literal with 4 qoutes");}
    ;
 
 
@@ -187,7 +218,9 @@ BadLiteral
    ;
 
 String
-   : STRING_LITERAL_QUOTE | STRING_LITERAL_SINGLE_QUOTE | STRING_LITERAL_LONG_SINGLE_QUOTE | STRING_LITERAL_LONG_QUOTE
+   : 
+    STRING_LITERAL_QUOTE | STRING_LITERAL_SINGLE_QUOTE | STRING_LITERAL_LONG_SINGLE_QUOTE | STRING_LITERAL_LONG_QUOTE
+
    ;
 
 iri
@@ -198,11 +231,11 @@ iri
 // | PNAME_NS  PN_LOCAL_BAD_WITH_DASH {notifyErrorListeners("Bad syntax of Prefixed IRI, the local prefix namespace cannot start with dash");}
    | PNAME_NS  BAD_PN_LOCAL_STARTS_WITH_PERCENT {notifyErrorListeners("Bad syntax of Prefixed IRI, the local prefix namespace cannot contain '%'");}
 //   | PNAME_NS  PN_LOCAL_BAD_WITH_PERCENT {notifyErrorListeners("Bad syntax of Prefixed IRI, the local prefix namespace cannot contain '%'");}
-   | BAD_PNAME_LN_STARTS_WITH_DOT  {notifyErrorListeners("Uncorrect form of Prefixed Namespace, it cannot start with '.'");} 
-   | BAD_PNAME_LN_ENDS_WITH_DOT  {notifyErrorListeners("Uncorrect form of Prefixed Namespace, it cannot end with '.'");} 
-   | BAD_IRIREF_WITH_SPACE {notifyErrorListeners("Bas syntax of IRI, IRI cannot contain space or newline");}
-   | BAD_IRIREF_WITH_MULTIPLE_ANGLE_BRACKETS {notifyErrorListeners("Bas syntax of IRI, Too many angle brackets in IRI");}
-   | BAD_IRIREF_WITH_PARENTHESES {notifyErrorListeners("Bas syntax of IRI, IRI cannot contain parentheses");}
+   | BAD_PNAME_LN_STARTS_WITH_DOT  {notifyErrorListeners("incorrect form of Prefixed Namespace, it cannot start with '.'");} 
+   | BAD_PNAME_LN_ENDS_WITH_DOT  {notifyErrorListeners("incorrect form of Prefixed Namespace, it cannot end with '.'");} 
+   | BAD_IRIREF_WITH_SPACE {notifyErrorListeners("Bad syntax of IRI, IRI cannot contain space or newline");}
+   | BAD_IRIREF_WITH_MULTIPLE_ANGLE_BRACKETS {notifyErrorListeners("Bad syntax of IRI, Too many angle brackets in IRI");}
+   | BAD_IRIREF_WITH_PARENTHESES {notifyErrorListeners("Bad syntax of IRI, IRI cannot contain parentheses");}
    ;
 
 
@@ -214,8 +247,7 @@ BlankNode
 CHARS: 
 	[a-zA-Z]+ [0-9]*
 	;
-
-
+	
 WS
    : ([\t\r\n\u000C] | ' ') + -> skip
    ;
@@ -231,7 +263,11 @@ PN_PREFIX
 //IRIREF	        :	'<' (~(['\u0000'..'\u0020']|'<'|'>'|'"'|'{'|'}'|'|'|'^'|'`'|'\\') | UCHAR)* '>'; /* \u00=NULL #01-\u1F=control codes \u20=space */
 
 IRIREF
-   : '<' (PN_CHARS | '.' | ':' | '/' | '\\' | '#' | '@' | '%' | '&' | UCHAR)* '>'
+   :
+   // '<' (PN_CHARS | '.' | ':' | '/' | '\\' | '#' | '@' | '%' | '&' | UCHAR)* '>'
+   //'<' (~[\u0000-\u0020=<>"{}|^`\\] | UCHAR)* '>' 
+   '<' (~[\u0000-\u0020<>"{}|^`\\] | UCHAR)* '>' 
+   
    ;
 
 
@@ -246,7 +282,7 @@ PrefixedName
 
 
 PNAME_LN
-   : PNAME_NS PN_LOCAL
+   : PNAME_NS PN_LOCAL?
    ;
 
 BAD_PNAME_LN_STARTS_WITH_DOT	  
@@ -291,17 +327,18 @@ EXPONENT
 
 
 STRING_LITERAL_LONG_SINGLE_QUOTE
-   : '\'\'\'' (('\'' | '\'\'')? ([^'\\] | ECHAR | UCHAR | '"'))* '\'\'\''
+   : '\'\'\'' (~[\u0027\u005C\u000A\u000D] | ECHAR | UCHAR  | '\n' )*  ('\'' | '\'\'')?  (~[\u0027\u005C\u000A\u000D] | ECHAR | UCHAR)* '\'\'\''  
+//   ||'\'\'\'' (('\'' | '\'\'')? ([^'\\] | ECHAR | UCHAR | '"'))* '\'\'\''
    ;
 
 
 STRING_LITERAL_LONG_QUOTE
-   : '"""' (('"' | '""')? (~ ["\\] | ECHAR | UCHAR | '\''))* '"""'
+   : '"""'  ((~ ["\\] | ECHAR | UCHAR | '\'') ('"' | '""')? (~ ["\\] | ECHAR | UCHAR | '\''))* '"""'
    ;
 
 
 STRING_LITERAL_QUOTE
-   : '"' (~ ["\\\r\n] | '\'' | '\\"')* '"'
+   : '"' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '"' 
    ;
 
 
@@ -309,11 +346,18 @@ STRING_LITERAL_SINGLE_QUOTE
    : '\'' (~ [\u0027\u005C\u000A\u000D] | ECHAR | UCHAR | '"')* '\''
    ;
 
+BAD_STRING_LITERAL_QUOTE_WITH_ESCAPE
+   : '"' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* BAD_UCHAR (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '"' 
+   ;
 
-UCHAR
+
+fragment UCHAR
    : '\\u' HEX HEX HEX HEX | '\\U' HEX HEX HEX HEX HEX HEX HEX HEX
    ;
 
+BAD_UCHAR
+	: '\\u' HEX* NONHEX+ | '\\U' HEX* NONHEX+ 
+	;
 
 ECHAR
    : '\\' [tbnrf"'\\]
@@ -331,7 +375,9 @@ ANON
 
 
 PN_CHARS_BASE
-   : 'A' .. 'Z' | 'a' .. 'z' | '\u00C0' .. '\u00D6' | '\u00D8' .. '\u00F6' | '\u00F8' .. '\u02FF' | '\u0370' .. '\u037D' | '\u037F' .. '\u1FFF' | '\u200C' .. '\u200D' | '\u2070' .. '\u218F' | '\u2C00' .. '\u2FEF' | '\u3001' .. '\uD7FF' | '\uF900' .. '\uFDCF' | '\uFDF0' .. '\uFFFD'
+   : [A-Z] | [a-z] | [\u00C0-\u00D6] | [\u00D8-\u00F6] | [\u00F8-\u02FF] | [\u0370-\u037D]
+	| [\u037F-\u1FFF] | [\u200C-\u200D] | [\u2070-\u218F] | [\u2C00-\u2FEF] | [\u3001-\uD7FF]
+	| [\uF900-\uFDCF] | [\uFDF0-\uFFFD]				   		   
    ;
 
 
@@ -342,7 +388,7 @@ PN_CHARS_U
 
 PN_CHARS
    : PN_CHARS_U | '-' | [0-9] | '\u00B7' | [\u0300-\u036F] | [\u203F-\u2040]
-   ;
+      ;
 
 
 PN_LOCAL
@@ -368,6 +414,10 @@ PERCENT
 HEX
    : [0-9] | [A-F] | [a-f]
    ;
+   
+NONHEX
+	: [g-zG-Z]
+	;
 
 
 PN_LOCAL_ESC
@@ -382,6 +432,8 @@ PN_LOCAL_ESC
 BAD_IRIREF_WITH_SPACE
  		  :  '<' (PN_CHARS | '.' | ':' | '/' | '\\' | '#' | '@' | '%' | '&' | UCHAR)* '\n>'
 		  | '<' (PN_CHARS | '.' | ':' | '/' | '\\' | '#' | '@' | '%' | '&' | UCHAR)* '\u0020>'
+		  | '<' (PN_CHARS | '.' | ':' | '/' | '\\' | '#' | '@' | '%' | '&' | UCHAR)* ANON_WS+ (PN_CHARS | '.' | ':' | '/' | '\\' | '#' | '@' | '%' | '&' | UCHAR)*'>'
+		  
 		  ;
 BAD_IRIREF_WITH_MULTIPLE_ANGLE_BRACKETS
 		  :'<' (PN_CHARS | '.' | ':' | '/' | '\\' | '#' | '@' | '%' | '&' | UCHAR)* '\u003C>'
@@ -391,5 +443,63 @@ BAD_IRIREF_WITH_PARENTHESES
 		  : '<' (PN_CHARS | '.' | ':' | '/' | '{'| '}' | '\\' | '#' | '@' | '%' | '&' | UCHAR)* '>'
 		  ;
 		  
-		  
-		  
+BAD_STRING_LITERAL_SINGLE_QUOTE   
+    : '\'\'\'' (~[\u0027\u005C\u000A\u000D] | ECHAR | UCHAR)* '\'' 
+	| '\'' (~[\u0027\u005C\u000A\u000D] | ECHAR | UCHAR)* '\'\'\'' 
+	;
+
+BAD_STRING_LITERAL_QUOTE      
+	: '"""' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '"' 
+	| '"' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '"""' 
+	| '"' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '\'' 
+	| '\'' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '"' 			
+	;  	  
+
+BAD_STRING_LITERAL_LONG_SINGLE_QUOTE
+	: '\'\'\'' (('\'' | '\'\'')? ([^'\\] | ECHAR | UCHAR | '"'))* '"""'
+	;
+
+BAD_STRING_LITERAL_LONG_QUOTE
+	: '"""' (('"' | '""')? (~ ["\\] | ECHAR | UCHAR | '\''))* '\'\'\''
+	;
+BAD_STRING_LITERAL_LONG_QUOTE_TOO_MANY
+	: '"""' (('"' | '""')? (~ ["\\] | ECHAR | UCHAR ))* '""""'
+	| '""""' (('"' | '""')? (~ ["\\] | ECHAR | UCHAR ))* '"""'
+	;	
+	
+BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_TOO_MANY
+	: '\'\'\'' (~[\u0027\u005C\u000A\u000D] | ECHAR | UCHAR)*  '\'\'\'\''
+	| '\'\'\'\''(~[\u0027\u005C\u000A\u000D] | ECHAR | UCHAR)*  '\'\'\''
+	;
+	
+	
+//	|  (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '"""' 
+//	|  '"""' (('"' | '""')? (~["\\] | CHARS | ECHAR))*  
+	
+	
+fragment A:('a'|'A');
+fragment B:('b'|'B');
+fragment C:('c'|'C');
+fragment D:('d'|'D');
+fragment E:('e'|'E');
+fragment F:('f'|'F');
+fragment G:('g'|'G');
+fragment H:('h'|'H');
+fragment I:('i'|'I');
+fragment J:('j'|'J');
+fragment K:('k'|'K');
+fragment L:('l'|'L');
+fragment M:('m'|'M');
+fragment N:('n'|'N');
+fragment O:('o'|'O');
+fragment P:('p'|'P');
+fragment Q:('q'|'Q');
+fragment R:('r'|'R');
+fragment S:('s'|'S');
+fragment T:('t'|'T');
+fragment U:('u'|'U');
+fragment V:('v'|'V');
+fragment W:('w'|'W');
+fragment X:('x'|'X');
+fragment Y:('y'|'Y');
+fragment Z:('z'|'Z');	

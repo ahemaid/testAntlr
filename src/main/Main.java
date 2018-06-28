@@ -26,6 +26,7 @@ import errorDetection.DescriptiveErrorListener;
 import java.io.PrintWriter;
 import java.io.PrintStream;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.ANTLRErrorListener;
@@ -38,34 +39,30 @@ import org.antlr.v4.gui.TreeViewer;
 import org.antlr.v4.runtime.CommonTokenStream;
 public class Main {
 
+	// needed for large files 
 	static DescriptiveErrorListener errorListener = new DescriptiveErrorListener();
 
 	public static void main (String[] args) {
-		//final String filename = "/home/ahmed/Downloads/yagoRedirectLabels_de.ttl";
-		//final String filename = "b2.ttl";
-		//final String filename = "/home/ahmed/Downloads/TESTS/TurtleTestsResult/bad_syntax/turtle-syntax-bad-n3-extras-05.ttl";
-		//final String filename = "mainfest.ttl";
-		//final String filename = "test.ttl";
-		//final String filename = "testTurtle.ttl";
-		//final String filename = "/home/ahmed/Downloads/xaa";
-		//final String filename = "/home/ahmed/Downloads/mappingbased_properties_en_uris_fr.ttl";
-		final String filename = "/home/ahmed/Desktop/eclipse-projects/RDF-Doctor/Resources/TurtleTestsResult/bad_syntax/turtle-syntax-bad-string-01.ttl";
-		final String outputFilename = "/home/ahmed/Downloads/xaa_Output.ttl" ;
+		//final String filename ="/home/ahmed/Downloads/rdfDoctorTest/xaa_with_errors";
+		//final String filename = "/home/ahmed/Downloads/albumin-epo.ttl";
+	    //final String filename = "/home/ahmed/Downloads/persondata_en.ttl";
+	   //final String filename = "/home/ahmed/Desktop/eclipse-projects/RDF-Doctor/Resources/myTest/test.ttl";
+	    //final String filename = "/home/ahmed/Downloads/persondata_en _with_errors.ttl";
+	    //final String filename ="/home/ahmed/Downloads/rdfDoctorTest/file_size_385mb_with_3_errors.ttl";
+		final String filename = "/home/ahmed/Desktop/eclipse-projects/RDF-Doctor/Resources/myTest/test.ttl" ; 
+		final String outputFilename = "/home/ahmed/Downloads/xaa.output" ;
+		final String errorFilename = "/home/ahmed/Downloads/xaa.error" ;
 
-
-		// test with all TurtleSuit files 
-		/*
-		String turtleFolderPath = "/home/ahmed/Downloads/TESTS/TurtleTests/";
-		File dir = new File(turtleFolderPath);
-		String[] extensions = new String[] { "ttl" };
-		List<File> files = (List<File>) FileUtils.listFiles(dir, extensions, true);
-		for (File file : files) {
-		 */
-
-
-
+		// test with all TurtleSuit files 	
+//		String turtleFolderPath = "/home/ahmed/Desktop/eclipse-projects/RDF-Doctor/Resources/TurtleTests/";
+//		File dir = new File(turtleFolderPath);
+//		String[] extensions = new String[] { "ttl" };
+//		List<File> files = (List<File>) FileUtils.listFiles(dir, extensions, true);
+//		for (File file : files) {
+		 
 		long startTime = 0, endTime = 0;
 		StringBuilder inputSB = new StringBuilder();
+		//PrintStream printStream ;
 		//final String filename = "data.ttl";
 		//System.out.print("\n\n\nlocationListener"+locationListener.getLineNo());
 		//parser.setParseLocationListener(locationListener);
@@ -80,22 +77,26 @@ public class Main {
 		try {
 
 			// new input stream created
-			//System.out.print("\n"+file.getCanonicalFile());
-
 			// test with all TurtleSuit files 
 			//input = new FileInputStream(file.getCanonicalFile());
-
+			
+			// needed for large file
 			input = new FileInputStream(filename);
+			//PrintStream printStream = new PrintStream(new FileOutputStream(outputFilename));
+			//System.setOut(printStream);
+			
+			// start time counter
+			startTime = System.nanoTime();
 
+			
 			BufferedReader reader = new BufferedReader(new InputStreamReader(input,"UTF8"));
-			//				DescriptiveErrorListener errorListener = new DescriptiveErrorListener();
 			//				Correction corrector = new Correction();
 
-
+			// needed for reading multiple files 
 			// send system.out to a file
-			//PrintStream printStream = new PrintStream(new FileOutputStream(file.getCanonicalFile()+".out"));
-			//System.setOut(printStream);
-			startTime = System.nanoTime();
+			//DescriptiveErrorListener errorListener = new DescriptiveErrorListener();
+			//System.out.print("\n"+file.getCanonicalFile());
+
 
 			String line;
 			int counter = 1;
@@ -118,74 +119,49 @@ public class Main {
 			scheduler.scheduleAtFixedRate(notifier, 1, 1, TimeUnit.SECONDS);
 
 			while ((line = reader.readLine()) != null) {
-				System.out.print("line "+counter+"  "+line+"\n");
 				currentData[counter - 1]=line+"\n";
 				counter++;
-				if (counter%99 == 0) {
+				if (counter%999999 == 0) {
 					break;
 				}
 			}
 
 			//for smaller than 1000000 lines
-			//System.out.print(String.join("",currentData));
-			
 			errorListener.setInput(currentData);
 			parse( currentData ,outputFilename);
-			//currentData = new String[1000010];
 			Arrays.fill( currentData, "" );
 
-			//inputSB.replace(0, inputSB.length() -1, "");
-			//currentData = {};
-			//System.gc();//gc, won't run for such tiny object so forced clean-up
-			//errorListener.setOffest(counter);
 
-			//Midddle part of with double of 999999 lines 
-
+			//Middle part of multiple 999999 lines 
 			int higherCounter = 0;
+			boolean dataBelowMilion = true;
 			//for greater that 1000000 lines
-//			while ((line = reader.readLine()) != null) {
-//				//System.out.print("line "+counter+"  "+line+"\n");
-//				currentData[higherCounter]=line+"\n";
-//				counter++;
-//				higherCounter++;
-//
-//				if (counter%999999 == 0 ) {
-//					//System.out.print("\nLine"+line);
-//					errorListener.setInput(currentData);
-//					errorListener.setOffest(counter);
-//					parse(currentData,outputFilename);
-//					Arrays.fill( currentData, "" );
-//					//System.gc();//gc, won't run for such tiny object so forced clean-up
-//					higherCounter =0;
-//				}
-//			}
-//			if(counter > 999999)
-//			//last part less thatn 999999 lines 
-//			higherCounter = 0;
-//			while ((line = reader.readLine()) != null) {
-//
-//				//System.out.print("line "+counter+"  "+line+"\n");
-//				currentData[higherCounter]=line+"\n";
-//				counter++;
-//				higherCounter++;
-//
-//			}
-//			//System.out.print("\nLine"+line);
-//			errorListener.setInput(currentData);
-//			errorListener.setOffest(counter);
-//			parse(currentData,outputFilename);
-//			Arrays.fill( currentData, "" );
-//			//System.gc();//gc, won't run for such tiny object so forced clean-up
-//			//errorListener.setOffest(counter);
+			while ((line = reader.readLine()) != null) {
+				currentData[higherCounter]=line+"\n";
+				counter++;
+				higherCounter++;
+				dataBelowMilion = true;
 
+				if (counter%999999 == 0 ) {
+					//System.out.print("\nLine"+line);
+					errorListener.setInput(currentData);
+					errorListener.setOffest(counter -1);
+					parse(currentData,outputFilename);
+					Arrays.fill( currentData, "" );
+					higherCounter = 0;
+					dataBelowMilion = false;
+				} 
+			}
+			if(dataBelowMilion) {
+					errorListener.setInput(currentData);
+					errorListener.setOffest(counter -1);
+					parse(currentData,outputFilename);
+					Arrays.fill( currentData, "" );
+			}
 
 			scheduler.shutdownNow();
-
-			int lineCount = 1;
-			for (String errorMessage : errorListener.errorsList){
-				System.out.print("\nerror "+ lineCount++ +": "+errorMessage);
-
-			}
+			// write error list to an error file 
+			writeErrorsToFile(errorFilename);
 
 			endTime = System.nanoTime();
 
@@ -238,40 +214,18 @@ public class Main {
 
 			 */
 
-
-			//		        for(String l : RecognitionExceptionUtil.lines)
-			//	            System.out.println("\n"+l);
-
-			//System.out.print("\n"+listener.);
-			// Create a generic parse tree walker that can trigger callbacks
-			//ParseTreeWalker walker = new ParseTreeWalker();
-			//System.out.println("\n"); // print LISP-style tree
-
-			// Walk the tree created during the parse, trigger callbacks
-			//    walker.walk(new ShortToUnicodeString(), tree);
-			//    System.out.println("\n"+tree.toStringTree(parser)); // print LISP-style tree
-			System.out.println("\n\n");
-
 			long elapsedTimeInMillis = TimeUnit.MILLISECONDS.convert((endTime - startTime), TimeUnit.NANOSECONDS);
 			System.out.println("\n\nTotal elapsed time: " + elapsedTimeInMillis + " ms");
 			System.out.println("\nNumber of processed lines:"+ counter);
-
-			//printStream.close();
 			System.gc();//gc, won't run for such tiny object so forced clean-up
 
 
+			
 		}catch(RecognitionException e ) {
 			System.out.print("\n\n\n from inside catch "+e.getMessage());
 		}catch(IOException ioe) {
-			//System.out.print("\n lfsd;lkfjsdl;fj;lskdjfl;kdsfj "+ioe.getMessage());
-
+			System.out.print("\n"+ioe.getMessage());
 		}
-
-
-
-
-
-
 
 		// end of test with all TurtleSuit files 
 		//}
@@ -313,12 +267,10 @@ public class Main {
 		// Create a generic parse tree walker that can trigger callbacks
 		ParseTreeWalker walker = new ParseTreeWalker();
 		// Walk the tree created during the parse, trigger callbacks
-		//walker.walk(listener, tree);
+		//walker.walk((ParseTreeListener) listener, tree);
 
-
-		//show AST in GUI
-
-		        JFrame frame = new JFrame("Antlr AST");
+/*		//show AST in GUI
+		        JFrame frame = new JFrame("Parsing Tree");
 
 	        TreeViewer viewr = new TreeViewer(Arrays.asList(
 	                parser.getRuleNames()),tree);
@@ -331,21 +283,57 @@ public class Main {
 	        frame.setSize(1200,800);
 	        frame.setVisible(true);
 
-
+*/
 
 		//		startRule_ctx root = ... ;
 		//		ParseTreeVisitor visitor = new ParseTreeVisitor();
 		//		visitor.visit(listener, root);
 
 		//System.out.println(); // print a \n after translation
-		//corrector.process(inputChunck,errorListener.errorsList );
+		///corrector.process(inputChunck,errorListener.errorsList );
 
 		//show arrayOfErrors
-		System.out.print(errorListener.errorsList);
+		//System.out.print(errorListener.errorsList);
 
 		//corrector.showInputAfterEditing();
-		//corrector.writeToFileAfterEditing(outFilename);
+		////corrector.writeToFileAfterEditing(outFilename);
+		////errorListener.resetErrorList();
 
+	}
+	static public void writeErrorsToFile (String errorFilename) {
+		long count = 1;
+		String data = "";
+		
+	        File file = new File(errorFilename);
+	        FileWriter fr = null;
+	        try {
+	        	
+	            fr = new FileWriter(file, true);
+	    		for(String line : errorListener.errorsList) {
+	    			// check if input is empty
+	    			if(line == "")
+	    				break;
+	    			// show input after fixing errors
+	    			//System.out.print("\nline "+ count++ + " " + line);
+		            fr.write("\nError"+count++ +": "+line);
+	    			
+	    		}
+
+	            
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }finally{
+    			//System.out.print("\nOutput file is saved !");
+	            //close resources
+	            try {
+	                fr.close();
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	    
+		
+		
 	}
 
 }

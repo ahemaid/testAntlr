@@ -40,6 +40,10 @@ public class DescriptiveErrorListener extends BaseErrorListener {
     public void setInput(String [] arr) {
     	inputLines = arr;
     }
+    
+    public void resetErrorList () {
+    	errorsList.clear();
+    }
     public static String getErrorLineString(int lineNumber) {
 //        if (e == null || e.getRecognizer() == null
 //                || e.getRecognizer().getInputStream() == null
