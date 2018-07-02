@@ -2,9 +2,15 @@ PreFIX : <http://www.w3.org/2013/TurtleTests/>
 base <http://www.w3.org/2013/TurtleTests/>
 PREFIX : <http://www.w3.org/2013/TurtleTests/>
 
-<http://www.w3.org/2013/TurtleTests/s> <http://www.w3.org/2013/TurtleTests/p> "a\uhhxxb" .
-<s> <p> <o> .
-<http://www.w3.org/2013/TurtleTests/s> <http://www.w3.org/2013/TurtleTests/p> "a\U00000020b" .
+
+<http://www.w3.org/2013/TurtleTests/s> A 
+
+
+ owl:Class .
+
+<http://www.w3.org/2013/TurtleTests/s> <http://www.w3.org/2013/TurtleTests/p> """a\U0000WXYZ""" .
+<s> <p> <o> ,
+<http://www.w3.org/2013/TurtleTests/s> <http://www.w3.org/2013/TurtleTests/p> "a\u0039b" .
 
 <http://www.w3.org/2013/TurtleTests/s> <http://www.w3.org/2013/TurtleTests/p>
   <scheme:!$%25&'()*+,-./0123456789:/@ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz~?#> .

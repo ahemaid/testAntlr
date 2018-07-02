@@ -4,7 +4,6 @@ import org.antlr.v4.runtime.*;
 import java.util.ArrayList;
 
 public class DescriptiveErrorListener extends BaseErrorListener {
-   // public static DescriptiveErrorListener INSTANCE = new DescriptiveErrorListener();
     public 	ArrayList<String> errorsList = new ArrayList<String>();
     private int offest = 0;
     private static String [] inputLines;

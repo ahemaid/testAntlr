@@ -13,6 +13,7 @@ import java.util.Scanner;
 public class Correction {
 
 	private String [] inputBeforeEditing;
+    public 	ArrayList<String> errorCorrectionsList = new ArrayList<String>();
 	public void process (String [] input, ArrayList<String> errors ) {
 
 		if(inputBeforeEditing == null) {
@@ -20,7 +21,7 @@ public class Correction {
 		}
 		
 		
-		// make uique values of the error arrary list 
+		// make unique values of the error array list 
 		HashSet<String> uniqueValues = new HashSet<>(errors);
 		Iterator<String> iterator = uniqueValues.iterator();
 
@@ -28,13 +29,8 @@ public class Correction {
 			String line = iterator.next();
 			int lineNum = Integer.parseInt(line.split("line ")[1].split(":")[0]);
 			int columnNum = Integer.parseInt(line.split("line ")[1].split(":")[1].split(" ")[0]);
-			//System.out.print("\nline "+lineNum);
-			//System.out.print("  column "+columnNum);
-			//System.out.print("\n"+line+"\n");
-			//System.out.print(Arrays.toString(inputBeforeEditing));
 			
-			System.out.print("\n"+lineNum+" "+line );
-
+			// select the action based on the error message
 			if(line.contains("extraneous input'.' at the end of Prefix directive"))
 				deleteDot(lineNum, columnNum);
 			else if (line.contains("Missing '.' at the end of Prefix directive") || line.contains("Missing '.' at the end of a triple"))
@@ -45,8 +41,44 @@ public class Correction {
 				addIRIandDot(lineNum, columnNum);
 			else if (line.contains("'=' sign cannot be used in Turtle"))
 				commentLine(lineNum, columnNum);
+			else if (line.contains("'A' cannot be used as predicate, it should be repalced with 'a'"))
+				changeA2a(lineNum, columnNum);
+			else if (line.contains("Bad end of a triple with ';'"))
+				change2Dot(lineNum,columnNum, ";");
+			else if (line.contains("Bad end of a triple with ','"))
+				change2Dot(lineNum,columnNum, ",");
 			
 			
+			
+		}
+	}
+	
+	// delete an extra dot 
+	public void change2Dot(long lineNum, long colNum, String badChar ) {
+		long lineNumber = -1 ; 
+		if (colNum == 0 && lineNum >= 2)
+			lineNumber = lineNum - 2 ;
+		else if (colNum == 0 && lineNum == 1)
+			lineNumber = lineNum - 1 ;
+		// store line inside stringBuilder to delete a period
+		StringBuilder sb = new StringBuilder(inputBeforeEditing[(int) lineNumber]);
+		int charLocation = -1;
+		while(charLocation == -1) {
+			 sb = new StringBuilder(inputBeforeEditing[(int) lineNumber]);
+			charLocation = sb.lastIndexOf(badChar);
+			if(charLocation != -1) {
+				sb.deleteCharAt(charLocation);
+				inputBeforeEditing[(int) lineNumber] = 	sb.insert(charLocation, '.').toString();
+				// correction done to the correctionList
+		    	errorCorrectionsList.add("error in [line "+ lineNum +",Column "+colNum+"] "+ "was corrected by replaced '" + badChar + "' with '.' as a correct end of a triple") ;
+				break;
+			}
+			// if lineNumber is equal to 0, then the line
+			if(lineNumber != 0)
+				lineNumber--;
+			else
+				// exit loop if lineNumber is 0 
+				break;
 		}
 	}
 
@@ -65,6 +97,8 @@ public class Correction {
 			charLocation = sb.lastIndexOf(".");
 			if(charLocation != -1) {
 				inputBeforeEditing[(int) lineNumber] = sb.deleteCharAt(charLocation).toString();
+				// correction done to the correctionList
+		    	errorCorrectionsList.add("error in [line "+ lineNum +",Column "+colNum+"] "+ "was corrected by deleting extra Dots") ;
 				break;
 			}
 			// if lineNumber is equal to 0, then the line
@@ -73,6 +107,34 @@ public class Correction {
 			else
 				// exit loop if lineNumber is 0 
 				break;
+		}
+	}
+	
+	// Replace 'A' with 'a' in case it is used as a predicate
+	public void changeA2a(long lineNum, long colNum ) {
+		// store line inside stringBuilder to replace 'A' with 'a'
+		StringBuilder sb = new StringBuilder(inputBeforeEditing[(int) lineNum]);
+		int charLocation = -1;
+		while(charLocation == -1) {
+			 sb = new StringBuilder(inputBeforeEditing[(int) lineNum]);
+			charLocation = sb.lastIndexOf(" A");
+			if(charLocation != -1) {
+				// delete where 'A' is found
+				sb.deleteCharAt(charLocation +1).toString();
+				sb.insert(charLocation, ' ');
+				sb.insert(charLocation + 1, 'a');
+				inputBeforeEditing[(int) lineNum] = sb.toString();
+				// correction done to the correctionList
+		    	errorCorrectionsList.add("error in [line "+ lineNum +",Column "+colNum+"] "+ "was corrected by replaced 'A' with 'a'") ;
+				break;
+			}
+			// if lineNumber is equal to 0, then the line
+			if(lineNum != 0)
+				lineNum--;
+			else
+				// exit loop if lineNumber is 0 
+				break;
+	
 		}
 	}
 	
@@ -91,7 +153,7 @@ public class Correction {
 			charLocation = sb.lastIndexOf(" ");
 			if(charLocation != -1) {
 				inputBeforeEditing[(int) lineNumber] = sb.insert(charLocation, ".").toString();
-				System.out.println(inputBeforeEditing[(int) lineNumber]);
+		    	errorCorrectionsList.add("error in [line "+ lineNum +",Column "+colNum+"] "+ "was corrected by adding '.' at the end of a triple/prefix ") ;
 				break;
 			}
 			// if lineNumber is equal to 0, then the line
@@ -205,7 +267,7 @@ public class Correction {
 	
 	public void showInputAfterEditing () {
 		long count = 1;
-		System.out.print("\nInput after correction:");
+		System.out.print("\nInput after correction:\n");
 
 		for(String line : inputBeforeEditing) {
 			// check if input is empty
@@ -224,7 +286,7 @@ public class Correction {
 	        FileWriter fr = null;
 	        try {
 	        	
-	            fr = new FileWriter(file, true);
+	            fr = new FileWriter(file,true);
 	    		for(String line : inputBeforeEditing) {
 	    			// check if input is empty
 	    			if(line == "")

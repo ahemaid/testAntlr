@@ -26,13 +26,17 @@ public class TurtleParser extends Parser {
 		BAD_PNAME_LN_ENDS_WITH_DOT=43, BLANK_NODE_LABEL=44, LANGTAG=45, BAD_LANGTAG_AS_NUMBER=46, 
 		INTEGER=47, DECIMAL=48, DOUBLE=49, EXPONENT=50, STRING_LITERAL_LONG_SINGLE_QUOTE=51, 
 		STRING_LITERAL_LONG_QUOTE=52, STRING_LITERAL_QUOTE=53, STRING_LITERAL_SINGLE_QUOTE=54, 
-		BAD_STRING_LITERAL_QUOTE_WITH_ESCAPE=55, BAD_UCHAR=56, ECHAR=57, ANON_WS=58, 
-		ANON=59, PN_CHARS_BASE=60, PN_CHARS_U=61, PN_CHARS=62, PN_LOCAL=63, BAD_PN_LOCAL_STARTS_WITH_PERCENT=64, 
-		PLX=65, PERCENT=66, HEX=67, NONHEX=68, PN_LOCAL_ESC=69, BAD_IRIREF_WITH_SPACE=70, 
-		BAD_IRIREF_WITH_MULTIPLE_ANGLE_BRACKETS=71, BAD_IRIREF_WITH_PARENTHESES=72, 
-		BAD_STRING_LITERAL_SINGLE_QUOTE=73, BAD_STRING_LITERAL_QUOTE=74, BAD_STRING_LITERAL_LONG_SINGLE_QUOTE=75, 
-		BAD_STRING_LITERAL_LONG_QUOTE=76, BAD_STRING_LITERAL_LONG_QUOTE_TOO_MANY=77, 
-		BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_TOO_MANY=78;
+		BAD_STRING_LITERAL_QUOTE_WITH_BAD_UCHAR=55, BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_UCHAR=56, 
+		BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_UCHAR=57, BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_UCHAR=58, 
+		BAD_STRING_LITERAL_QUOTE_WITH_BAD_ESCAPE=59, BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_ESCAPE=60, 
+		BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_ESCAPE=61, BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_ESCAPE=62, 
+		BAD_UCHAR=63, ECHAR=64, ANON_WS=65, ANON=66, PN_CHARS_BASE=67, PN_CHARS_U=68, 
+		PN_CHARS=69, PN_LOCAL=70, BAD_PN_LOCAL_STARTS_WITH_PERCENT=71, PLX=72, 
+		PERCENT=73, HEX=74, NONHEX=75, PN_LOCAL_ESC=76, BAD_IRIREF_WITH_SPACE=77, 
+		BAD_IRIREF_WITH_MULTIPLE_ANGLE_BRACKETS=78, BAD_IRIREF_WITH_PARENTHESES=79, 
+		BAD_STRING_LITERAL_SINGLE_QUOTE=80, BAD_STRING_LITERAL_QUOTE=81, BAD_STRING_LITERAL_LONG_SINGLE_QUOTE=82, 
+		BAD_STRING_LITERAL_LONG_QUOTE=83, BAD_STRING_LITERAL_LONG_QUOTE_TOO_MANY=84, 
+		BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_TOO_MANY=85, ILLEGAL_ESCAPE=86;
 	public static final int
 		RULE_start = 0, RULE_statement = 1, RULE_directive = 2, RULE_errors = 3, 
 		RULE_graphLabel = 4, RULE_unkonwnDecl = 5, RULE_prefixID = 6, RULE_base = 7, 
@@ -63,13 +67,17 @@ public class TurtleParser extends Parser {
 		"BAD_PNAME_LN_ENDS_WITH_DOT", "BLANK_NODE_LABEL", "LANGTAG", "BAD_LANGTAG_AS_NUMBER", 
 		"INTEGER", "DECIMAL", "DOUBLE", "EXPONENT", "STRING_LITERAL_LONG_SINGLE_QUOTE", 
 		"STRING_LITERAL_LONG_QUOTE", "STRING_LITERAL_QUOTE", "STRING_LITERAL_SINGLE_QUOTE", 
-		"BAD_STRING_LITERAL_QUOTE_WITH_ESCAPE", "BAD_UCHAR", "ECHAR", "ANON_WS", 
-		"ANON", "PN_CHARS_BASE", "PN_CHARS_U", "PN_CHARS", "PN_LOCAL", "BAD_PN_LOCAL_STARTS_WITH_PERCENT", 
-		"PLX", "PERCENT", "HEX", "NONHEX", "PN_LOCAL_ESC", "BAD_IRIREF_WITH_SPACE", 
-		"BAD_IRIREF_WITH_MULTIPLE_ANGLE_BRACKETS", "BAD_IRIREF_WITH_PARENTHESES", 
-		"BAD_STRING_LITERAL_SINGLE_QUOTE", "BAD_STRING_LITERAL_QUOTE", "BAD_STRING_LITERAL_LONG_SINGLE_QUOTE", 
-		"BAD_STRING_LITERAL_LONG_QUOTE", "BAD_STRING_LITERAL_LONG_QUOTE_TOO_MANY", 
-		"BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_TOO_MANY"
+		"BAD_STRING_LITERAL_QUOTE_WITH_BAD_UCHAR", "BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_UCHAR", 
+		"BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_UCHAR", "BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_UCHAR", 
+		"BAD_STRING_LITERAL_QUOTE_WITH_BAD_ESCAPE", "BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_ESCAPE", 
+		"BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_ESCAPE", "BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_ESCAPE", 
+		"BAD_UCHAR", "ECHAR", "ANON_WS", "ANON", "PN_CHARS_BASE", "PN_CHARS_U", 
+		"PN_CHARS", "PN_LOCAL", "BAD_PN_LOCAL_STARTS_WITH_PERCENT", "PLX", "PERCENT", 
+		"HEX", "NONHEX", "PN_LOCAL_ESC", "BAD_IRIREF_WITH_SPACE", "BAD_IRIREF_WITH_MULTIPLE_ANGLE_BRACKETS", 
+		"BAD_IRIREF_WITH_PARENTHESES", "BAD_STRING_LITERAL_SINGLE_QUOTE", "BAD_STRING_LITERAL_QUOTE", 
+		"BAD_STRING_LITERAL_LONG_SINGLE_QUOTE", "BAD_STRING_LITERAL_LONG_QUOTE", 
+		"BAD_STRING_LITERAL_LONG_QUOTE_TOO_MANY", "BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_TOO_MANY", 
+		"ILLEGAL_ESCAPE"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -152,7 +160,7 @@ public class TurtleParser extends Parser {
 			setState(49);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__6) | (1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << T__10) | (1L << T__11) | (1L << T__13) | (1L << T__14) | (1L << T__18) | (1L << T__20) | (1L << T__22) | (1L << KW_BASE) | (1L << KW_PREFIX) | (1L << NumericLiteral) | (1L << BooleanLiteral) | (1L << String) | (1L << BlankNode) | (1L << CHARS) | (1L << IRIREF) | (1L << PNAME_NS) | (1L << PrefixedName) | (1L << BAD_PNAME_LN_STARTS_WITH_DOT) | (1L << BAD_PNAME_LN_ENDS_WITH_DOT) | (1L << BAD_STRING_LITERAL_QUOTE_WITH_ESCAPE))) != 0) || ((((_la - 70)) & ~0x3f) == 0 && ((1L << (_la - 70)) & ((1L << (BAD_IRIREF_WITH_SPACE - 70)) | (1L << (BAD_IRIREF_WITH_MULTIPLE_ANGLE_BRACKETS - 70)) | (1L << (BAD_IRIREF_WITH_PARENTHESES - 70)) | (1L << (BAD_STRING_LITERAL_SINGLE_QUOTE - 70)) | (1L << (BAD_STRING_LITERAL_QUOTE - 70)) | (1L << (BAD_STRING_LITERAL_LONG_SINGLE_QUOTE - 70)) | (1L << (BAD_STRING_LITERAL_LONG_QUOTE - 70)) | (1L << (BAD_STRING_LITERAL_LONG_QUOTE_TOO_MANY - 70)) | (1L << (BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_TOO_MANY - 70)))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__6) | (1L << T__7) | (1L << T__8) | (1L << T__9) | (1L << T__10) | (1L << T__11) | (1L << T__13) | (1L << T__14) | (1L << T__18) | (1L << T__20) | (1L << T__22) | (1L << KW_BASE) | (1L << KW_PREFIX) | (1L << NumericLiteral) | (1L << BooleanLiteral) | (1L << String) | (1L << BlankNode) | (1L << CHARS) | (1L << IRIREF) | (1L << PNAME_NS) | (1L << PrefixedName) | (1L << BAD_PNAME_LN_STARTS_WITH_DOT) | (1L << BAD_PNAME_LN_ENDS_WITH_DOT) | (1L << BAD_STRING_LITERAL_QUOTE_WITH_BAD_UCHAR) | (1L << BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_UCHAR) | (1L << BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_UCHAR) | (1L << BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_UCHAR) | (1L << BAD_STRING_LITERAL_QUOTE_WITH_BAD_ESCAPE) | (1L << BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_ESCAPE) | (1L << BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_ESCAPE) | (1L << BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_ESCAPE))) != 0) || ((((_la - 77)) & ~0x3f) == 0 && ((1L << (_la - 77)) & ((1L << (BAD_IRIREF_WITH_SPACE - 77)) | (1L << (BAD_IRIREF_WITH_MULTIPLE_ANGLE_BRACKETS - 77)) | (1L << (BAD_IRIREF_WITH_PARENTHESES - 77)) | (1L << (BAD_STRING_LITERAL_SINGLE_QUOTE - 77)) | (1L << (BAD_STRING_LITERAL_QUOTE - 77)) | (1L << (BAD_STRING_LITERAL_LONG_SINGLE_QUOTE - 77)) | (1L << (BAD_STRING_LITERAL_LONG_QUOTE - 77)) | (1L << (BAD_STRING_LITERAL_LONG_QUOTE_TOO_MANY - 77)) | (1L << (BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_TOO_MANY - 77)))) != 0)) {
 				{
 				{
 				setState(46);
@@ -234,7 +242,7 @@ public class TurtleParser extends Parser {
 				triples();
 				setState(59);
 				match(T__1);
-				notifyErrorListeners("Extraneous ';' at the end of a triple");
+				notifyErrorListeners("Bad end of a triple with ','");
 				}
 				break;
 			case 4:
@@ -244,7 +252,7 @@ public class TurtleParser extends Parser {
 				triples();
 				setState(63);
 				match(T__2);
-				notifyErrorListeners("Extraneous ';' at the end of a triple");
+				notifyErrorListeners("Bad end of a triple with ';'");
 				}
 				break;
 			case 5:
@@ -294,7 +302,7 @@ public class TurtleParser extends Parser {
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				} while ( _la==T__0 );
-				notifyErrorListeners("Too many DOT ");
+				notifyErrorListeners("Too many DOT");
 				}
 				break;
 			case 7:
@@ -1934,7 +1942,14 @@ public class TurtleParser extends Parser {
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case String:
-			case BAD_STRING_LITERAL_QUOTE_WITH_ESCAPE:
+			case BAD_STRING_LITERAL_QUOTE_WITH_BAD_UCHAR:
+			case BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_UCHAR:
+			case BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_UCHAR:
+			case BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_UCHAR:
+			case BAD_STRING_LITERAL_QUOTE_WITH_BAD_ESCAPE:
+			case BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_ESCAPE:
+			case BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_ESCAPE:
+			case BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_ESCAPE:
 			case BAD_STRING_LITERAL_SINGLE_QUOTE:
 			case BAD_STRING_LITERAL_QUOTE:
 			case BAD_STRING_LITERAL_LONG_SINGLE_QUOTE:
@@ -2105,7 +2120,7 @@ public class TurtleParser extends Parser {
 			setState(420);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__8) | (1L << T__20) | (1L << T__22) | (1L << NumericLiteral) | (1L << BooleanLiteral) | (1L << BadLiteral) | (1L << String) | (1L << BlankNode) | (1L << IRIREF) | (1L << PNAME_NS) | (1L << PrefixedName) | (1L << BAD_PNAME_LN_STARTS_WITH_DOT) | (1L << BAD_PNAME_LN_ENDS_WITH_DOT) | (1L << BAD_STRING_LITERAL_QUOTE_WITH_ESCAPE))) != 0) || ((((_la - 70)) & ~0x3f) == 0 && ((1L << (_la - 70)) & ((1L << (BAD_IRIREF_WITH_SPACE - 70)) | (1L << (BAD_IRIREF_WITH_MULTIPLE_ANGLE_BRACKETS - 70)) | (1L << (BAD_IRIREF_WITH_PARENTHESES - 70)) | (1L << (BAD_STRING_LITERAL_SINGLE_QUOTE - 70)) | (1L << (BAD_STRING_LITERAL_QUOTE - 70)) | (1L << (BAD_STRING_LITERAL_LONG_SINGLE_QUOTE - 70)) | (1L << (BAD_STRING_LITERAL_LONG_QUOTE - 70)) | (1L << (BAD_STRING_LITERAL_LONG_QUOTE_TOO_MANY - 70)) | (1L << (BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_TOO_MANY - 70)))) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__8) | (1L << T__20) | (1L << T__22) | (1L << NumericLiteral) | (1L << BooleanLiteral) | (1L << BadLiteral) | (1L << String) | (1L << BlankNode) | (1L << IRIREF) | (1L << PNAME_NS) | (1L << PrefixedName) | (1L << BAD_PNAME_LN_STARTS_WITH_DOT) | (1L << BAD_PNAME_LN_ENDS_WITH_DOT) | (1L << BAD_STRING_LITERAL_QUOTE_WITH_BAD_UCHAR) | (1L << BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_UCHAR) | (1L << BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_UCHAR) | (1L << BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_UCHAR) | (1L << BAD_STRING_LITERAL_QUOTE_WITH_BAD_ESCAPE) | (1L << BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_ESCAPE) | (1L << BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_ESCAPE) | (1L << BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_ESCAPE))) != 0) || ((((_la - 77)) & ~0x3f) == 0 && ((1L << (_la - 77)) & ((1L << (BAD_IRIREF_WITH_SPACE - 77)) | (1L << (BAD_IRIREF_WITH_MULTIPLE_ANGLE_BRACKETS - 77)) | (1L << (BAD_IRIREF_WITH_PARENTHESES - 77)) | (1L << (BAD_STRING_LITERAL_SINGLE_QUOTE - 77)) | (1L << (BAD_STRING_LITERAL_QUOTE - 77)) | (1L << (BAD_STRING_LITERAL_LONG_SINGLE_QUOTE - 77)) | (1L << (BAD_STRING_LITERAL_LONG_QUOTE - 77)) | (1L << (BAD_STRING_LITERAL_LONG_QUOTE_TOO_MANY - 77)) | (1L << (BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_TOO_MANY - 77)))) != 0)) {
 				{
 				{
 				setState(417);
@@ -2144,7 +2159,14 @@ public class TurtleParser extends Parser {
 		public TerminalNode BAD_STRING_LITERAL_LONG_QUOTE() { return getToken(TurtleParser.BAD_STRING_LITERAL_LONG_QUOTE, 0); }
 		public TerminalNode BAD_STRING_LITERAL_SINGLE_QUOTE() { return getToken(TurtleParser.BAD_STRING_LITERAL_SINGLE_QUOTE, 0); }
 		public TerminalNode BAD_STRING_LITERAL_QUOTE() { return getToken(TurtleParser.BAD_STRING_LITERAL_QUOTE, 0); }
-		public TerminalNode BAD_STRING_LITERAL_QUOTE_WITH_ESCAPE() { return getToken(TurtleParser.BAD_STRING_LITERAL_QUOTE_WITH_ESCAPE, 0); }
+		public TerminalNode BAD_STRING_LITERAL_QUOTE_WITH_BAD_UCHAR() { return getToken(TurtleParser.BAD_STRING_LITERAL_QUOTE_WITH_BAD_UCHAR, 0); }
+		public TerminalNode BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_UCHAR() { return getToken(TurtleParser.BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_UCHAR, 0); }
+		public TerminalNode BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_UCHAR() { return getToken(TurtleParser.BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_UCHAR, 0); }
+		public TerminalNode BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_UCHAR() { return getToken(TurtleParser.BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_UCHAR, 0); }
+		public TerminalNode BAD_STRING_LITERAL_QUOTE_WITH_BAD_ESCAPE() { return getToken(TurtleParser.BAD_STRING_LITERAL_QUOTE_WITH_BAD_ESCAPE, 0); }
+		public TerminalNode BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_ESCAPE() { return getToken(TurtleParser.BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_ESCAPE, 0); }
+		public TerminalNode BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_ESCAPE() { return getToken(TurtleParser.BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_ESCAPE, 0); }
+		public TerminalNode BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_ESCAPE() { return getToken(TurtleParser.BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_ESCAPE, 0); }
 		public RdfLiteralContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -2164,7 +2186,7 @@ public class TurtleParser extends Parser {
 		enterRule(_localctx, 42, RULE_rdfLiteral);
 		int _la;
 		try {
-			setState(488);
+			setState(490);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,38,_ctx) ) {
 			case 1:
@@ -2223,7 +2245,14 @@ public class TurtleParser extends Parser {
 				case PrefixedName:
 				case BAD_PNAME_LN_STARTS_WITH_DOT:
 				case BAD_PNAME_LN_ENDS_WITH_DOT:
-				case BAD_STRING_LITERAL_QUOTE_WITH_ESCAPE:
+				case BAD_STRING_LITERAL_QUOTE_WITH_BAD_UCHAR:
+				case BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_UCHAR:
+				case BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_UCHAR:
+				case BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_UCHAR:
+				case BAD_STRING_LITERAL_QUOTE_WITH_BAD_ESCAPE:
+				case BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_ESCAPE:
+				case BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_ESCAPE:
+				case BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_ESCAPE:
 				case BAD_IRIREF_WITH_SPACE:
 				case BAD_IRIREF_WITH_MULTIPLE_ANGLE_BRACKETS:
 				case BAD_IRIREF_WITH_PARENTHESES:
@@ -2296,7 +2325,14 @@ public class TurtleParser extends Parser {
 				case PrefixedName:
 				case BAD_PNAME_LN_STARTS_WITH_DOT:
 				case BAD_PNAME_LN_ENDS_WITH_DOT:
-				case BAD_STRING_LITERAL_QUOTE_WITH_ESCAPE:
+				case BAD_STRING_LITERAL_QUOTE_WITH_BAD_UCHAR:
+				case BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_UCHAR:
+				case BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_UCHAR:
+				case BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_UCHAR:
+				case BAD_STRING_LITERAL_QUOTE_WITH_BAD_ESCAPE:
+				case BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_ESCAPE:
+				case BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_ESCAPE:
+				case BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_ESCAPE:
 				case BAD_IRIREF_WITH_SPACE:
 				case BAD_IRIREF_WITH_MULTIPLE_ANGLE_BRACKETS:
 				case BAD_IRIREF_WITH_PARENTHESES:
@@ -2369,7 +2405,14 @@ public class TurtleParser extends Parser {
 				case PrefixedName:
 				case BAD_PNAME_LN_STARTS_WITH_DOT:
 				case BAD_PNAME_LN_ENDS_WITH_DOT:
-				case BAD_STRING_LITERAL_QUOTE_WITH_ESCAPE:
+				case BAD_STRING_LITERAL_QUOTE_WITH_BAD_UCHAR:
+				case BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_UCHAR:
+				case BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_UCHAR:
+				case BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_UCHAR:
+				case BAD_STRING_LITERAL_QUOTE_WITH_BAD_ESCAPE:
+				case BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_ESCAPE:
+				case BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_ESCAPE:
+				case BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_ESCAPE:
 				case BAD_IRIREF_WITH_SPACE:
 				case BAD_IRIREF_WITH_MULTIPLE_ANGLE_BRACKETS:
 				case BAD_IRIREF_WITH_PARENTHESES:
@@ -2499,7 +2542,14 @@ public class TurtleParser extends Parser {
 				case PrefixedName:
 				case BAD_PNAME_LN_STARTS_WITH_DOT:
 				case BAD_PNAME_LN_ENDS_WITH_DOT:
-				case BAD_STRING_LITERAL_QUOTE_WITH_ESCAPE:
+				case BAD_STRING_LITERAL_QUOTE_WITH_BAD_UCHAR:
+				case BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_UCHAR:
+				case BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_UCHAR:
+				case BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_UCHAR:
+				case BAD_STRING_LITERAL_QUOTE_WITH_BAD_ESCAPE:
+				case BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_ESCAPE:
+				case BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_ESCAPE:
+				case BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_ESCAPE:
 				case BAD_IRIREF_WITH_SPACE:
 				case BAD_IRIREF_WITH_MULTIPLE_ANGLE_BRACKETS:
 				case BAD_IRIREF_WITH_PARENTHESES:
@@ -2572,7 +2622,14 @@ public class TurtleParser extends Parser {
 				case PrefixedName:
 				case BAD_PNAME_LN_STARTS_WITH_DOT:
 				case BAD_PNAME_LN_ENDS_WITH_DOT:
-				case BAD_STRING_LITERAL_QUOTE_WITH_ESCAPE:
+				case BAD_STRING_LITERAL_QUOTE_WITH_BAD_UCHAR:
+				case BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_UCHAR:
+				case BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_UCHAR:
+				case BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_UCHAR:
+				case BAD_STRING_LITERAL_QUOTE_WITH_BAD_ESCAPE:
+				case BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_ESCAPE:
+				case BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_ESCAPE:
+				case BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_ESCAPE:
 				case BAD_IRIREF_WITH_SPACE:
 				case BAD_IRIREF_WITH_MULTIPLE_ANGLE_BRACKETS:
 				case BAD_IRIREF_WITH_PARENTHESES:
@@ -2645,7 +2702,14 @@ public class TurtleParser extends Parser {
 				case PrefixedName:
 				case BAD_PNAME_LN_STARTS_WITH_DOT:
 				case BAD_PNAME_LN_ENDS_WITH_DOT:
-				case BAD_STRING_LITERAL_QUOTE_WITH_ESCAPE:
+				case BAD_STRING_LITERAL_QUOTE_WITH_BAD_UCHAR:
+				case BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_UCHAR:
+				case BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_UCHAR:
+				case BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_UCHAR:
+				case BAD_STRING_LITERAL_QUOTE_WITH_BAD_ESCAPE:
+				case BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_ESCAPE:
+				case BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_ESCAPE:
+				case BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_ESCAPE:
 				case BAD_IRIREF_WITH_SPACE:
 				case BAD_IRIREF_WITH_MULTIPLE_ANGLE_BRACKETS:
 				case BAD_IRIREF_WITH_PARENTHESES:
@@ -2666,8 +2730,32 @@ public class TurtleParser extends Parser {
 				enterOuterAlt(_localctx, 11);
 				{
 				setState(486);
-				match(BAD_STRING_LITERAL_QUOTE_WITH_ESCAPE);
-				notifyErrorListeners("Bad Unicode Characters, Only HEX Chars can be used");
+				_la = _input.LA(1);
+				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << BAD_STRING_LITERAL_QUOTE_WITH_BAD_UCHAR) | (1L << BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_UCHAR) | (1L << BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_UCHAR) | (1L << BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_UCHAR))) != 0)) ) {
+				_errHandler.recoverInline(this);
+				}
+				else {
+					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+					_errHandler.reportMatch(this);
+					consume();
+				}
+				notifyErrorListeners("Bad Unicode Characters, Only HEX Characters are allowed");
+				}
+				break;
+			case 12:
+				enterOuterAlt(_localctx, 12);
+				{
+				setState(488);
+				_la = _input.LA(1);
+				if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << BAD_STRING_LITERAL_QUOTE_WITH_BAD_ESCAPE) | (1L << BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_ESCAPE) | (1L << BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_ESCAPE) | (1L << BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_ESCAPE))) != 0)) ) {
+				_errHandler.recoverInline(this);
+				}
+				else {
+					if ( _input.LA(1)==Token.EOF ) matchedEOF = true;
+					_errHandler.reportMatch(this);
+					consume();
+				}
+				notifyErrorListeners("Bad Literal Escape");
 				}
 				break;
 			}
@@ -2711,29 +2799,29 @@ public class TurtleParser extends Parser {
 		IriContext _localctx = new IriContext(_ctx, getState());
 		enterRule(_localctx, 44, RULE_iri);
 		try {
-			setState(505);
+			setState(507);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case IRIREF:
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(490);
+				setState(492);
 				match(IRIREF);
 				}
 				break;
 			case PrefixedName:
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(491);
+				setState(493);
 				match(PrefixedName);
 				}
 				break;
 			case PNAME_NS:
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(492);
+				setState(494);
 				match(PNAME_NS);
-				setState(493);
+				setState(495);
 				match(BAD_PN_LOCAL_STARTS_WITH_PERCENT);
 				notifyErrorListeners("Bad syntax of Prefixed IRI, the local prefix namespace cannot contain '%'");
 				}
@@ -2741,7 +2829,7 @@ public class TurtleParser extends Parser {
 			case BAD_PNAME_LN_STARTS_WITH_DOT:
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(495);
+				setState(497);
 				match(BAD_PNAME_LN_STARTS_WITH_DOT);
 				notifyErrorListeners("incorrect form of Prefixed Namespace, it cannot start with '.'");
 				}
@@ -2749,7 +2837,7 @@ public class TurtleParser extends Parser {
 			case BAD_PNAME_LN_ENDS_WITH_DOT:
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(497);
+				setState(499);
 				match(BAD_PNAME_LN_ENDS_WITH_DOT);
 				notifyErrorListeners("incorrect form of Prefixed Namespace, it cannot end with '.'");
 				}
@@ -2757,7 +2845,7 @@ public class TurtleParser extends Parser {
 			case BAD_IRIREF_WITH_SPACE:
 				enterOuterAlt(_localctx, 6);
 				{
-				setState(499);
+				setState(501);
 				match(BAD_IRIREF_WITH_SPACE);
 				notifyErrorListeners("Bad syntax of IRI, IRI cannot contain space or newline");
 				}
@@ -2765,7 +2853,7 @@ public class TurtleParser extends Parser {
 			case BAD_IRIREF_WITH_MULTIPLE_ANGLE_BRACKETS:
 				enterOuterAlt(_localctx, 7);
 				{
-				setState(501);
+				setState(503);
 				match(BAD_IRIREF_WITH_MULTIPLE_ANGLE_BRACKETS);
 				notifyErrorListeners("Bad syntax of IRI, Too many angle brackets in IRI");
 				}
@@ -2773,7 +2861,7 @@ public class TurtleParser extends Parser {
 			case BAD_IRIREF_WITH_PARENTHESES:
 				enterOuterAlt(_localctx, 8);
 				{
-				setState(503);
+				setState(505);
 				match(BAD_IRIREF_WITH_PARENTHESES);
 				notifyErrorListeners("Bad syntax of IRI, IRI cannot contain parentheses");
 				}
@@ -2794,7 +2882,7 @@ public class TurtleParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3P\u01fe\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3X\u0200\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\3\2\7\2\62"+
@@ -2830,61 +2918,61 @@ public class TurtleParser extends Parser {
 		"\3\27\3\27\3\27\3\27\3\27\3\27\3\27\3\27\3\27\3\27\3\27\3\27\3\27\3\27"+
 		"\3\27\3\27\3\27\3\27\3\27\3\27\3\27\3\27\3\27\3\27\5\27\u01d8\n\27\3\27"+
 		"\3\27\3\27\3\27\3\27\5\27\u01df\n\27\3\27\3\27\3\27\3\27\3\27\5\27\u01e6"+
-		"\n\27\3\27\3\27\3\27\5\27\u01eb\n\27\3\30\3\30\3\30\3\30\3\30\3\30\3\30"+
-		"\3\30\3\30\3\30\3\30\3\30\3\30\3\30\3\30\5\30\u01fc\n\30\3\30\2\2\31\2"+
-		"\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\2\5\4\2\13\13$$\4\2((."+
-		".\3\2MN\2\u0254\2\63\3\2\2\2\4U\3\2\2\2\6d\3\2\2\2\b\u00b4\3\2\2\2\n\u00b6"+
-		"\3\2\2\2\f\u00b8\3\2\2\2\16\u00f8\3\2\2\2\20\u010a\3\2\2\2\22\u0112\3"+
-		"\2\2\2\24\u012c\3\2\2\2\26\u013d\3\2\2\2\30\u013f\3\2\2\2\32\u014c\3\2"+
-		"\2\2\34\u0166\3\2\2\2\36\u0182\3\2\2\2 \u0184\3\2\2\2\"\u0190\3\2\2\2"+
-		"$\u0197\3\2\2\2&\u0199\3\2\2\2(\u019d\3\2\2\2*\u01a2\3\2\2\2,\u01ea\3"+
-		"\2\2\2.\u01fb\3\2\2\2\60\62\5\4\3\2\61\60\3\2\2\2\62\65\3\2\2\2\63\61"+
-		"\3\2\2\2\63\64\3\2\2\2\64\66\3\2\2\2\65\63\3\2\2\2\66\67\7\2\2\3\67\3"+
-		"\3\2\2\28V\5\6\4\29:\5\26\f\2:;\7\3\2\2;V\3\2\2\2<=\5\26\f\2=>\7\4\2\2"+
-		">?\b\3\1\2?V\3\2\2\2@A\5\26\f\2AB\7\5\2\2BC\b\3\1\2CV\3\2\2\2DE\5\26\f"+
-		"\2EF\b\3\1\2FV\3\2\2\2GI\5\26\f\2HJ\7\3\2\2IH\3\2\2\2JK\3\2\2\2KI\3\2"+
-		"\2\2KL\3\2\2\2LN\3\2\2\2MO\7\3\2\2NM\3\2\2\2OP\3\2\2\2PN\3\2\2\2PQ\3\2"+
-		"\2\2QR\3\2\2\2RS\b\3\1\2SV\3\2\2\2TV\5\b\5\2U8\3\2\2\2U9\3\2\2\2U<\3\2"+
-		"\2\2U@\3\2\2\2UD\3\2\2\2UG\3\2\2\2UT\3\2\2\2V\5\3\2\2\2We\5\24\13\2Xe"+
-		"\5\22\n\2Ye\5\16\b\2Ze\5\20\t\2[e\5\f\7\2\\]\5\24\13\2]^\7\3\2\2^_\b\4"+
-		"\1\2_e\3\2\2\2`a\5\22\n\2ab\7\3\2\2bc\b\4\1\2ce\3\2\2\2dW\3\2\2\2dX\3"+
-		"\2\2\2dY\3\2\2\2dZ\3\2\2\2d[\3\2\2\2d\\\3\2\2\2d`\3\2\2\2e\7\3\2\2\2f"+
-		"g\5.\30\2gh\7\6\2\2hi\5.\30\2ij\7\3\2\2jk\b\5\1\2k\u00b5\3\2\2\2lm\5."+
-		"\30\2mn\7\7\2\2no\5.\30\2op\7\3\2\2pq\b\5\1\2q\u00b5\3\2\2\2rs\5.\30\2"+
-		"st\7\b\2\2tu\5.\30\2uv\7\3\2\2vw\b\5\1\2w\u00b5\3\2\2\2xy\5.\30\2yz\7"+
-		"\3\2\2z|\3\2\2\2{x\3\2\2\2|}\3\2\2\2}{\3\2\2\2}~\3\2\2\2~\u0082\3\2\2"+
-		"\2\177\u0080\5.\30\2\u0080\u0081\7\3\2\2\u0081\u0083\3\2\2\2\u0082\177"+
-		"\3\2\2\2\u0083\u0084\3\2\2\2\u0084\u0082\3\2\2\2\u0084\u0085\3\2\2\2\u0085"+
-		"\u0086\3\2\2\2\u0086\u0087\5\26\f\2\u0087\u0088\7\3\2\2\u0088\u0089\b"+
-		"\5\1\2\u0089\u00b5\3\2\2\2\u008a\u008b\5.\30\2\u008b\u008c\7\3\2\2\u008c"+
-		"\u008e\3\2\2\2\u008d\u008a\3\2\2\2\u008e\u008f\3\2\2\2\u008f\u008d\3\2"+
-		"\2\2\u008f\u0090\3\2\2\2\u0090\u0094\3\2\2\2\u0091\u0092\5.\30\2\u0092"+
-		"\u0093\7\3\2\2\u0093\u0095\3\2\2\2\u0094\u0091\3\2\2\2\u0095\u0096\3\2"+
-		"\2\2\u0096\u0094\3\2\2\2\u0096\u0097\3\2\2\2\u0097\u0098\3\2\2\2\u0098"+
-		"\u0099\5\26\f\2\u0099\u009a\b\5\1\2\u009a\u00b5\3\2\2\2\u009b\u009c\7"+
-		"\t\2\2\u009c\u009d\5.\30\2\u009d\u009e\7\3\2\2\u009e\u009f\b\5\1\2\u009f"+
-		"\u00b5\3\2\2\2\u00a0\u00a1\7\n\2\2\u00a1\u00a2\5.\30\2\u00a2\u00a3\7\3"+
-		"\2\2\u00a3\u00a4\b\5\1\2\u00a4\u00b5\3\2\2\2\u00a5\u00a7\t\2\2\2\u00a6"+
-		"\u00a5\3\2\2\2\u00a7\u00aa\3\2\2\2\u00a8\u00a6\3\2\2\2\u00a8\u00a9\3\2"+
-		"\2\2\u00a9\u00ab\3\2\2\2\u00aa\u00a8\3\2\2\2\u00ab\u00af\7\f\2\2\u00ac"+
-		"\u00ae\t\2\2\2\u00ad\u00ac\3\2\2\2\u00ae\u00b1\3\2\2\2\u00af\u00ad\3\2"+
-		"\2\2\u00af\u00b0\3\2\2\2\u00b0\u00b2\3\2\2\2\u00b1\u00af\3\2\2\2\u00b2"+
-		"\u00b3\7\3\2\2\u00b3\u00b5\b\5\1\2\u00b4f\3\2\2\2\u00b4l\3\2\2\2\u00b4"+
-		"r\3\2\2\2\u00b4{\3\2\2\2\u00b4\u008d\3\2\2\2\u00b4\u009b\3\2\2\2\u00b4"+
-		"\u00a0\3\2\2\2\u00b4\u00a8\3\2\2\2\u00b5\t\3\2\2\2\u00b6\u00b7\t\3\2\2"+
-		"\u00b7\13\3\2\2\2\u00b8\u00bc\7\r\2\2\u00b9\u00bb\t\2\2\2\u00ba\u00b9"+
-		"\3\2\2\2\u00bb\u00be\3\2\2\2\u00bc\u00ba\3\2\2\2\u00bc\u00bd\3\2\2\2\u00bd"+
-		"\u00bf\3\2\2\2\u00be\u00bc\3\2\2\2\u00bf\u00c0\7\3\2\2\u00c0\u00c1\b\7"+
-		"\1\2\u00c1\r\3\2\2\2\u00c2\u00c3\7\16\2\2\u00c3\u00c4\7$\2\2\u00c4\u00c5"+
-		"\7\3\2\2\u00c5\u00c6\7\17\2\2\u00c6\u00c7\7(\2\2\u00c7\u00c8\7\3\2\2\u00c8"+
-		"\u00f9\b\b\1\2\u00c9\u00ca\7\16\2\2\u00ca\u00cb\7\3\2\2\u00cb\u00cc\7"+
-		"$\2\2\u00cc\u00cd\7\17\2\2\u00cd\u00ce\7(\2\2\u00ce\u00cf\7\3\2\2\u00cf"+
-		"\u00f9\b\b\1\2\u00d0\u00d1\7\16\2\2\u00d1\u00d2\7\17\2\2\u00d2\u00d3\7"+
-		"(\2\2\u00d3\u00f9\7\3\2\2\u00d4\u00d5\7\16\2\2\u00d5\u00d6\7)\2\2\u00d6"+
-		"\u00d7\7(\2\2\u00d7\u00f9\7\3\2\2\u00d8\u00d9\7\16\2\2\u00d9\u00da\7)"+
-		"\2\2\u00da\u00dc\7(\2\2\u00db\u00dd\7\3\2\2\u00dc\u00db\3\2\2\2\u00dd"+
-		"\u00de\3\2\2\2\u00de\u00dc\3\2\2\2\u00de\u00df\3\2\2\2\u00df\u00e1\3\2"+
-		"\2\2\u00e0\u00e2\7\3\2\2\u00e1\u00e0\3\2\2\2\u00e2\u00e3\3\2\2\2\u00e3"+
+		"\n\27\3\27\3\27\3\27\3\27\3\27\5\27\u01ed\n\27\3\30\3\30\3\30\3\30\3\30"+
+		"\3\30\3\30\3\30\3\30\3\30\3\30\3\30\3\30\3\30\3\30\5\30\u01fe\n\30\3\30"+
+		"\2\2\31\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&(*,.\2\7\4\2\13\13"+
+		"$$\4\2((..\3\2TU\3\29<\3\2=@\2\u0257\2\63\3\2\2\2\4U\3\2\2\2\6d\3\2\2"+
+		"\2\b\u00b4\3\2\2\2\n\u00b6\3\2\2\2\f\u00b8\3\2\2\2\16\u00f8\3\2\2\2\20"+
+		"\u010a\3\2\2\2\22\u0112\3\2\2\2\24\u012c\3\2\2\2\26\u013d\3\2\2\2\30\u013f"+
+		"\3\2\2\2\32\u014c\3\2\2\2\34\u0166\3\2\2\2\36\u0182\3\2\2\2 \u0184\3\2"+
+		"\2\2\"\u0190\3\2\2\2$\u0197\3\2\2\2&\u0199\3\2\2\2(\u019d\3\2\2\2*\u01a2"+
+		"\3\2\2\2,\u01ec\3\2\2\2.\u01fd\3\2\2\2\60\62\5\4\3\2\61\60\3\2\2\2\62"+
+		"\65\3\2\2\2\63\61\3\2\2\2\63\64\3\2\2\2\64\66\3\2\2\2\65\63\3\2\2\2\66"+
+		"\67\7\2\2\3\67\3\3\2\2\28V\5\6\4\29:\5\26\f\2:;\7\3\2\2;V\3\2\2\2<=\5"+
+		"\26\f\2=>\7\4\2\2>?\b\3\1\2?V\3\2\2\2@A\5\26\f\2AB\7\5\2\2BC\b\3\1\2C"+
+		"V\3\2\2\2DE\5\26\f\2EF\b\3\1\2FV\3\2\2\2GI\5\26\f\2HJ\7\3\2\2IH\3\2\2"+
+		"\2JK\3\2\2\2KI\3\2\2\2KL\3\2\2\2LN\3\2\2\2MO\7\3\2\2NM\3\2\2\2OP\3\2\2"+
+		"\2PN\3\2\2\2PQ\3\2\2\2QR\3\2\2\2RS\b\3\1\2SV\3\2\2\2TV\5\b\5\2U8\3\2\2"+
+		"\2U9\3\2\2\2U<\3\2\2\2U@\3\2\2\2UD\3\2\2\2UG\3\2\2\2UT\3\2\2\2V\5\3\2"+
+		"\2\2We\5\24\13\2Xe\5\22\n\2Ye\5\16\b\2Ze\5\20\t\2[e\5\f\7\2\\]\5\24\13"+
+		"\2]^\7\3\2\2^_\b\4\1\2_e\3\2\2\2`a\5\22\n\2ab\7\3\2\2bc\b\4\1\2ce\3\2"+
+		"\2\2dW\3\2\2\2dX\3\2\2\2dY\3\2\2\2dZ\3\2\2\2d[\3\2\2\2d\\\3\2\2\2d`\3"+
+		"\2\2\2e\7\3\2\2\2fg\5.\30\2gh\7\6\2\2hi\5.\30\2ij\7\3\2\2jk\b\5\1\2k\u00b5"+
+		"\3\2\2\2lm\5.\30\2mn\7\7\2\2no\5.\30\2op\7\3\2\2pq\b\5\1\2q\u00b5\3\2"+
+		"\2\2rs\5.\30\2st\7\b\2\2tu\5.\30\2uv\7\3\2\2vw\b\5\1\2w\u00b5\3\2\2\2"+
+		"xy\5.\30\2yz\7\3\2\2z|\3\2\2\2{x\3\2\2\2|}\3\2\2\2}{\3\2\2\2}~\3\2\2\2"+
+		"~\u0082\3\2\2\2\177\u0080\5.\30\2\u0080\u0081\7\3\2\2\u0081\u0083\3\2"+
+		"\2\2\u0082\177\3\2\2\2\u0083\u0084\3\2\2\2\u0084\u0082\3\2\2\2\u0084\u0085"+
+		"\3\2\2\2\u0085\u0086\3\2\2\2\u0086\u0087\5\26\f\2\u0087\u0088\7\3\2\2"+
+		"\u0088\u0089\b\5\1\2\u0089\u00b5\3\2\2\2\u008a\u008b\5.\30\2\u008b\u008c"+
+		"\7\3\2\2\u008c\u008e\3\2\2\2\u008d\u008a\3\2\2\2\u008e\u008f\3\2\2\2\u008f"+
+		"\u008d\3\2\2\2\u008f\u0090\3\2\2\2\u0090\u0094\3\2\2\2\u0091\u0092\5."+
+		"\30\2\u0092\u0093\7\3\2\2\u0093\u0095\3\2\2\2\u0094\u0091\3\2\2\2\u0095"+
+		"\u0096\3\2\2\2\u0096\u0094\3\2\2\2\u0096\u0097\3\2\2\2\u0097\u0098\3\2"+
+		"\2\2\u0098\u0099\5\26\f\2\u0099\u009a\b\5\1\2\u009a\u00b5\3\2\2\2\u009b"+
+		"\u009c\7\t\2\2\u009c\u009d\5.\30\2\u009d\u009e\7\3\2\2\u009e\u009f\b\5"+
+		"\1\2\u009f\u00b5\3\2\2\2\u00a0\u00a1\7\n\2\2\u00a1\u00a2\5.\30\2\u00a2"+
+		"\u00a3\7\3\2\2\u00a3\u00a4\b\5\1\2\u00a4\u00b5\3\2\2\2\u00a5\u00a7\t\2"+
+		"\2\2\u00a6\u00a5\3\2\2\2\u00a7\u00aa\3\2\2\2\u00a8\u00a6\3\2\2\2\u00a8"+
+		"\u00a9\3\2\2\2\u00a9\u00ab\3\2\2\2\u00aa\u00a8\3\2\2\2\u00ab\u00af\7\f"+
+		"\2\2\u00ac\u00ae\t\2\2\2\u00ad\u00ac\3\2\2\2\u00ae\u00b1\3\2\2\2\u00af"+
+		"\u00ad\3\2\2\2\u00af\u00b0\3\2\2\2\u00b0\u00b2\3\2\2\2\u00b1\u00af\3\2"+
+		"\2\2\u00b2\u00b3\7\3\2\2\u00b3\u00b5\b\5\1\2\u00b4f\3\2\2\2\u00b4l\3\2"+
+		"\2\2\u00b4r\3\2\2\2\u00b4{\3\2\2\2\u00b4\u008d\3\2\2\2\u00b4\u009b\3\2"+
+		"\2\2\u00b4\u00a0\3\2\2\2\u00b4\u00a8\3\2\2\2\u00b5\t\3\2\2\2\u00b6\u00b7"+
+		"\t\3\2\2\u00b7\13\3\2\2\2\u00b8\u00bc\7\r\2\2\u00b9\u00bb\t\2\2\2\u00ba"+
+		"\u00b9\3\2\2\2\u00bb\u00be\3\2\2\2\u00bc\u00ba\3\2\2\2\u00bc\u00bd\3\2"+
+		"\2\2\u00bd\u00bf\3\2\2\2\u00be\u00bc\3\2\2\2\u00bf\u00c0\7\3\2\2\u00c0"+
+		"\u00c1\b\7\1\2\u00c1\r\3\2\2\2\u00c2\u00c3\7\16\2\2\u00c3\u00c4\7$\2\2"+
+		"\u00c4\u00c5\7\3\2\2\u00c5\u00c6\7\17\2\2\u00c6\u00c7\7(\2\2\u00c7\u00c8"+
+		"\7\3\2\2\u00c8\u00f9\b\b\1\2\u00c9\u00ca\7\16\2\2\u00ca\u00cb\7\3\2\2"+
+		"\u00cb\u00cc\7$\2\2\u00cc\u00cd\7\17\2\2\u00cd\u00ce\7(\2\2\u00ce\u00cf"+
+		"\7\3\2\2\u00cf\u00f9\b\b\1\2\u00d0\u00d1\7\16\2\2\u00d1\u00d2\7\17\2\2"+
+		"\u00d2\u00d3\7(\2\2\u00d3\u00f9\7\3\2\2\u00d4\u00d5\7\16\2\2\u00d5\u00d6"+
+		"\7)\2\2\u00d6\u00d7\7(\2\2\u00d7\u00f9\7\3\2\2\u00d8\u00d9\7\16\2\2\u00d9"+
+		"\u00da\7)\2\2\u00da\u00dc\7(\2\2\u00db\u00dd\7\3\2\2\u00dc\u00db\3\2\2"+
+		"\2\u00dd\u00de\3\2\2\2\u00de\u00dc\3\2\2\2\u00de\u00df\3\2\2\2\u00df\u00e1"+
+		"\3\2\2\2\u00e0\u00e2\7\3\2\2\u00e1\u00e0\3\2\2\2\u00e2\u00e3\3\2\2\2\u00e3"+
 		"\u00e1\3\2\2\2\u00e3\u00e4\3\2\2\2\u00e4\u00e5\3\2\2\2\u00e5\u00f9\b\b"+
 		"\1\2\u00e6\u00e7\7)\2\2\u00e7\u00e8\7(\2\2\u00e8\u00e9\7\3\2\2\u00e9\u00f9"+
 		"\b\b\1\2\u00ea\u00eb\7\16\2\2\u00eb\u00ec\7(\2\2\u00ec\u00ed\7\3\2\2\u00ed"+
@@ -2956,41 +3044,42 @@ public class TurtleParser extends Parser {
 		"\2\u01a2\u01a6\7\31\2\2\u01a3\u01a5\5\"\22\2\u01a4\u01a3\3\2\2\2\u01a5"+
 		"\u01a8\3\2\2\2\u01a6\u01a4\3\2\2\2\u01a6\u01a7\3\2\2\2\u01a7\u01a9\3\2"+
 		"\2\2\u01a8\u01a6\3\2\2\2\u01a9\u01aa\7\32\2\2\u01aa+\3\2\2\2\u01ab\u01af"+
-		"\7O\2\2\u01ac\u01b0\7/\2\2\u01ad\u01ae\7\33\2\2\u01ae\u01b0\5.\30\2\u01af"+
+		"\7V\2\2\u01ac\u01b0\7/\2\2\u01ad\u01ae\7\33\2\2\u01ae\u01b0\5.\30\2\u01af"+
 		"\u01ac\3\2\2\2\u01af\u01ad\3\2\2\2\u01af\u01b0\3\2\2\2\u01b0\u01b1\3\2"+
-		"\2\2\u01b1\u01eb\b\27\1\2\u01b2\u01b6\7P\2\2\u01b3\u01b7\7/\2\2\u01b4"+
+		"\2\2\u01b1\u01ed\b\27\1\2\u01b2\u01b6\7W\2\2\u01b3\u01b7\7/\2\2\u01b4"+
 		"\u01b5\7\33\2\2\u01b5\u01b7\5.\30\2\u01b6\u01b3\3\2\2\2\u01b6\u01b4\3"+
-		"\2\2\2\u01b6\u01b7\3\2\2\2\u01b7\u01b8\3\2\2\2\u01b8\u01eb\b\27\1\2\u01b9"+
+		"\2\2\2\u01b6\u01b7\3\2\2\2\u01b7\u01b8\3\2\2\2\u01b8\u01ed\b\27\1\2\u01b9"+
 		"\u01bd\7\"\2\2\u01ba\u01be\7/\2\2\u01bb\u01bc\7\33\2\2\u01bc\u01be\5."+
 		"\30\2\u01bd\u01ba\3\2\2\2\u01bd\u01bb\3\2\2\2\u01bd\u01be\3\2\2\2\u01be"+
-		"\u01eb\3\2\2\2\u01bf\u01c0\7\"\2\2\u01c0\u01c1\7\60\2\2\u01c1\u01eb\b"+
+		"\u01ed\3\2\2\2\u01bf\u01c0\7\"\2\2\u01c0\u01c1\7\60\2\2\u01c1\u01ed\b"+
 		"\27\1\2\u01c2\u01c3\7\"\2\2\u01c3\u01c4\7\34\2\2\u01c4\u01c5\5.\30\2\u01c5"+
-		"\u01c6\b\27\1\2\u01c6\u01eb\3\2\2\2\u01c7\u01c8\7\"\2\2\u01c8\u01c9\7"+
+		"\u01c6\b\27\1\2\u01c6\u01ed\3\2\2\2\u01c7\u01c8\7\"\2\2\u01c8\u01c9\7"+
 		"/\2\2\u01c9\u01ca\7\33\2\2\u01ca\u01cb\5.\30\2\u01cb\u01cc\b\27\1\2\u01cc"+
-		"\u01eb\3\2\2\2\u01cd\u01ce\7\"\2\2\u01ce\u01cf\7\33\2\2\u01cf\u01d0\5"+
-		".\30\2\u01d0\u01d1\7/\2\2\u01d1\u01d2\b\27\1\2\u01d2\u01eb\3\2\2\2\u01d3"+
+		"\u01ed\3\2\2\2\u01cd\u01ce\7\"\2\2\u01ce\u01cf\7\33\2\2\u01cf\u01d0\5"+
+		".\30\2\u01d0\u01d1\7/\2\2\u01d1\u01d2\b\27\1\2\u01d2\u01ed\3\2\2\2\u01d3"+
 		"\u01d7\t\4\2\2\u01d4\u01d8\7/\2\2\u01d5\u01d6\7\33\2\2\u01d6\u01d8\5."+
 		"\30\2\u01d7\u01d4\3\2\2\2\u01d7\u01d5\3\2\2\2\u01d7\u01d8\3\2\2\2\u01d8"+
-		"\u01d9\3\2\2\2\u01d9\u01eb\b\27\1\2\u01da\u01de\7K\2\2\u01db\u01df\7/"+
+		"\u01d9\3\2\2\2\u01d9\u01ed\b\27\1\2\u01da\u01de\7R\2\2\u01db\u01df\7/"+
 		"\2\2\u01dc\u01dd\7\33\2\2\u01dd\u01df\5.\30\2\u01de\u01db\3\2\2\2\u01de"+
-		"\u01dc\3\2\2\2\u01de\u01df\3\2\2\2\u01df\u01e0\3\2\2\2\u01e0\u01eb\b\27"+
-		"\1\2\u01e1\u01e5\7L\2\2\u01e2\u01e6\7/\2\2\u01e3\u01e4\7\33\2\2\u01e4"+
+		"\u01dc\3\2\2\2\u01de\u01df\3\2\2\2\u01df\u01e0\3\2\2\2\u01e0\u01ed\b\27"+
+		"\1\2\u01e1\u01e5\7S\2\2\u01e2\u01e6\7/\2\2\u01e3\u01e4\7\33\2\2\u01e4"+
 		"\u01e6\5.\30\2\u01e5\u01e2\3\2\2\2\u01e5\u01e3\3\2\2\2\u01e5\u01e6\3\2"+
-		"\2\2\u01e6\u01e7\3\2\2\2\u01e7\u01eb\b\27\1\2\u01e8\u01e9\79\2\2\u01e9"+
-		"\u01eb\b\27\1\2\u01ea\u01ab\3\2\2\2\u01ea\u01b2\3\2\2\2\u01ea\u01b9\3"+
-		"\2\2\2\u01ea\u01bf\3\2\2\2\u01ea\u01c2\3\2\2\2\u01ea\u01c7\3\2\2\2\u01ea"+
-		"\u01cd\3\2\2\2\u01ea\u01d3\3\2\2\2\u01ea\u01da\3\2\2\2\u01ea\u01e1\3\2"+
-		"\2\2\u01ea\u01e8\3\2\2\2\u01eb-\3\2\2\2\u01ec\u01fc\7(\2\2\u01ed\u01fc"+
-		"\7*\2\2\u01ee\u01ef\7)\2\2\u01ef\u01f0\7B\2\2\u01f0\u01fc\b\30\1\2\u01f1"+
-		"\u01f2\7,\2\2\u01f2\u01fc\b\30\1\2\u01f3\u01f4\7-\2\2\u01f4\u01fc\b\30"+
-		"\1\2\u01f5\u01f6\7H\2\2\u01f6\u01fc\b\30\1\2\u01f7\u01f8\7I\2\2\u01f8"+
-		"\u01fc\b\30\1\2\u01f9\u01fa\7J\2\2\u01fa\u01fc\b\30\1\2\u01fb\u01ec\3"+
-		"\2\2\2\u01fb\u01ed\3\2\2\2\u01fb\u01ee\3\2\2\2\u01fb\u01f1\3\2\2\2\u01fb"+
-		"\u01f3\3\2\2\2\u01fb\u01f5\3\2\2\2\u01fb\u01f7\3\2\2\2\u01fb\u01f9\3\2"+
-		"\2\2\u01fc/\3\2\2\2*\63KPUd}\u0084\u008f\u0096\u00a8\u00af\u00b4\u00bc"+
-		"\u00de\u00e3\u00f2\u00f8\u0102\u0107\u010a\u0112\u012c\u0133\u013d\u0145"+
-		"\u0149\u0151\u0166\u0182\u0190\u0197\u01a6\u01af\u01b6\u01bd\u01d7\u01de"+
-		"\u01e5\u01ea\u01fb";
+		"\2\2\u01e6\u01e7\3\2\2\2\u01e7\u01ed\b\27\1\2\u01e8\u01e9\t\5\2\2\u01e9"+
+		"\u01ed\b\27\1\2\u01ea\u01eb\t\6\2\2\u01eb\u01ed\b\27\1\2\u01ec\u01ab\3"+
+		"\2\2\2\u01ec\u01b2\3\2\2\2\u01ec\u01b9\3\2\2\2\u01ec\u01bf\3\2\2\2\u01ec"+
+		"\u01c2\3\2\2\2\u01ec\u01c7\3\2\2\2\u01ec\u01cd\3\2\2\2\u01ec\u01d3\3\2"+
+		"\2\2\u01ec\u01da\3\2\2\2\u01ec\u01e1\3\2\2\2\u01ec\u01e8\3\2\2\2\u01ec"+
+		"\u01ea\3\2\2\2\u01ed-\3\2\2\2\u01ee\u01fe\7(\2\2\u01ef\u01fe\7*\2\2\u01f0"+
+		"\u01f1\7)\2\2\u01f1\u01f2\7I\2\2\u01f2\u01fe\b\30\1\2\u01f3\u01f4\7,\2"+
+		"\2\u01f4\u01fe\b\30\1\2\u01f5\u01f6\7-\2\2\u01f6\u01fe\b\30\1\2\u01f7"+
+		"\u01f8\7O\2\2\u01f8\u01fe\b\30\1\2\u01f9\u01fa\7P\2\2\u01fa\u01fe\b\30"+
+		"\1\2\u01fb\u01fc\7Q\2\2\u01fc\u01fe\b\30\1\2\u01fd\u01ee\3\2\2\2\u01fd"+
+		"\u01ef\3\2\2\2\u01fd\u01f0\3\2\2\2\u01fd\u01f3\3\2\2\2\u01fd\u01f5\3\2"+
+		"\2\2\u01fd\u01f7\3\2\2\2\u01fd\u01f9\3\2\2\2\u01fd\u01fb\3\2\2\2\u01fe"+
+		"/\3\2\2\2*\63KPUd}\u0084\u008f\u0096\u00a8\u00af\u00b4\u00bc\u00de\u00e3"+
+		"\u00f2\u00f8\u0102\u0107\u010a\u0112\u012c\u0133\u013d\u0145\u0149\u0151"+
+		"\u0166\u0182\u0190\u0197\u01a6\u01af\u01b6\u01bd\u01d7\u01de\u01e5\u01ec"+
+		"\u01fd";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

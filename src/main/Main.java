@@ -15,6 +15,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import core.CollectionErrorListener;
 import core.ShortToUnicodeString;
@@ -41,25 +43,26 @@ public class Main {
 
 	// needed for large files 
 	static DescriptiveErrorListener errorListener = new DescriptiveErrorListener();
+	static ArrayList<String> errorCorrectionsReport = new ArrayList<String>();
 
 	public static void main (String[] args) {
 		//final String filename ="/home/ahmed/Downloads/rdfDoctorTest/xaa_with_errors";
 		//final String filename = "/home/ahmed/Downloads/albumin-epo.ttl";
-	    //final String filename = "/home/ahmed/Downloads/persondata_en.ttl";
-	   //final String filename = "/home/ahmed/Desktop/eclipse-projects/RDF-Doctor/Resources/myTest/test.ttl";
-	    //final String filename = "/home/ahmed/Downloads/persondata_en _with_errors.ttl";
-	    //final String filename ="/home/ahmed/Downloads/rdfDoctorTest/file_size_385mb_with_3_errors.ttl";
+		//final String filename = "/home/ahmed/Downloads/persondata_en.ttl";
+		//final String filename = "/home/ahmed/Desktop/eclipse-projects/RDF-Doctor/Resources/myTest/test.ttl";
+		//final String filename = "/home/ahmed/Downloads/persondata_en _with_errors.ttl";
+		//final String filename ="/home/ahmed/Downloads/rdfDoctorTest/file_size_385mb_with_3_errors.ttl";
 		final String filename = "/home/ahmed/Desktop/eclipse-projects/RDF-Doctor/Resources/myTest/test.ttl" ; 
 		final String outputFilename = "/home/ahmed/Downloads/xaa.output" ;
 		final String errorFilename = "/home/ahmed/Downloads/xaa.error" ;
 
 		// test with all TurtleSuit files 	
-//		String turtleFolderPath = "/home/ahmed/Desktop/eclipse-projects/RDF-Doctor/Resources/TurtleTests/";
-//		File dir = new File(turtleFolderPath);
-//		String[] extensions = new String[] { "ttl" };
-//		List<File> files = (List<File>) FileUtils.listFiles(dir, extensions, true);
-//		for (File file : files) {
-		 
+		//		String turtleFolderPath = "/home/ahmed/Desktop/eclipse-projects/RDF-Doctor/Resources/TurtleTests/";
+		//		File dir = new File(turtleFolderPath);
+		//		String[] extensions = new String[] { "ttl" };
+		//		List<File> files = (List<File>) FileUtils.listFiles(dir, extensions, true);
+		//		for (File file : files) {
+
 		long startTime = 0, endTime = 0;
 		StringBuilder inputSB = new StringBuilder();
 		//PrintStream printStream ;
@@ -79,16 +82,20 @@ public class Main {
 			// new input stream created
 			// test with all TurtleSuit files 
 			//input = new FileInputStream(file.getCanonicalFile());
-			
+
 			// needed for large file
 			input = new FileInputStream(filename);
 			//PrintStream printStream = new PrintStream(new FileOutputStream(outputFilename));
 			//System.setOut(printStream);
-			
+
 			// start time counter
 			startTime = System.nanoTime();
+			// clear output file at the start of the program
+			FileWriter fw =new FileWriter(outputFilename, false);
+			fw.write("");
+			fw.close();
 
-			
+
 			BufferedReader reader = new BufferedReader(new InputStreamReader(input,"UTF8"));
 			//				Correction corrector = new Correction();
 
@@ -152,16 +159,19 @@ public class Main {
 					dataBelowMilion = false;
 				} 
 			}
-			if(dataBelowMilion) {
-					errorListener.setInput(currentData);
-					errorListener.setOffest(counter -1);
-					parse(currentData,outputFilename);
-					Arrays.fill( currentData, "" );
+			if(dataBelowMilion && counter > 999999) {
+				errorListener.setInput(currentData);
+				errorListener.setOffest(counter -1);
+				parse(currentData,outputFilename);
+				Arrays.fill( currentData, "" );
 			}
 
 			scheduler.shutdownNow();
 			// write error list to an error file 
 			writeErrorsToFile(errorFilename);
+			// show corrections list report if there any in the corrections list
+			if(!errorCorrectionsReport.isEmpty())
+				showCorrectionReport();
 
 			endTime = System.nanoTime();
 
@@ -220,7 +230,7 @@ public class Main {
 			System.gc();//gc, won't run for such tiny object so forced clean-up
 
 
-			
+
 		}catch(RecognitionException e ) {
 			System.out.print("\n\n\n from inside catch "+e.getMessage());
 		}catch(IOException ioe) {
@@ -269,71 +279,99 @@ public class Main {
 		// Walk the tree created during the parse, trigger callbacks
 		//walker.walk((ParseTreeListener) listener, tree);
 
-/*		//show AST in GUI
-		        JFrame frame = new JFrame("Parsing Tree");
+		//show AST in GUI
+		JFrame frame = new JFrame("Parsing Tree");
 
-	        TreeViewer viewr = new TreeViewer(Arrays.asList(
-	                parser.getRuleNames()),tree);
-	        viewr.setScale(1.5);//scale a little
-	        JScrollPane panel = new JScrollPane(viewr);
-        //panel.setAutoscrolls(true);
-	        panel.setAutoscrolls(true);
-	        frame.add(panel);
-	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	        frame.setSize(1200,800);
-	        frame.setVisible(true);
+		TreeViewer viewr = new TreeViewer(Arrays.asList(
+				parser.getRuleNames()),tree);
+		viewr.setScale(1.5);//scale a little
+		JScrollPane panel = new JScrollPane(viewr);
+		//panel.setAutoscrolls(true);
+		panel.setAutoscrolls(true);
+		frame.add(panel);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(1200,800);
+		frame.setVisible(true);
 
-*/
+
 
 		//		startRule_ctx root = ... ;
 		//		ParseTreeVisitor visitor = new ParseTreeVisitor();
 		//		visitor.visit(listener, root);
 
 		//System.out.println(); // print a \n after translation
-		///corrector.process(inputChunck,errorListener.errorsList );
+		corrector.process(inputChunck,errorListener.errorsList );
 
 		//show arrayOfErrors
 		//System.out.print(errorListener.errorsList);
 
-		//corrector.showInputAfterEditing();
-		////corrector.writeToFileAfterEditing(outFilename);
-		////errorListener.resetErrorList();
+		corrector.showInputAfterEditing();
+		corrector.writeToFileAfterEditing(outFilename);
+		if(!corrector.errorCorrectionsList.isEmpty()) {
+			for(String line : corrector.errorCorrectionsList) {
+				errorCorrectionsReport.add(line);
+
+			}
+		}
+		//errorListener.resetErrorList();
 
 	}
+
+	// write the errors to a file 
 	static public void writeErrorsToFile (String errorFilename) {
 		long count = 1;
 		String data = "";
-		
-	        File file = new File(errorFilename);
-	        FileWriter fr = null;
-	        try {
-	        	
-	            fr = new FileWriter(file, true);
-	    		for(String line : errorListener.errorsList) {
-	    			// check if input is empty
-	    			if(line == "")
-	    				break;
-	    			// show input after fixing errors
-	    			//System.out.print("\nline "+ count++ + " " + line);
-		            fr.write("\nError"+count++ +": "+line);
-	    			
-	    		}
+		JSONArray errorJSONArray = new JSONArray();
 
-	            
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }finally{
-    			//System.out.print("\nOutput file is saved !");
-	            //close resources
-	            try {
-	                fr.close();
-	            } catch (IOException e) {
-	                e.printStackTrace();
-	            }
-	        }
-	    
-		
-		
+		File file = new File(errorFilename);
+		FileWriter fr = null;
+		try {
+
+			fr = new FileWriter(file);
+			for(String line : errorListener.errorsList) {
+				// check if input is empty
+				if(line == "") {
+					break;
+				}
+				// create a JSONObject to hold the error number and the message
+				JSONObject errorJSONObject = new JSONObject();
+				errorJSONObject.put("Error Message", line);
+				errorJSONObject.put("Error Number", count++);
+				errorJSONArray.put(errorJSONObject);
+				// can be used to show error with a plain text
+				//fr.write("\nError"+count++ +": "+line);
+
+			}
+
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			//System.out.print("\nOutput file is saved !");
+			//close resources
+
+			try {
+				fr.write(errorJSONArray.toString());
+				fr.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	// display report about the corrections list
+	static public void showCorrectionReport () {
+		// counter for number of corrections
+		int count = 1;
+		// check if there are some corrections done
+		if(!errorCorrectionsReport.isEmpty()) {
+			System.out.println(":::::::::::::::::::::::");
+			System.out.println(":: Correction Reprot ::");
+			System.out.println(":::::::::::::::::::::::");
+			for(String line : errorCorrectionsReport) {
+				System.out.println("Correction "+ count++ +": " + line);
+			}
+		}
 	}
 
 }

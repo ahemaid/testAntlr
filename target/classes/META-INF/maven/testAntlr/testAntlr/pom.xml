@@ -3,6 +3,16 @@
   <groupId>testAntlr</groupId>
   <artifactId>testAntlr</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  
+  <!-- https://mvnrepository.com/artifact/org.json/json -->
+    <dependencies>
+<dependency>
+    <groupId>org.json</groupId>
+    <artifactId>json</artifactId>
+    <version>20160810</version>
+</dependency>
+    </dependencies>
+
   <build>
     <sourceDirectory>src</sourceDirectory>
     <plugins>

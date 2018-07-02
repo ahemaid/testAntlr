@@ -28,10 +28,10 @@ start
 statement
    : directive
    | triples '.'
-   | triples ',' {notifyErrorListeners("Extraneous ';' at the end of a triple");}
-   | triples ';' {notifyErrorListeners("Extraneous ';' at the end of a triple");}
+   | triples ',' {notifyErrorListeners("Bad end of a triple with ','");}
+   | triples ';' {notifyErrorListeners("Bad end of a triple with ';'");}
    | triples {notifyErrorListeners("Missing '.' at the end of a triple");}
-   | triples ('.')+ ('.')+ {notifyErrorListeners("Too many DOT ");}
+   | triples ('.')+ ('.')+ {notifyErrorListeners("Too many DOT");}
    | errors		
    
    ;
@@ -202,9 +202,9 @@ rdfLiteral
    | (BAD_STRING_LITERAL_LONG_SINGLE_QUOTE | BAD_STRING_LITERAL_LONG_QUOTE ) (LANGTAG | '^^' iri)?  {notifyErrorListeners("incorrect quotes of a literal");}
    | BAD_STRING_LITERAL_SINGLE_QUOTE (LANGTAG | '^^' iri)? {notifyErrorListeners("incorrect quotes of a literal");}
    | BAD_STRING_LITERAL_QUOTE (LANGTAG | '^^' iri)? {notifyErrorListeners("incorrect quotes of a literal");}
-   | BAD_STRING_LITERAL_QUOTE_WITH_ESCAPE {notifyErrorListeners("Bad Unicode Characters, Only HEX Chars can be used");}
-  
-//   |   {notifyErrorListeners("Uncorrect form of long literal with 4 qoutes");}
+   | (BAD_STRING_LITERAL_QUOTE_WITH_BAD_UCHAR | BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_UCHAR | BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_UCHAR | BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_UCHAR) {notifyErrorListeners("Bad Unicode Characters, Only HEX Characters are allowed");}
+   | (BAD_STRING_LITERAL_QUOTE_WITH_BAD_ESCAPE | BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_ESCAPE | BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_ESCAPE | BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_ESCAPE) {notifyErrorListeners("Bad Literal Escape");}
+   //   |   {notifyErrorListeners("Uncorrect form of long literal with 4 qoutes");}
    ;
 
 
@@ -264,8 +264,6 @@ PN_PREFIX
 
 IRIREF
    :
-   // '<' (PN_CHARS | '.' | ':' | '/' | '\\' | '#' | '@' | '%' | '&' | UCHAR)* '>'
-   //'<' (~[\u0000-\u0020=<>"{}|^`\\] | UCHAR)* '>' 
    '<' (~[\u0000-\u0020<>"{}|^`\\] | UCHAR)* '>' 
    
    ;
@@ -328,7 +326,6 @@ EXPONENT
 
 STRING_LITERAL_LONG_SINGLE_QUOTE
    : '\'\'\'' (~[\u0027\u005C\u000A\u000D] | ECHAR | UCHAR  | '\n' )*  ('\'' | '\'\'')?  (~[\u0027\u005C\u000A\u000D] | ECHAR | UCHAR)* '\'\'\''  
-//   ||'\'\'\'' (('\'' | '\'\'')? ([^'\\] | ECHAR | UCHAR | '"'))* '\'\'\''
    ;
 
 
@@ -336,20 +333,45 @@ STRING_LITERAL_LONG_QUOTE
    : '"""'  ((~ ["\\] | ECHAR | UCHAR | '\'') ('"' | '""')? (~ ["\\] | ECHAR | UCHAR | '\''))* '"""'
    ;
 
-
 STRING_LITERAL_QUOTE
    : '"' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '"' 
    ;
-
 
 STRING_LITERAL_SINGLE_QUOTE
    : '\'' (~ [\u0027\u005C\u000A\u000D] | ECHAR | UCHAR | '"')* '\''
    ;
 
-BAD_STRING_LITERAL_QUOTE_WITH_ESCAPE
+BAD_STRING_LITERAL_QUOTE_WITH_BAD_UCHAR
    : '"' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* BAD_UCHAR (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '"' 
    ;
 
+BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_UCHAR
+   : '\'' (~ [\u0027\u005C\u000A\u000D] | ECHAR | UCHAR | '"')*  BAD_UCHAR (~ [\u0027\u005C\u000A\u000D] | ECHAR | UCHAR | '"')*  '\''
+   ;
+
+BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_UCHAR
+   : '\'\'\'' (~[\u0027\u005C\u000A\u000D] | ECHAR | UCHAR  | '\n' )*  ('\'' | '\'\'')?  (~[\u0027\u005C\u000A\u000D] | ECHAR | UCHAR)* BAD_UCHAR   (~[\u0027\u005C\u000A\u000D] | ECHAR | UCHAR  | '\n' )*  ('\'' | '\'\'')?  (~[\u0027\u005C\u000A\u000D] | ECHAR | UCHAR)*'\'\'\''  
+   ;
+
+BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_UCHAR
+   : '"""'  (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)*   BAD_UCHAR (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)*   '"""'
+   ;
+   
+BAD_STRING_LITERAL_QUOTE_WITH_BAD_ESCAPE
+   : '"' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* ILLEGAL_ESCAPE (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '"' 
+   ;
+
+BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_ESCAPE
+   : '\'' (~ [\u0027\u005C\u000A\u000D] | ECHAR | UCHAR | '"')*  ILLEGAL_ESCAPE (~ [\u0027\u005C\u000A\u000D] | ECHAR | UCHAR | '"')*  '\''
+   ;
+
+BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_ESCAPE
+   : '\'\'\'' (~[\u0027\u005C\u000A\u000D] | ECHAR | UCHAR  | '\n' )*  ('\'' | '\'\'')?  (~[\u0027\u005C\u000A\u000D] | ECHAR | UCHAR)* ILLEGAL_ESCAPE   (~[\u0027\u005C\u000A\u000D] | ECHAR | UCHAR  | '\n' )*  ('\'' | '\'\'')?  (~[\u0027\u005C\u000A\u000D] | ECHAR | UCHAR)*'\'\'\''  
+   ;
+
+BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_ESCAPE
+   : '"""'  (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)*   ILLEGAL_ESCAPE (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)*   '"""'
+   ;
 
 fragment UCHAR
    : '\\u' HEX HEX HEX HEX | '\\U' HEX HEX HEX HEX HEX HEX HEX HEX
@@ -473,9 +495,9 @@ BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_TOO_MANY
 	;
 	
 	
-//	|  (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '"""' 
-//	|  '"""' (('"' | '""')? (~["\\] | CHARS | ECHAR))*  
-	
+ILLEGAL_ESCAPE
+	: ('\\' ~[ubtnfr"'\\] ) [a-zA-Z]+ 
+	;
 	
 fragment A:('a'|'A');
 fragment B:('b'|'B');
