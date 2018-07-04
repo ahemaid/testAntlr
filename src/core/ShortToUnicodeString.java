@@ -21,12 +21,4 @@ public class ShortToUnicodeString extends TurtleBaseListener {
     public void exitStart(TurtleParser.StartContext ctx) {
         System.out.print('"');
     }
-
-//    /** Translate integers to 4-digit hexadecimal strings prefixed with \\u */
-//    @Override
-//    public void enterValue(HelloParser. ctx) {
-//        // Assumes no nested array initializers
-//        int value = Integer.valueOf(ctx.INT().getText());
-//        System.out.printf("\\u%04x", value);
-//    }
 }

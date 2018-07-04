@@ -19,8 +19,7 @@ public class Correction {
 		if(inputBeforeEditing == null) {
 			inputBeforeEditing = input;
 		}
-		
-		
+
 		// make unique values of the error array list 
 		HashSet<String> uniqueValues = new HashSet<>(errors);
 		Iterator<String> iterator = uniqueValues.iterator();
@@ -47,9 +46,7 @@ public class Correction {
 				change2Dot(lineNum,columnNum, ";");
 			else if (line.contains("Bad end of a triple with ','"))
 				change2Dot(lineNum,columnNum, ",");
-			
-			
-			
+						
 		}
 	}
 	
@@ -145,6 +142,7 @@ public class Correction {
 			lineNumber = lineNum - 2 ;
 		else if (colNum == 0 && lineNum == 1)
 			lineNumber = lineNum - 1 ;
+		System.out.println(lineNumber);
 		// store line inside stringBuilder to delete a period
 		StringBuilder sb = new StringBuilder(inputBeforeEditing[(int) lineNumber]);
 		int charLocation = -1;
@@ -291,17 +289,11 @@ public class Correction {
 	    			// check if input is empty
 	    			if(line == "")
 	    				break;
-	    			// show input after fixing errors
-	    			//System.out.print("\nline "+ count++ + " " + line);
-		            fr.write(line);
-	    			
+		            fr.write(line);	    			
 	    		}
-
-	            
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }finally{
-    			//System.out.print("\nOutput file is saved !");
 	            //close resources
 	            try {
 	                fr.close();
@@ -309,11 +301,5 @@ public class Correction {
 	                e.printStackTrace();
 	            }
 	        }
-	    
-		
-		
 	}
-
-
-
 }

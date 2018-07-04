@@ -21,6 +21,20 @@
 
 grammar Turtle;
 
+@parser::members { // add members to check Namespace declaration
+public List<String> symbols = new ArrayList<String>();
+boolean isExistNS(String in ) { // custom constructor
+	boolean foundNS = false ; 
+	for(String s : symbols ){
+		if(s.contains(in.split(":")[0])){
+			foundNS = true; 
+			break;
+		}
+	}
+	return foundNS;
+}
+}
+
 start
    : statement*  EOF
    ;
@@ -37,9 +51,12 @@ statement
    ;
 
 directive
+//	/* List of symbols defined within this block */
+//	locals [
+//	]
    : sparqlPrefix
    | sparqlBase 
-   | prefixID
+   | prefixID    //{System.out.println("symbols="+$symbols);}
    | base
    | unkonwnDecl
    | sparqlPrefix '.' {notifyErrorListeners("Extraneous '.' at the end of SPARQL prefix directive");}
@@ -75,7 +92,8 @@ prefixID
      '@prefix' CHARS '.' ':' IRIREF '.' {notifyErrorListeners("Prefix Namespace cannot end with '.' ");}
    | '@prefix' '.' CHARS ':' IRIREF '.' {notifyErrorListeners("Prefix Namespace cannot start with '.' ");}
    | '@prefix' ':' IRIREF '.' 
-   | '@prefix' PNAME_NS IRIREF '.' 
+   | '@prefix' PNAME_NS IRIREF '.' {symbols.add($PNAME_NS.text);} // { System.out.println($PNAME_NS.text + $IRIREF.text);} 
+ //  | '@prefix' (PN_PREFIX)? ':' IRIREF '.' { System.out.println($PN_PREFIX.text + $IRIREF.text);} 
    | '@prefix' PNAME_NS IRIREF ('.')+ ('.')+ {notifyErrorListeners("Too many DOT ");}
    | PNAME_NS IRIREF '.' {notifyErrorListeners("Missing Prefix keyword, use '@prefix'");}
    | '@prefix'   IRIREF '.' {notifyErrorListeners("Missing NameSpace in Prefix directive");}
@@ -226,7 +244,13 @@ String
 iri
    : 
    IRIREF 
-   | PrefixedName
+   |  PrefixedName { if(!isExistNS($PrefixedName.text))notifyErrorListeners($PrefixedName.text.split(":")[0] +" prefix is undefined ");}
+//	 | PNAME_LN | (PN_PREFIX)? ':'   
+//      	{
+//	if ( !$directive:symbols.contains($PN_PREFIX.text) ) {
+//	System.err.println("Undefined prefix: "+PN_PREFIX.text);
+//	}
+//	}
 //ToDO   
 // | PNAME_NS  PN_LOCAL_BAD_WITH_DASH {notifyErrorListeners("Bad syntax of Prefixed IRI, the local prefix namespace cannot start with dash");}
    | PNAME_NS  BAD_PN_LOCAL_STARTS_WITH_PERCENT {notifyErrorListeners("Bad syntax of Prefixed IRI, the local prefix namespace cannot contain '%'");}
