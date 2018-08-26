@@ -44,19 +44,50 @@ public class Main {
 	// needed for large files 
 	static DescriptiveErrorListener errorListener = new DescriptiveErrorListener();
 	static ArrayList<String> errorCorrectionsReport = new ArrayList<String>();
+	static boolean showParsingTree = false; 
 
 	public static void main (String[] args) {
-		final String filename = "/home/ahmed/Desktop/eclipse-projects/RDF-Doctor/Resources/myTest/test.ttl" ; 
-		final String outputFilename = "/home/ahmed/Downloads/xaa.output" ;
-		final String errorFilename = "/home/ahmed/Downloads/xaa.error" ;
-
+		String InputFIlename = "file.ttl" ; 
+		String outputFilename = InputFIlename.split("ttl")[0]+"output" ;
+		String errorFilename = InputFIlename.split("ttl")[0]+"error" ;
 		long startTime = 0, endTime = 0;
 		StringBuilder inputSB = new StringBuilder();
 		InputStream input;
+		boolean isJSONOutputSeleted = false; 
+
+		// check if there are inputs for the names of output or input files
+		if(args.length != 0) {
+			String[] inputParameters = args;
+			//System.out.println(Arrays.toString(inputParameters));
+
+			if ( Arrays.asList(inputParameters).contains("-i")) {
+				InputFIlename = Arrays.asList(inputParameters).get(Arrays.asList(inputParameters).indexOf("-i")+1);
+				errorFilename = InputFIlename.split("ttl")[0]+"error" ;
+				outputFilename = InputFIlename.split("ttl")[0]+"output" ;
+
+			}
+			if ( Arrays.asList(inputParameters).contains("-o")) {
+				outputFilename = Arrays.asList(inputParameters).get(Arrays.asList(inputParameters).indexOf("-o")+1);
+			}
+			if ( Arrays.asList(inputParameters).contains("-r")) {
+				errorFilename = Arrays.asList(inputParameters).get(Arrays.asList(inputParameters).indexOf("-r")+1);
+			}
+			if ( Arrays.asList(inputParameters).contains("-j")) {
+				isJSONOutputSeleted = true;
+			}
+			if ( Arrays.asList(inputParameters).contains("-v")) {
+				showParsingTree = true;
+			}
+			if ( Arrays.asList(inputParameters).contains("-c")) {
+				//showParsingTree = true;
+				// make a function for correction
+			}
+			
+		}
 
 		try {
 			// needed for large file
-			input = new FileInputStream(filename);
+			input = new FileInputStream(InputFIlename);
 			// start time counter
 			startTime = System.nanoTime();
 			// clear output file at the start of the program
@@ -128,14 +159,17 @@ public class Main {
 
 			scheduler.shutdownNow();
 			// write error list to an error file 
-			writeErrorsToFile(errorFilename, "Plain");
+			if(isJSONOutputSeleted)
+				writeErrorsToFile(errorFilename, "JSON");
+			else 
+				writeErrorsToFile(errorFilename, "Plain");
 			// show corrections list report if there any in the corrections list
 			//			if(!errorCorrectionsReport.isEmpty())
 			//				showCorrectionReport();
 			endTime = System.nanoTime();
 			long elapsedTimeInMillis = TimeUnit.MILLISECONDS.convert((endTime - startTime), TimeUnit.NANOSECONDS);
 			System.out.println("\n\nTotal elapsed time: " + elapsedTimeInMillis + " ms");
-			System.out.println("\nNumber of processed lines:"+ counter);
+			System.out.println("\nNumber of processed lines: "+ counter);
 			System.gc();//gc, won't run for such tiny object so forced clean-up
 
 
@@ -168,18 +202,20 @@ public class Main {
 
 		// Create a generic parse tree walker that can trigger callbacks
 		ParseTreeWalker walker = new ParseTreeWalker();
-	
+
 		//show AST in GUI
-		JFrame frame = new JFrame("Parsing Tree");
-		TreeViewer viewr = new TreeViewer(Arrays.asList(
-				parser.getRuleNames()),tree);
-		viewr.setScale(1.5);//scale a little
-		JScrollPane panel = new JScrollPane(viewr);
-		panel.setAutoscrolls(true);
-		frame.add(panel);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(1200,800);
-		frame.setVisible(true);
+		if(showParsingTree) {
+			JFrame frame = new JFrame("Parsing Tree");
+			TreeViewer viewr = new TreeViewer(Arrays.asList(
+					parser.getRuleNames()),tree);
+			viewr.setScale(1.5);//scale a little
+			JScrollPane panel = new JScrollPane(viewr);
+			panel.setAutoscrolls(true);
+			frame.add(panel);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.setSize(1200,800);
+			frame.setVisible(true);
+		}
 
 		//System.out.println(); // print a \n after translation
 		/*		corrector.process(inputChunck,errorListener.errorsList );
