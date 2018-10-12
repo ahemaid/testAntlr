@@ -1,6 +1,9 @@
 package main;
 
 import java.io.IOException;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -10,11 +13,14 @@ import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -45,13 +51,13 @@ public class Main {
 	static DescriptiveErrorListener errorListener = new DescriptiveErrorListener();
 	static ArrayList<String> errorCorrectionsReport = new ArrayList<String>();
 	static boolean showParsingTree = false; 
+	static boolean autoErrorCorrection = false; 
 
 	public static void main (String[] args) {
 		String InputFIlename = "file.ttl" ; 
 		String outputFilename = InputFIlename.split("ttl")[0]+"output" ;
 		String errorFilename = InputFIlename.split("ttl")[0]+"error" ;
 		long startTime = 0, endTime = 0;
-		StringBuilder inputSB = new StringBuilder();
 		InputStream input;
 		boolean isJSONOutputSeleted = false; 
 
@@ -61,9 +67,12 @@ public class Main {
 			//System.out.println(Arrays.toString(inputParameters));
 
 			if ( Arrays.asList(inputParameters).contains("-i")) {
+				File f;
 				InputFIlename = Arrays.asList(inputParameters).get(Arrays.asList(inputParameters).indexOf("-i")+1);
-				errorFilename = InputFIlename.split("ttl")[0]+"error" ;
-				outputFilename = InputFIlename.split("ttl")[0]+"output" ;
+				errorFilename = FilenameUtils.getName(InputFIlename).split("ttl")[0]+"error" ;
+				outputFilename = FilenameUtils.getName(InputFIlename).split("ttl")[0]+"output" ;
+				System.out.println(errorFilename);
+				System.out.println(outputFilename);
 
 			}
 			if ( Arrays.asList(inputParameters).contains("-o")) {
@@ -79,10 +88,10 @@ public class Main {
 				showParsingTree = true;
 			}
 			if ( Arrays.asList(inputParameters).contains("-c")) {
-				//showParsingTree = true;
+				autoErrorCorrection = true;
 				// make a function for correction
 			}
-			
+
 		}
 
 		try {
@@ -127,7 +136,7 @@ public class Main {
 
 			//for smaller than 1000000 lines
 			errorListener.setInput(currentData);
-			parse( currentData ,outputFilename);
+			parse( currentData, outputFilename );
 			Arrays.fill( currentData, "" );
 
 
@@ -158,11 +167,12 @@ public class Main {
 			}
 
 			scheduler.shutdownNow();
-			// write error list to an error file 
+			// write error list to an error file 			
 			if(isJSONOutputSeleted)
 				writeErrorsToFile(errorFilename, "JSON");
 			else 
 				writeErrorsToFile(errorFilename, "Plain");
+			
 			// show corrections list report if there any in the corrections list
 			//			if(!errorCorrectionsReport.isEmpty())
 			//				showCorrectionReport();
@@ -199,80 +209,97 @@ public class Main {
 		parser.addErrorListener(errorListener);
 		ParseTree tree = parser.start(); // begin parsing at init rule
 		//System.out.print("\n\n"+parser.getCurrentToken());
-
-		// Create a generic parse tree walker that can trigger callbacks
-		ParseTreeWalker walker = new ParseTreeWalker();
-
+		
 		//show AST in GUI
 		if(showParsingTree) {
 			JFrame frame = new JFrame("Parsing Tree");
-			TreeViewer viewr = new TreeViewer(Arrays.asList(
+			TreeViewer viewer = new TreeViewer(Arrays.asList(
 					parser.getRuleNames()),tree);
-			viewr.setScale(1.5);//scale a little
-			JScrollPane panel = new JScrollPane(viewr);
+			viewer.setScale(1.5);//scale a little
+			JScrollPane panel = new JScrollPane(viewer);
 			panel.setAutoscrolls(true);
 			frame.add(panel);
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			frame.setSize(1200,800);
+			frame.setSize(3000,500);
+			//frame.pack();
+
 			frame.setVisible(true);
+			try
+			{
+				// This is not the actual-sized frame. get the actual size
+				Dimension actualSize = frame.getContentPane().getSize();
+				BufferedImage image = new BufferedImage(actualSize.width, actualSize.height+100, BufferedImage.TYPE_INT_RGB);
+				Graphics2D graphics2D = image.createGraphics();
+				frame.paint(graphics2D);
+				ImageIO.write(image,"jpeg", new File("parseTree.jpeg"));
+			}
+			catch(Exception exception)
+			{
+				//code
+			}
 		}
 
-		//System.out.println(); // print a \n after translation
-		/*		corrector.process(inputChunck,errorListener.errorsList );
+		if(autoErrorCorrection) {
+			//System.out.println(); // print a \n after translation
+			corrector.process(inputChunck,errorListener.errorsList );
 
-		//show arrayOfErrors
-		//System.out.print(errorListener.errorsList);
+			//show arrayOfErrors
+			//System.out.print(errorListener.errorsList);
 
-		corrector.showInputAfterEditing();
-		corrector.writeToFileAfterEditing(outFilename);
-		if(!corrector.errorCorrectionsList.isEmpty()) {
-			for(String line : corrector.errorCorrectionsList) {
-				errorCorrectionsReport.add(line);
+			//corrector.showInputAfterEditing();
+			//corrector.writeToFileAfterEditing(outFilename);
+			if(!corrector.errorCorrectionsList.isEmpty()) {
+				for(String line : corrector.errorCorrectionsList) {
+					errorCorrectionsReport.add(line);
 
+				}
 			}
-		}*/
-		//errorListener.resetErrorList();
+			//errorListener.resetErrorList();
+		}
+
 
 	}
 
 	// write the errors to a file 
 	static public void writeErrorsToFile (String errorFilename, String type) {
 		long count = 1;
-		String data = "";
 		JSONArray errorJSONArray = new JSONArray();
 
 		File file = new File(errorFilename);
 		FileWriter fr = null;
 		try {
+			if(!errorListener.errorsList.isEmpty()) {
+				fr = new FileWriter(file);
+				for(String line : errorListener.errorsList) {
+//					// check if input is empty
+//					if(line == "") {
+//						break;
+//					}
+					if(type == "JSON") {
+						// create a JSONObject to hold the error number and the message
+						JSONObject errorJSONObject = new JSONObject();
+						errorJSONObject.put("errorMessage", line);
+						errorJSONObject.put("errorNumber", count++);
+						errorJSONArray.put(errorJSONObject);
+					} else {
+						// can be used to show error with a plain text
+						System.out.print(line+"\n");
+						fr.write("\nError"+count++ + ": "+line);
+					}
 
-			fr = new FileWriter(file);
-			for(String line : errorListener.errorsList) {
-				// check if input is empty
-				if(line == "") {
-					break;
 				}
-				if(type == "JSON") {
-					// create a JSONObject to hold the error number and the message
-					JSONObject errorJSONObject = new JSONObject();
-					errorJSONObject.put("Error Message", line);
-					errorJSONObject.put("Error Number", count++);
-					errorJSONArray.put(errorJSONObject);
-				}
-				else {
-					// can be used to show error with a plain text
-					fr.write("\nError"+count++ +": "+line);
-				}
-
+			} else {
+				System.out.println("\nno errors were found in " + errorFilename);
 			}
-
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}finally{
 			try {
-				if(type == "JSON")
+				if(type == "JSON" && !errorListener.errorsList.isEmpty()) {
 					fr.write(errorJSONArray.toString());
-				fr.close();
+					fr.close();
+				}
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
