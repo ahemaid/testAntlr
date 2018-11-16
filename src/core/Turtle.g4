@@ -21,11 +21,11 @@ start
 
 statement
    : directive
-   | triples '.'
-   | triples ',' {notifyErrorListeners("Bad end of a triple with ','");}
-   | triples ';' {notifyErrorListeners("Bad end of a triple with ';'");}
-   | triples {notifyErrorListeners("Missing '.' at the end of a triple");}
-   | triples ('.')+ ('.')+ {notifyErrorListeners("Too many DOT");}
+   | triple '.'
+   | triple ',' {notifyErrorListeners("Bad end of a triple with ','");}
+   | triple ';' {notifyErrorListeners("Bad end of a triple with ';'");}
+   | triple {notifyErrorListeners("Missing '.' at the end of a triple");}
+   | triple ('.')+ ('.')+ {notifyErrorListeners("Too many DOT");}
    | errors		
    
    ;
@@ -36,7 +36,7 @@ directive
 //	]
    : sparqlPrefix
    | sparqlBase 
-   | prefixID    //{System.out.println("symbols="+$symbols);}
+   | prefixID   
    | base
    | unkonwnDecl
    | sparqlPrefix '.' {notifyErrorListeners("Extraneous '.' at the end of SPARQL prefix directive");}
@@ -51,8 +51,8 @@ errors
 ////    | subject predicate object graphLabel? '.' {notifyErrorListeners("Turtle is not NQOUDS");}
 ////TODO
 //// 	| BAD_PNAME_LN_ENDS_WITH_DOT BAD_PNAME_LN_ENDS_WITH_DOT  BAD_PNAME_LN_ENDS_WITH_DOT  {notifyErrorListeners("'IRI' as a Subject or a Predicate cannot be followed by '.' in Turtle");}
- 	| (iri '.')+ (iri '.')+  triples '.' {notifyErrorListeners("N3 paths cannot be used in Turtle");}
-    | (iri '.')+ (iri '.')+  triples  {notifyErrorListeners("N3 paths cannot be used in Turtle");}
+ 	| (iri '.')+ (iri '.')+  triple '.' {notifyErrorListeners("N3 paths cannot be used in Turtle");}
+    | (iri '.')+ (iri '.')+  triple  {notifyErrorListeners("N3 paths cannot be used in Turtle");}
     | '@forAll' iri '.' {notifyErrorListeners(" '@forAll' cannot be used in Turtle ");}
     | '@forSome' iri '.' {notifyErrorListeners(" '@forSome' cannot be used in Turtle ");}
     | ('a'|CHARS)* '@a' ('a'|CHARS)* '.' {notifyErrorListeners(" '@a' cannot be used in Turtle ");}
@@ -72,7 +72,7 @@ prefixID
      '@prefix' CHARS '.' ':' IRIREF '.' {notifyErrorListeners("Prefix Namespace cannot end with '.' ");}
    | '@prefix' '.' CHARS ':' IRIREF '.' {notifyErrorListeners("Prefix Namespace cannot start with '.' ");}
    | '@prefix' ':' IRIREF '.' 
-   | '@prefix' PNAME_NS IRIREF '.' {symbols.add($PNAME_NS.text);} // { System.out.println($PNAME_NS.text + $IRIREF.text);} 
+   | '@prefix' PNAME_NS  IRIREF '.' {symbols.add($PNAME_NS.text);} // { System.out.println($PNAME_NS.text + $IRIREF.text);} 
  //  | '@prefix' (PN_PREFIX)? ':' IRIREF '.' { System.out.println($PN_PREFIX.text + $IRIREF.text);} 
    | '@prefix' PNAME_NS IRIREF ('.')+ ('.')+ {notifyErrorListeners("Too many DOT ");}
    | PNAME_NS IRIREF '.' {notifyErrorListeners("Missing Prefix keyword, use '@prefix'");}
@@ -107,16 +107,17 @@ sparqlPrefix
 KW_BASE : B A S E ;
 KW_PREFIX : P R E F I X ;
 
-triples
+triple
    :    
-   subject predicateObjectList
+    subject predicateObjectList
    | blankNodePropertyList predicateObjectList?
    | subject ':' object 
    | subject verb {notifyErrorListeners("Object of a triple is missing");}
    ;
 
 predicateObjectList
-   : verb objectList (';' (verb objectList)?)*
+//   : verb objectList (';' (verb objectList)?)*
+   : verb objectList (';' verb objectList)*
    ;
 
 objectList
@@ -124,10 +125,10 @@ objectList
    ;
 
 verb
-   : predicate
+   :   'a' 
+   | predicate
    | 'is' predicate 'of' {notifyErrorListeners("'is .. of' pattern is not used in Turtle");}
-   | 'a'
-   | 'A' {notifyErrorListeners("'A' cannot be used as predicate, it should be repalced with 'a'");}
+   | 'A' {notifyErrorListeners("'A' cannot be used as predicate, it should be replaced with 'a'");}
    | BooleanLiteral {notifyErrorListeners("Predicate cannot be a boolean value");}
    | NumericLiteral  {notifyErrorListeners("Predicate cannot be a number");}
    | literal {notifyErrorListeners("Predicate cannot be a literal");}
@@ -142,11 +143,9 @@ subject
    | BooleanLiteral {notifyErrorListeners("Subject cannot be a boolean value");}
    | NumericLiteral  {notifyErrorListeners("Subject cannot be a number");}
    | rdfLiteral   {notifyErrorListeners("Subject cannot be a string");}
-   
    | collection
-   | '{' triples '.' '}' {notifyErrorListeners("{ } pattern cannot be used in Turtle");}
-   | '{' triples '}' {notifyErrorListeners("{ } pattern cannot be used in Turtle");} 
-// todo
+   | '{' triple '.' '}' {notifyErrorListeners("{ } pattern cannot be used in Turtle");}
+   | '{' triple '}' {notifyErrorListeners("{ } pattern cannot be used in Turtle");} 
 //				| rdfLiteral   {notifyErrorListeners("Subject cannot be a string");}
 				
    ;
@@ -192,7 +191,6 @@ rdfLiteral
    : 
    BAD_STRING_LITERAL_LONG_QUOTE_TOO_MANY (LANGTAG | '^^' iri)? {notifyErrorListeners("incorrect form of long literal with 4 qoutes");}
    | BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_TOO_MANY (LANGTAG | '^^' iri)? {notifyErrorListeners("incorrect form of long literal with 4 qoutes");}
-   | String (LANGTAG | '^^' iri)?
    | String  BAD_LANGTAG_AS_NUMBER  {notifyErrorListeners("Language tag cannot be a numeric value");}
    | String '^' iri {notifyErrorListeners("Missing '^' Character");}
    | String LANGTAG '^^' iri {notifyErrorListeners("incorrect form of a Literal");}
@@ -202,6 +200,7 @@ rdfLiteral
    | BAD_STRING_LITERAL_QUOTE (LANGTAG | '^^' iri)? {notifyErrorListeners("incorrect quotes of a literal");}
    | (BAD_STRING_LITERAL_QUOTE_WITH_BAD_UCHAR | BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_UCHAR | BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_UCHAR | BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_UCHAR) {notifyErrorListeners("Bad Unicode Characters, Only HEX Characters are allowed");}
    | (BAD_STRING_LITERAL_QUOTE_WITH_BAD_ESCAPE | BAD_STRING_LITERAL_SINGLE_QUOTE_WITH_BAD_ESCAPE | BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_WITH_BAD_ESCAPE | BAD_STRING_LITERAL_LONG_QUOTE_WITH_BAD_ESCAPE) {notifyErrorListeners("Bad Literal Escape");}
+   | String (LANGTAG | '^^' iri)?
    //   |   {notifyErrorListeners("Uncorrect form of long literal with 4 qoutes");}
    ;
 
@@ -213,19 +212,20 @@ BooleanLiteral
 BadLiteral 
    : NumericLiteral ('.')+ CHARS 
    | NumericLiteral CHARS 
+   | '+' '-' NumericLiteral
    ;
 
 String
    : 
     STRING_LITERAL_QUOTE | STRING_LITERAL_SINGLE_QUOTE | STRING_LITERAL_LONG_SINGLE_QUOTE | STRING_LITERAL_LONG_QUOTE
-
    ;
 
 iri
-   : 
-   IRIREF 
-   |  PrefixedName { if(!isExistNS($PrefixedName.text))notifyErrorListeners($PrefixedName.text.split(":")[0] +" prefix is undefined ");}
-//	 | PNAME_LN | (PN_PREFIX)? ':'   
+   :
+   ':' BAD_PN_LOCAL_CONTAINS_PERCENT  {notifyErrorListeners("Bad syntax of Prefixed IRI, the local prefix namespace cannot contain '%'");} 
+   | PrefixedName { if(!isExistNS($PrefixedName.text))notifyErrorListeners($PrefixedName.text.split(":")[0] +" prefix is undefined ");}
+   | IRIREF 
+// | PNAME_LN | (PN_PREFIX)? ':'   
 //      	{
 //	if ( !$directive:symbols.contains($PN_PREFIX.text) ) {
 //	System.err.println("Undefined prefix: "+PN_PREFIX.text);
@@ -233,7 +233,7 @@ iri
 //	}
 //ToDO   
 // | PNAME_NS  PN_LOCAL_BAD_WITH_DASH {notifyErrorListeners("Bad syntax of Prefixed IRI, the local prefix namespace cannot start with dash");}
-   | PNAME_NS  BAD_PN_LOCAL_STARTS_WITH_PERCENT {notifyErrorListeners("Bad syntax of Prefixed IRI, the local prefix namespace cannot contain '%'");}
+   | PN_PREFIX? ':'  BAD_PN_LOCAL_STARTS_WITH_PERCENT {notifyErrorListeners("Bad syntax of Prefixed IRI, the local prefix namespace cannot contain '%'");}
 //   | PNAME_NS  PN_LOCAL_BAD_WITH_PERCENT {notifyErrorListeners("Bad syntax of Prefixed IRI, the local prefix namespace cannot contain '%'");}
    | BAD_PNAME_LN_STARTS_WITH_DOT  {notifyErrorListeners("incorrect form of Prefixed Namespace, it cannot start with '.'");} 
    | BAD_PNAME_LN_ENDS_WITH_DOT  {notifyErrorListeners("incorrect form of Prefixed Namespace, it cannot end with '.'");} 
@@ -279,12 +279,13 @@ PNAME_NS
 
 
 PrefixedName
-   : PNAME_LN | PNAME_NS
+   :  PNAME_NS | PNAME_LN
    ;
 
 
 PNAME_LN
-   : PNAME_NS PN_LOCAL?
+//   : PNAME_NS PN_LOCAL? 
+   : PNAME_NS PN_LOCAL 
    ;
 
 BAD_PNAME_LN_STARTS_WITH_DOT	  
@@ -309,7 +310,7 @@ BAD_LANGTAG_AS_NUMBER
    ;
 
 INTEGER
-   : [+-]? [0-9] +
+   : [+-]? [0-9]+
    ;
 
 
@@ -334,7 +335,7 @@ STRING_LITERAL_LONG_SINGLE_QUOTE
 
 
 STRING_LITERAL_LONG_QUOTE
-   : '"""'  ((~ ["\\] | ECHAR | UCHAR | '\'') ('"' | '""')? (~ ["\\] | ECHAR | UCHAR | '\''))* '"""'
+   : '"""'  ((~ ["\\] | ECHAR | UCHAR | '\'') ('"' | '""')? (';'| ',' |'.')* (~ ["\\] | ECHAR | UCHAR | '\''))* '"""'
    ;
 
 STRING_LITERAL_QUOTE
@@ -423,9 +424,12 @@ PN_LOCAL
 
 
 BAD_PN_LOCAL_STARTS_WITH_PERCENT
-   :   '%' PN_LOCAL
+   :   '%' (PN_CHARS_U | ':' | [0-9]) ((PN_CHARS | '.' | ':' )* (PN_CHARS | ':' ))?
    ;
-
+BAD_PN_LOCAL_CONTAINS_PERCENT
+  :   CHARS* '%' [0-9]
+//   :   (PN_CHARS_U | ':' | [0-9]) ((PN_CHARS | '.' | ':' )* (PN_CHARS | ':' ))? '%' [0-9]
+   ;
 
 PLX
    : PERCENT | PN_LOCAL_ESC
@@ -478,7 +482,9 @@ BAD_STRING_LITERAL_QUOTE
 	: '"""' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '"' 
 	| '"' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '"""' 
 	| '"' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '\'' 
-	| '\'' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '"' 			
+	| '\'' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '"' 	
+	| '"''\'' (~[\u0022\u005C\u000A\u000D] | ECHAR | UCHAR)* '""' 			
+			
 	;  	  
 
 BAD_STRING_LITERAL_LONG_SINGLE_QUOTE
@@ -487,10 +493,15 @@ BAD_STRING_LITERAL_LONG_SINGLE_QUOTE
 
 BAD_STRING_LITERAL_LONG_QUOTE
 	: '"""' (('"' | '""')? (~ ["\\] | ECHAR | UCHAR | '\''))* '\'\'\''
+	|  '"""' (('"' | '""')? (~ ["\\] | ECHAR | UCHAR | '\''))* '"' '\''
+	|  '"' '\'' (~ ["\\] | ECHAR | UCHAR | '\'')* '""'
+	
 	;
 BAD_STRING_LITERAL_LONG_QUOTE_TOO_MANY
-	: '"""' (('"' | '""')? (~ ["\\] | ECHAR | UCHAR ))* '""""'
-	| '""""' (('"' | '""')? (~ ["\\] | ECHAR | UCHAR ))* '"""'
+	: '"""'  (~ ["\\] | ECHAR | UCHAR )* '""""'
+	| '""""' (('"' | '""')? (~ ["\\] | ECHAR | UCHAR ))* '"""' 
+	| '"""'  (~ ["\\] | ECHAR | UCHAR )* 
+	
 	;	
 	
 BAD_STRING_LITERAL_LONG_SINGLE_QUOTE_TOO_MANY
@@ -503,6 +514,7 @@ ILLEGAL_ESCAPE
 	: ('\\' ~[ubtnfr"'\\] ) [a-zA-Z]+ 
 	;
 	
+
 fragment A:('a'|'A');
 fragment B:('b'|'B');
 fragment C:('c'|'C');

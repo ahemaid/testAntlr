@@ -136,13 +136,13 @@ public class TurtleBaseListener implements TurtleListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTriples(TurtleParser.TriplesContext ctx) { }
+	@Override public void enterTriple(TurtleParser.TripleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTriples(TurtleParser.TriplesContext ctx) { }
+	@Override public void exitTriple(TurtleParser.TripleContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

@@ -108,15 +108,15 @@ public interface TurtleListener extends ParseTreeListener {
 	 */
 	void exitSparqlPrefix(TurtleParser.SparqlPrefixContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link TurtleParser#triples}.
+	 * Enter a parse tree produced by {@link TurtleParser#triple}.
 	 * @param ctx the parse tree
 	 */
-	void enterTriples(TurtleParser.TriplesContext ctx);
+	void enterTriple(TurtleParser.TripleContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link TurtleParser#triples}.
+	 * Exit a parse tree produced by {@link TurtleParser#triple}.
 	 * @param ctx the parse tree
 	 */
-	void exitTriples(TurtleParser.TriplesContext ctx);
+	void exitTriple(TurtleParser.TripleContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link TurtleParser#predicateObjectList}.
 	 * @param ctx the parse tree
